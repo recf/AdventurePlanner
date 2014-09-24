@@ -11,6 +11,8 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("class", Required = Required.Always)]
         public string ClassName { get; set; }
 
+        #region Ability Scores
+
         [JsonProperty("increase_str", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int IncreaseStr { get; set; }
 
@@ -28,5 +30,10 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("increase_cha", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int IncreaseCha { get; set; }
+
+        #endregion
+
+        [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public int SetProficiencyBonus { get; set; }
     }
 }

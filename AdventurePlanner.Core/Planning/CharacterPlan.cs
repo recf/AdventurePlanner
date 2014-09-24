@@ -83,6 +83,11 @@ namespace AdventurePlanner.Core.Planning
                 snapshot.IntScore.Score += plan.IncreaseInt;
                 snapshot.WisScore.Score += plan.IncreaseWis;
                 snapshot.ChaScore.Score += plan.IncreaseCha;
+
+                if (plan.SetProficiencyBonus > 0)
+                {
+                    snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
+                }
             }
 
             return snapshot;

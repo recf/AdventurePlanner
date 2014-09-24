@@ -35,6 +35,8 @@ namespace AdventurePlanner.Core.Snapshots
 
         public IDictionary<string, int> Classes { get; set; }
 
+        #region Ability Scores
+
         public AbilitySnapshot StrScore { get; private set; }
 
         public AbilitySnapshot DexScore { get; private set; }
@@ -46,6 +48,10 @@ namespace AdventurePlanner.Core.Snapshots
         public AbilitySnapshot WisScore { get; private set; }
 
         public AbilitySnapshot ChaScore { get; private set; }
+
+        #endregion
+
+        public int ProficiencyBonus { get; set; }
 
         public CharacterSnapshot()
         {

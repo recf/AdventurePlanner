@@ -48,11 +48,14 @@ namespace AdventurePlannter.Core.Tests
                         IncreaseCon = 14,
                         IncreaseInt = 8,
                         IncreaseWis = 15,
-                        IncreaseCha = 11
+                        IncreaseCha = 11,
+
+                        SetProficiencyBonus = 2,
                     },
                     new CharacterLevelPlan { Level = 2, ClassName = "Cleric" },
                     new CharacterLevelPlan { Level = 3, ClassName = "Cleric" },
-                    new CharacterLevelPlan { Level = 4, ClassName = "Cleric", IncreaseWis = 1 }
+                    new CharacterLevelPlan { Level = 4, ClassName = "Cleric", IncreaseWis = 1 },
+                    new CharacterLevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
                 }
             };
 
@@ -73,7 +76,7 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                Classes = new Dictionary<string, int> { { "Cleric", 3 }, { "Fighter", 1 } },
+                Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
 
                 StrScore = { Score = 10 },
                 DexScore = { Score = 12 },
@@ -81,6 +84,8 @@ namespace AdventurePlannter.Core.Tests
                 IntScore = { Score = 8 },
                 WisScore = { Score = 16 },
                 ChaScore = { Score = 11 },
+
+                ProficiencyBonus = 3
             };
             
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
@@ -105,6 +110,8 @@ namespace AdventurePlannter.Core.Tests
             Assert.That(actualSnapshot.IntScore.Score, Is.EqualTo(expectedSnapshot.IntScore.Score));
             Assert.That(actualSnapshot.WisScore.Score, Is.EqualTo(expectedSnapshot.WisScore.Score));
             Assert.That(actualSnapshot.ChaScore.Score, Is.EqualTo(expectedSnapshot.ChaScore.Score));
+
+            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
         }
     }
 }

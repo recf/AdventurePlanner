@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AdventurePlanner.UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Main Window
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CharacterPlanView
     {
-        public MainWindow()
+        public CharacterPlanView()
         {
             InitializeComponent();
         }
