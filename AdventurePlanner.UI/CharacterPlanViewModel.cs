@@ -14,22 +14,54 @@ namespace AdventurePlanner.UI
     {
         public CharacterPlanViewModel()
         {
-            //Save = ReactiveCommand.CreateAsyncObservable(_ => SaveImpl());
+            var canSaveOrReload = this.ObservableForProperty(x => x.IsDirty).Select(y => y.Value);
+
+            Save = ReactiveCommand.CreateAsyncObservable(canSaveOrReload, _ => SaveImpl());
+            Reload = ReactiveCommand.CreateAsyncObservable(canSaveOrReload, _ => ReloadImpl());
+
+            var dataPropertyChanged = Changed.Where(e => e.PropertyName != "IsDirty");
+            
+            Observable.Merge(
+                Save.Select(_ => false),
+                Reload.Select(_ => false),
+                dataPropertyChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
         }
 
-        private string _name;
+        private readonly ObservableAsPropertyHelper<bool> _dirty;
 
-        public string Name
+        public bool IsDirty
         {
-            get { return _name; }
-            set { this.RaiseAndSetIfChanged(ref _name, value); }
+            get { return _dirty.Value; }
         }
 
-        public IReactiveCommand Save { get; private set; }
+        private string _characterName;
 
-        //public IObservable<Unit> SaveImpl()
-        //{
-        //    return Observable.Create();
-        //}
+        public string CharacterName
+        {
+            get { return _characterName; }
+            set { this.RaiseAndSetIfChanged(ref _characterName, value); }
+        }
+
+        private string _race;
+
+        public string Race
+        {
+            get { return _race; }
+            set { this.RaiseAndSetIfChanged(ref _race, value); }
+        }
+
+        public ReactiveCommand<Unit> Save { get; private set; }
+
+        public IObservable<Unit> SaveImpl()
+        {
+            return Observable.Return(Unit.Default);
+        }
+
+        public ReactiveCommand<Unit> Reload { get; private set; }
+
+        public IObservable<Unit> ReloadImpl()
+        {
+            return Observable.Return(Unit.Default);
+        }
     }
 }

@@ -8,16 +8,22 @@
     
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Reload"/>
-            <Button Content="Save"/>
+            <Button Content="Reload" Command="{Binding Reload}"/>
+            <Button Content="Save" Command="{Binding Save}"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     
     <Grid>
 
         <StackPanel>
+            <Label Content="Changed"/>
+            <CheckBox x:Name="IsDirty" IsEnabled="False"/>
+            
             <Label Content="Name"/>
-            <TextBox x:Name="Name"/>
+            <TextBox x:Name="CharacterName"/>
+
+            <Label Content="Race"/>
+            <TextBox x:Name="Race"/>
         </StackPanel>
         
     </Grid>
