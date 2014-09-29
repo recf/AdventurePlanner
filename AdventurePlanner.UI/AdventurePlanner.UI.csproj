@@ -90,7 +90,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\CharacterLevelPlanViewModel.cs" />
     <Compile Include="ViewModels\CharacterPlanViewModel.cs" />
+    <Compile Include="Views\CharacterLevelPlanView.xaml.cs">
+      <DependentUpon>CharacterLevelPlanView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CharacterPlanView.xaml.cs">
       <DependentUpon>CharacterPlanView.xaml</DependentUpon>
     </Compile>
@@ -99,6 +103,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Page Include="Views\CharacterLevelPlanView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CharacterPlanView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

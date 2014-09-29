@@ -14,6 +14,7 @@
         <Controls:WindowCommands>
             <Label Content="*" Visibility="{Binding Path=IsDirty, Converter={StaticResource BooleanToVisibility}}"/>
             <Button Content="Load" Command="{Binding Load}"/>
+            <Button Content="Add Level" Command="{Binding AddLevel}"/>
             <Button Content="Save" Command="{Binding Save}"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
@@ -59,13 +60,7 @@
             <TextBox x:Name="Background"/>
         </UniformGrid>
 
-        <TabControl Grid.Row="1">
-
-            <TabItem Header="Level 1">LEVEL 1 CONTENT</TabItem>
-            <TabItem Header="2">LEVEL 2 CONTENT</TabItem>
-            <TabItem Header="3">LEVEL 3 CONTENT</TabItem>
-
-        </TabControl>
+        <TabControl Grid.Row="1" x:Name="LevelPlans" DisplayMemberPath="Header"/>
         
     </Grid>
 </Controls:MetroWindow>

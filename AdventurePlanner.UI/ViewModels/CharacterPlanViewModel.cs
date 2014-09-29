@@ -22,18 +22,24 @@ namespace AdventurePlanner.UI.ViewModels
 
             Load = ReactiveCommand.CreateAsyncObservable(_ => LoadImpl());
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
+            AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
             var dataPropertyChanged = Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName));
+
+            LevelPlans = new ReactiveList<CharacterLevelPlanViewModel>();
 
             Observable.Merge(
                 Load.Where(loaded => loaded).Select(_ => false),
                 Save.Where(saved => saved).Select(_ => false),
-                dataPropertyChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
+                dataPropertyChanged.Select(_ => true),
+                LevelPlans.ItemsAdded.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
         }
 
         public ReactiveCommand<bool> Load { get; private set; }
-
+        
         public ReactiveCommand<bool> Save { get; private set; }
+
+        public ReactiveCommand<CharacterLevelPlanViewModel> AddLevel { get; private set; }
 
         #region Bookkeeping Properties
 
@@ -144,6 +150,8 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _background, value); }
         }
 
+        public ReactiveList<CharacterLevelPlanViewModel> LevelPlans { get; private set; }
+
         #endregion
 
         #region Command Implementations
@@ -204,6 +212,21 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(true);
         }
 
+        private IObservable<CharacterLevelPlanViewModel> AddLevelImpl()
+        {
+            var maxLevel = LevelPlans.DefaultIfEmpty(new CharacterLevelPlanViewModel()).Last();
+
+            var viewModel = new CharacterLevelPlanViewModel
+            {
+                Level = maxLevel.Level + 1,
+                ClassName = maxLevel.ClassName
+            };
+
+            LevelPlans.Add(viewModel);
+            
+            return Observable.Return(viewModel);
+        }
+
         #endregion
 
         #region Conversion VM <-> M
@@ -228,7 +251,11 @@ namespace AdventurePlanner.UI.ViewModels
 
                 Background = Background,
 
-                LevelPlans = new List<CharacterLevelPlan>()
+                LevelPlans = LevelPlans.Select(view => new CharacterLevelPlan
+                {
+                    Level = view.Level,
+                    ClassName = view.ClassName
+                }).ToList()
             };
 
             return plan;
@@ -250,6 +277,16 @@ namespace AdventurePlanner.UI.ViewModels
             SkinColor = plan.SkinColor;
 
             Background = plan.Background;
+
+            LevelPlans.Clear();
+            foreach (var lp in plan.LevelPlans)
+            {
+                LevelPlans.Add(new CharacterLevelPlanViewModel
+                {
+                    Level = lp.Level,
+                    ClassName = lp.ClassName
+                });
+            }
         }
 
         #endregion
