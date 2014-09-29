@@ -8,6 +8,7 @@
     
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button Content="Load" Command="{Binding Load}"/>
             <Button Content="Reload" Command="{Binding Reload}"/>
             <Button Content="Save" Command="{Binding Save}"/>
         </Controls:WindowCommands>
