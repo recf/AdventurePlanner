@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using AdventurePlanner.Core.Planning;
 using Microsoft.Win32;
@@ -16,28 +17,26 @@ namespace AdventurePlanner.UI
 {
     public class CharacterPlanViewModel : ReactiveObject
     {
+        private static readonly string[] BookkeepingProperties = { "IsDirty", "BackingFile" };
+
         public CharacterPlanViewModel()
         {
-            var canSaveOrReload = this.ObservableForProperty(x => x.IsDirty).Select(y => y.Value);
+            var canSave = this.ObservableForProperty(x => x.IsDirty).Select(y => y.Value);
 
             Load = ReactiveCommand.CreateAsyncObservable(_ => LoadImpl());
-            Save = ReactiveCommand.CreateAsyncObservable(canSaveOrReload, _ => SaveImpl());
-            Reload = ReactiveCommand.CreateAsyncObservable(canSaveOrReload, _ => ReloadImpl());
+            Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
 
-            var dataPropertyChanged = Changed.Where(e => e.PropertyName != "IsDirty");
+            var dataPropertyChanged = Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName));
 
             Observable.Merge(
-                Load.Select(_ => true),
-                Save.Select(b => !b),
-                Reload.Select(b => !b),
+                Load.Select(loaded => !loaded),
+                Save.Select(saved => !saved),
                 dataPropertyChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
         }
 
-        public ReactiveCommand<Unit> Load { get; private set; }
+        public ReactiveCommand<bool> Load { get; private set; }
 
         public ReactiveCommand<bool> Save { get; private set; }
-
-        public ReactiveCommand<bool> Reload { get; private set; }
 
         #region Bookkeeping Properties
 
@@ -46,6 +45,14 @@ namespace AdventurePlanner.UI
         public bool IsDirty
         {
             get { return _dirty.Value; }
+        }
+
+        private string _backingFile;
+
+        public string BackingFile
+        {
+            get { return _backingFile; }
+            private set { this.RaiseAndSetIfChanged(ref _backingFile, value); }
         }
 
         #endregion
@@ -69,18 +76,14 @@ namespace AdventurePlanner.UI
         }
 
         #endregion
-        
+
         #region Command Implementations
 
-        private IObservable<Unit> LoadImpl()
+        private IObservable<bool> LoadImpl()
         {
-            return Observable.Return(Unit.Default);
-        }
+            var loaded = false;
 
-        private IObservable<bool> SaveImpl()
-        {
-            var saved = false;
-            var dialog = new SaveFileDialog
+            var dialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Filter = "Adventure Planner Character files (*.apchar)|*.apchar"
@@ -90,23 +93,53 @@ namespace AdventurePlanner.UI
 
             if (result.HasValue && result.Value)
             {
-                var plan = GetPlan();
+                var contents = File.ReadAllText(dialog.FileName);
+                var plan = JsonConvert.DeserializeObject<CharacterPlan>(contents);
 
-                var contents = JsonConvert.SerializeObject(plan, Formatting.Indented);
+                SetFromPlan(plan);
 
-                File.WriteAllText(dialog.FileName, contents);
-                saved = true;
+                BackingFile = dialog.FileName;
+
+                loaded = true;
             }
 
-            return Observable.Return(saved);
+            return Observable.Return(loaded);
         }
-        
-        private IObservable<bool> ReloadImpl()
+
+        private IObservable<bool> SaveImpl()
         {
+            if (BackingFile == null)
+            {
+                var dialog = new SaveFileDialog
+                {
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Filter = "Adventure Planner Character files (*.apchar)|*.apchar"
+                };
+
+                var result = dialog.ShowDialog();
+
+                if (result == true)
+                {
+                    BackingFile = dialog.FileName;
+                }
+                else
+                {
+                    return Observable.Return(false);
+                }
+            }
+
+            var plan = GetPlan();
+
+            var contents = JsonConvert.SerializeObject(plan, Formatting.Indented);
+
+            File.WriteAllText(BackingFile, contents);
+
             return Observable.Return(true);
         }
 
         #endregion
+
+        #region Conversion VM <-> M
 
         private CharacterPlan GetPlan()
         {
@@ -130,5 +163,13 @@ namespace AdventurePlanner.UI
 
             return plan;
         }
+
+        private void SetFromPlan(CharacterPlan plan)
+        {
+            CharacterName = plan.Name;
+            Race = plan.Race;
+        }
+
+        #endregion
     }
 }
