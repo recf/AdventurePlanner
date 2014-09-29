@@ -20,16 +20,13 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("alignment", Required = Required.Always)]
         public string Alignment { get; set; }
 
-        [JsonProperty("background", Required = Required.Always)]
-        public string Background { get; set; }
-
         #region Appearance
 
         [JsonProperty("age", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Age { get; set; }
 
         [JsonProperty("height_feet", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public int? HeightFeet { get; set; }
+        public int HeightFeet { get; set; }
 
         [JsonProperty("height_inches", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int HeightInches { get; set; }
@@ -45,6 +42,13 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("skin", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string SkinColor { get; set; }
+
+        #endregion
+
+        #region Background info
+
+        [JsonProperty("background", Required = Required.Always)]
+        public string Background { get; set; }
 
         #endregion
 

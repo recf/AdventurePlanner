@@ -3,10 +3,11 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Adventure Planner" 
-                      Height="350" 
-                      Width="525">
+                      SizeToContent="WidthAndHeight"
+                      ResizeMode="CanResize"
+                      MinWidth="400">
     <Controls:MetroWindow.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"></BooleanToVisibilityConverter>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Controls:MetroWindow.Resources>
     
     <Controls:MetroWindow.RightWindowCommands>
@@ -18,17 +19,43 @@
     </Controls:MetroWindow.RightWindowCommands>
     
     <Grid>
-
-        <StackPanel>
-            <Label Content="Changed"/>
-            <CheckBox x:Name="IsDirty" IsEnabled="False"/>
-            
+        
+        <UniformGrid Columns="2">
             <Label Content="Name"/>
             <TextBox x:Name="CharacterName"/>
 
             <Label Content="Race"/>
             <TextBox x:Name="Race"/>
-        </StackPanel>
+            
+            <Label Content="Speed"/>
+            <Controls:NumericUpDown Value="{Binding Speed}" />
+
+            <Label Content="Age"/>
+            <Controls:NumericUpDown Value="{Binding Age}" />
+            
+            <Label Content="Height"/>
+            <UniformGrid>
+                <Label Content="feet"/>
+                <Controls:NumericUpDown Value="{Binding HeightFeet}" />
+                <Label Content="inches"/>
+                <Controls:NumericUpDown Value="{Binding HeightInches}" />
+            </UniformGrid>
+
+            <Label Content="Weight"/>
+            <Controls:NumericUpDown Value="{Binding Weight}" />
+            
+            <Label Content="Eye Color"/>
+            <TextBox x:Name="EyeColor"/>
+
+            <Label Content="Hair Color"/>
+            <TextBox x:Name="HairColor"/>
+
+            <Label Content="Skin Color"/>
+            <TextBox x:Name="SkinColor"/>
+
+            <Label Content="Background"/>
+            <TextBox x:Name="Background"/>
+        </UniformGrid>
         
     </Grid>
 </Controls:MetroWindow>
