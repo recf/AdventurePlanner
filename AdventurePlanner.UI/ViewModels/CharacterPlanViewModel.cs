@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
 using AdventurePlanner.Core.Planning;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ReactiveUI;
 
-namespace AdventurePlanner.UI
+namespace AdventurePlanner.UI.ViewModels
 {
     public class CharacterPlanViewModel : ReactiveObject
     {
