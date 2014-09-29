@@ -26,13 +26,16 @@ namespace AdventurePlanner.UI.ViewModels
 
             var dataPropertyChanged = Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName));
 
-            LevelPlans = new ReactiveList<CharacterLevelPlanViewModel>();
+            LevelPlans = new ReactiveList<CharacterLevelPlanViewModel> { ChangeTrackingEnabled = true };
 
             Observable.Merge(
                 Load.Where(loaded => loaded).Select(_ => false),
                 Save.Where(saved => saved).Select(_ => false),
                 dataPropertyChanged.Select(_ => true),
-                LevelPlans.ItemsAdded.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
+                LevelPlans.ItemsAdded.Select(_ => true),
+                LevelPlans.ItemChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
+
+            AddLevel.Execute(null);
         }
 
         public ReactiveCommand<bool> Load { get; private set; }
@@ -214,17 +217,38 @@ namespace AdventurePlanner.UI.ViewModels
 
         private IObservable<CharacterLevelPlanViewModel> AddLevelImpl()
         {
-            var maxLevel = LevelPlans.DefaultIfEmpty(new CharacterLevelPlanViewModel()).Last();
+            var maxLevel = LevelPlans.LastOrDefault();
 
-            var viewModel = new CharacterLevelPlanViewModel
+            CharacterLevelPlanViewModel nextLevel;
+
+            if (maxLevel == null)
             {
-                Level = maxLevel.Level + 1,
-                ClassName = maxLevel.ClassName
-            };
+                nextLevel = new CharacterLevelPlanViewModel
+                {
+                    Level = 1,
+                    IncreaseStr = 10,
+                    IncreaseDex = 10,
+                    IncreaseCon = 10,
+                    IncreaseInt = 10,
+                    IncreaseWis = 10,
+                    IncreaseCha = 10,
+                    SetProficiencyBonus = 2
+                };
+            }
+            else
+            {
+                nextLevel = new CharacterLevelPlanViewModel
+                {
+                    Level = maxLevel.Level + 1,
+                    ClassName = maxLevel.ClassName,
 
-            LevelPlans.Add(viewModel);
-            
-            return Observable.Return(viewModel);
+                    SetProficiencyBonus = maxLevel.SetProficiencyBonus
+                };
+            }
+
+            LevelPlans.Add(nextLevel);
+
+            return Observable.Return(nextLevel);
         }
 
         #endregion
@@ -254,7 +278,16 @@ namespace AdventurePlanner.UI.ViewModels
                 LevelPlans = LevelPlans.Select(view => new CharacterLevelPlan
                 {
                     Level = view.Level,
-                    ClassName = view.ClassName
+                    ClassName = view.ClassName,
+
+                    IncreaseStr = view.IncreaseStr,
+                    IncreaseDex = view.IncreaseDex,
+                    IncreaseCon = view.IncreaseCon,
+                    IncreaseInt = view.IncreaseInt,
+                    IncreaseWis = view.IncreaseWis,
+                    IncreaseCha = view.IncreaseCha,
+
+                    SetProficiencyBonus = view.SetProficiencyBonus,
                 }).ToList()
             };
 
@@ -284,7 +317,16 @@ namespace AdventurePlanner.UI.ViewModels
                 LevelPlans.Add(new CharacterLevelPlanViewModel
                 {
                     Level = lp.Level,
-                    ClassName = lp.ClassName
+                    ClassName = lp.ClassName,
+
+                    IncreaseStr = lp.IncreaseStr,
+                    IncreaseDex = lp.IncreaseDex,
+                    IncreaseCon = lp.IncreaseCon,
+                    IncreaseInt = lp.IncreaseInt,
+                    IncreaseWis = lp.IncreaseWis,
+                    IncreaseCha = lp.IncreaseCha,
+
+                    SetProficiencyBonus = lp.SetProficiencyBonus,
                 });
             }
         }
