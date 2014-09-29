@@ -19,8 +19,12 @@
     </Controls:MetroWindow.RightWindowCommands>
     
     <Grid>
-        
-        <UniformGrid Columns="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <UniformGrid Columns="4">
             <Label Content="Name"/>
             <TextBox x:Name="CharacterName"/>
 
@@ -33,11 +37,9 @@
             <Label Content="Age"/>
             <Controls:NumericUpDown Value="{Binding Age}" />
             
-            <Label Content="Height"/>
-            <UniformGrid>
-                <Label Content="feet"/>
+            <Label Content="Height (feet,inches)"/>
+            <UniformGrid Columns="2">
                 <Controls:NumericUpDown Value="{Binding HeightFeet}" />
-                <Label Content="inches"/>
                 <Controls:NumericUpDown Value="{Binding HeightInches}" />
             </UniformGrid>
 
@@ -56,6 +58,14 @@
             <Label Content="Background"/>
             <TextBox x:Name="Background"/>
         </UniformGrid>
+
+        <TabControl Grid.Row="1">
+
+            <TabItem Header="Level 1">LEVEL 1 CONTENT</TabItem>
+            <TabItem Header="2">LEVEL 2 CONTENT</TabItem>
+            <TabItem Header="3">LEVEL 3 CONTENT</TabItem>
+
+        </TabControl>
         
     </Grid>
 </Controls:MetroWindow>
