@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventurePlanner.Core.Snapshots
 {
@@ -32,6 +33,11 @@ namespace AdventurePlanner.Core.Snapshots
         public string SkinColor { get; set; }
 
         #endregion
+
+        public int CharacterLevel
+        {
+            get { return Classes.Sum(kvp => kvp.Value); }
+        }
 
         public IDictionary<string, int> Classes { get; set; }
 

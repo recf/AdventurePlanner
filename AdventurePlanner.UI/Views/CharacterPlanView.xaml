@@ -76,7 +76,7 @@
             </Grid.RowDefinitions>
             
             <TextBox x:Name="SnapshotAsMarkdown" IsReadOnly="true" FontFamily="Courier New"/>
-            <Slider Grid.Row="1" Grid.Column="0" x:Name="SnapshotLevel" Maximum="20"/>
+            <Slider Grid.Row="1" Grid.Column="0" x:Name="SnapshotLevel" Minimum="1" Maximum="{Binding LevelPlans.Count}"/>
         </Grid>
         
     </Grid>

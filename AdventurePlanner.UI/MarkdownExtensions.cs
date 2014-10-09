@@ -20,7 +20,8 @@ namespace AdventurePlanner.UI
 
             var infoBlock = new Dictionary<string, object>
             {
-                { "Class & level", string.Join(", ", classes) },
+                { "Character level", snapshot.CharacterLevel },
+                { "Class levels", string.Join(", ", classes) },
                 { "Race", snapshot.Race },
                 { "Alignment", snapshot.Alignment },
                 { "Age", snapshot.Age },
