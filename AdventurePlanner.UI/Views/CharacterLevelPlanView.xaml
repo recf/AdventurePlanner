@@ -7,33 +7,39 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              d:DesignHeight="300" 
              d:DesignWidth="300">
-    <Grid>
-        <UniformGrid Columns="2">
-
+    <StackPanel>
+        <UniformGrid Columns="4">
             <Label Content="Class"/>
             <TextBox x:Name="ClassName"/>
 
-            <Label Content="Increase STR by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseStr}"/>
-
-            <Label Content="Increase DEX by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseDex}"/>
-
-            <Label Content="Increase CON by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseCon}"/>
-
-            <Label Content="Increase INT by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseInt}"/>
-
-            <Label Content="Increase WIS by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseWis}"/>
-
-            <Label Content="Increase CON by"/>
-            <controls:NumericUpDown Value="{Binding IncreaseCha}"/>
-
             <Label Content="Set Proficiency Bonus to"/>
             <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
-
         </UniformGrid>
-    </Grid>
+
+        <Expander Header="Ability Score Increases" IsExpanded="{Binding HasAbilityScoreIncreases, Mode=OneTime}">
+            <UniformGrid Columns="2">
+                <UniformGrid Columns="2">
+                    <Label Content="STR"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseStr}"/>
+
+                    <Label Content="DEX"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseDex}"/>
+
+                    <Label Content="CON"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseCon}"/>
+                </UniformGrid>
+                <UniformGrid Columns="2">
+                    <Label Content="INT"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseInt}"/>
+
+                    <Label Content="WIS"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseWis}"/>
+
+                    <Label Content="CON"/>
+                    <controls:NumericUpDown Value="{Binding IncreaseCha}"/>
+                </UniformGrid>
+
+            </UniformGrid>
+        </Expander>
+    </StackPanel>
 </UserControl>

@@ -70,7 +70,7 @@ namespace AdventurePlanner.UI.ViewModels
 
         #region Level Snapshot properties
 
-        private int _snapshotLevel;
+        private int _snapshotLevel = 1;
 
         public int SnapshotLevel
         {

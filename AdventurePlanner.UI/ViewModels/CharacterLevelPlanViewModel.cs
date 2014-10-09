@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
@@ -9,6 +10,29 @@ namespace AdventurePlanner.UI.ViewModels
 {
     public class CharacterLevelPlanViewModel : ReactiveObject
     {
+        private static string[] AbilityScoreProperties = new[]
+        {
+            "IncreaseStr",
+            "IncreaseDex",
+            "IncreaseCon",
+            "IncreaseInt", 
+            "IncreaseWis", 
+            "IncreaseCha"
+        };
+
+        public CharacterLevelPlanViewModel()
+        {
+            var abilityScoreChanged = Changed.Where(e => AbilityScoreProperties.Contains(e.PropertyName));
+            
+            abilityScoreChanged.Select(_ => (IncreaseStr +
+                                             IncreaseDex +
+                                             IncreaseCon +
+                                             IncreaseInt +
+                                             IncreaseWis +
+                                             IncreaseCha) > 0)
+                .ToProperty(this, x => x.HasAbilityScoreIncreases, out _hasAbilityScoreIncreases);
+        }
+
         public string Header
         {
             get
@@ -31,6 +55,15 @@ namespace AdventurePlanner.UI.ViewModels
         {
             get { return _className; }
             set { this.RaiseAndSetIfChanged(ref _className, value); }
+        }
+
+        #region Ability Score increases
+
+        private readonly ObservableAsPropertyHelper<bool> _hasAbilityScoreIncreases;
+
+        public bool HasAbilityScoreIncreases
+        {
+            get { return _hasAbilityScoreIncreases.Value; }
         }
 
         private int _increaseStr;
@@ -80,6 +113,8 @@ namespace AdventurePlanner.UI.ViewModels
             get { return _increaseCha; }
             set { this.RaiseAndSetIfChanged(ref _increaseCha, value); }
         }
+
+        #endregion
 
         private int _setProficiencyBonus;
 
