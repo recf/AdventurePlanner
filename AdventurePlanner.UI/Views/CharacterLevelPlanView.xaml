@@ -4,34 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             d:DesignHeight="300" 
+             d:DesignWidth="300">
     <Grid>
         <UniformGrid Columns="2">
-            
+
             <Label Content="Class"/>
             <TextBox x:Name="ClassName"/>
-            
+
             <Label Content="Increase STR by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseStr}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseStr}"/>
 
             <Label Content="Increase DEX by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseDex}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseDex}"/>
 
             <Label Content="Increase CON by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseCon}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseCon}"/>
 
             <Label Content="Increase INT by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseInt}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseInt}"/>
 
             <Label Content="Increase WIS by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseWis}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseWis}"/>
 
             <Label Content="Increase CON by"/>
-            <Controls:NumericUpDown Value="{Binding IncreaseCha}"/>
+            <controls:NumericUpDown Value="{Binding IncreaseCha}"/>
 
             <Label Content="Set Proficiency Bonus to"/>
-            <Controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
+            <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
 
         </UniformGrid>
     </Grid>

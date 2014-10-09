@@ -1,23 +1,24 @@
-﻿<Controls:MetroWindow x:Class="AdventurePlanner.UI.Views.CharacterPlanView"
+﻿<controls:MetroWindow x:Class="AdventurePlanner.UI.Views.CharacterPlanView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Adventure Planner" 
                       SizeToContent="WidthAndHeight"
                       ResizeMode="CanResize"
-                      MinWidth="400">
-    <Controls:MetroWindow.Resources>
+                      MinWidth="400"
+                      Padding="10,10,10,10">
+    <controls:MetroWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    </Controls:MetroWindow.Resources>
+    </controls:MetroWindow.Resources>
     
-    <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
             <Label Content="*" Visibility="{Binding Path=IsDirty, Converter={StaticResource BooleanToVisibility}}"/>
             <Button Content="Load" Command="{Binding Load}"/>
             <Button Content="Add Level" Command="{Binding AddLevel}"/>
             <Button Content="Save" Command="{Binding Save}"/>
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -33,19 +34,19 @@
             <TextBox x:Name="Race"/>
             
             <Label Content="Speed"/>
-            <Controls:NumericUpDown Value="{Binding Speed}" />
+            <controls:NumericUpDown Value="{Binding Speed}" />
 
             <Label Content="Age"/>
-            <Controls:NumericUpDown Value="{Binding Age}" />
+            <controls:NumericUpDown Value="{Binding Age}" />
             
             <Label Content="Height (feet,inches)"/>
             <UniformGrid Columns="2">
-                <Controls:NumericUpDown Value="{Binding HeightFeet}" />
-                <Controls:NumericUpDown Value="{Binding HeightInches}" />
+                <controls:NumericUpDown Value="{Binding HeightFeet}" />
+                <controls:NumericUpDown Value="{Binding HeightInches}" />
             </UniformGrid>
 
             <Label Content="Weight"/>
-            <Controls:NumericUpDown Value="{Binding Weight}" />
+            <controls:NumericUpDown Value="{Binding Weight}" />
             
             <Label Content="Eye Color"/>
             <TextBox x:Name="EyeColor"/>
@@ -57,10 +58,10 @@
             <TextBox x:Name="SkinColor"/>
 
             <Label Content="Background"/>
-            <TextBox x:Name="Background"/>
+            <TextBox x:Name="CharacterBackground"/>
         </UniformGrid>
 
         <TabControl Grid.Row="1" x:Name="LevelPlans" DisplayMemberPath="Header"/>
         
     </Grid>
-</Controls:MetroWindow>
+</controls:MetroWindow>

@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Crimson.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
                 
+                <ResourceDictionary Source="Styles/Styles.xaml"/>
+                
                 <ResourceDictionary>
                     <local:AppBootstrapper x:Key="Bootstrapper"/>
                 </ResourceDictionary>

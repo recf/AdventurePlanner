@@ -145,12 +145,12 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _skinColor, value); }
         }
 
-        private string _background;
+        private string _characterBackground;
 
-        public string Background
+        public string CharacterBackground
         {
-            get { return _background; }
-            set { this.RaiseAndSetIfChanged(ref _background, value); }
+            get { return _characterBackground; }
+            set { this.RaiseAndSetIfChanged(ref _characterBackground, value); }
         }
 
         public ReactiveList<CharacterLevelPlanViewModel> LevelPlans { get; private set; }
@@ -273,7 +273,7 @@ namespace AdventurePlanner.UI.ViewModels
                 HairColor = HairColor,
                 SkinColor = SkinColor,
 
-                Background = Background,
+                Background = CharacterBackground,
 
                 LevelPlans = LevelPlans.Select(view => new CharacterLevelPlan
                 {
@@ -309,7 +309,7 @@ namespace AdventurePlanner.UI.ViewModels
             HairColor = plan.HairColor;
             SkinColor = plan.SkinColor;
 
-            Background = plan.Background;
+            CharacterBackground = plan.Background;
 
             LevelPlans.Clear();
             foreach (var lp in plan.LevelPlans)
