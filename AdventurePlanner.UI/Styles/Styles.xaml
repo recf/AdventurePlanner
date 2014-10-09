@@ -4,4 +4,7 @@
     <Style TargetType="{x:Type controls:MetroContentControl}">
         <Setter Property="Padding" Value="10,10,10,10"/>
     </Style>
+    <Style TargetType="{x:Type GridSplitter}">
+        <Setter Property="Margin" Value="10"/>
+    </Style>
 </ResourceDictionary>

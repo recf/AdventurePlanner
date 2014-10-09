@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using AdventurePlanner.Core.Planning;
 using Microsoft.Win32;
@@ -24,20 +25,23 @@ namespace AdventurePlanner.UI.ViewModels
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
-            var dataPropertyChanged = Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName));
-
             LevelPlans = new ReactiveList<CharacterLevelPlanViewModel> { ChangeTrackingEnabled = true };
+
+            var dataChanged = Observable.Merge(
+                Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName)).Select(_ => Unit.Default),
+                LevelPlans.ItemsAdded.Select(_ => Unit.Default),
+                LevelPlans.ItemChanged.Select(_ => Unit.Default));
+
+            dataChanged.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
 
             Observable.Merge(
                 Load.Where(loaded => loaded).Select(_ => false),
                 Save.Where(saved => saved).Select(_ => false),
-                dataPropertyChanged.Select(_ => true),
-                LevelPlans.ItemsAdded.Select(_ => true),
-                LevelPlans.ItemChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
+                dataChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
 
             AddLevel.Execute(null);
         }
-
+        
         public ReactiveCommand<bool> Load { get; private set; }
         
         public ReactiveCommand<bool> Save { get; private set; }
@@ -59,6 +63,25 @@ namespace AdventurePlanner.UI.ViewModels
         {
             get { return _backingFile; }
             private set { this.RaiseAndSetIfChanged(ref _backingFile, value); }
+        }
+
+        #endregion
+
+        #region Level Snapshot properties
+
+        private int _snapshotLevel;
+
+        public int SnapshotLevel
+        {
+            get { return _snapshotLevel; }
+            set { this.RaiseAndSetIfChanged(ref _snapshotLevel, value); }
+        }
+
+        private readonly ObservableAsPropertyHelper<string> _snapShotAsMarkdown;
+
+        public string SnapshotAsMarkdown
+        {
+            get { return _snapShotAsMarkdown.Value; }
         }
 
         #endregion
@@ -259,6 +282,8 @@ namespace AdventurePlanner.UI.ViewModels
         {
             var plan = new CharacterPlan
             {
+                SnapshotLevel = SnapshotLevel,
+
                 Name = CharacterName,
                 Race = Race,
                 Speed = Speed,
@@ -296,6 +321,8 @@ namespace AdventurePlanner.UI.ViewModels
 
         private void SetFromPlan(CharacterPlan plan)
         {
+            SnapshotLevel = plan.SnapshotLevel;
+
             CharacterName = plan.Name;
             Race = plan.Race;
             Speed = plan.Speed;
@@ -332,5 +359,12 @@ namespace AdventurePlanner.UI.ViewModels
         }
 
         #endregion
+        
+        private string GetMarkdownString()
+        {
+            var snapshot = GetPlan().ToSnapshot(SnapshotLevel);
+
+            return SnapshotLevel.ToString();
+        }
     }
 }

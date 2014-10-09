@@ -5,12 +5,11 @@
                       Title="Adventure Planner" 
                       SizeToContent="WidthAndHeight"
                       ResizeMode="CanResize"
-                      MinWidth="400"
-                      Padding="10,10,10,10">
+                      MinWidth="400">
     <controls:MetroWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </controls:MetroWindow.Resources>
-    
+
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Label Content="*" Visibility="{Binding Path=IsDirty, Converter={StaticResource BooleanToVisibility}}"/>
@@ -19,12 +18,17 @@
             <Button Content="Save" Command="{Binding Save}"/>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <UniformGrid Columns="4">
             <Label Content="Name"/>
@@ -32,13 +36,13 @@
 
             <Label Content="Race"/>
             <TextBox x:Name="Race"/>
-            
+
             <Label Content="Speed"/>
             <controls:NumericUpDown Value="{Binding Speed}" />
 
             <Label Content="Age"/>
             <controls:NumericUpDown Value="{Binding Age}" />
-            
+
             <Label Content="Height (feet,inches)"/>
             <UniformGrid Columns="2">
                 <controls:NumericUpDown Value="{Binding HeightFeet}" />
@@ -47,7 +51,7 @@
 
             <Label Content="Weight"/>
             <controls:NumericUpDown Value="{Binding Weight}" />
-            
+
             <Label Content="Eye Color"/>
             <TextBox x:Name="EyeColor"/>
 
@@ -61,7 +65,19 @@
             <TextBox x:Name="CharacterBackground"/>
         </UniformGrid>
 
-        <TabControl Grid.Row="1" x:Name="LevelPlans" DisplayMemberPath="Header"/>
+        <TabControl Grid.Row="1" Grid.Column="0" x:Name="LevelPlans" DisplayMemberPath="Header"/>
+
+        <GridSplitter Grid.Row="0" Grid.Column="1" />
+        
+        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBox x:Name="SnapshotAsMarkdown" IsReadOnly="true"/>
+            <Slider Grid.Row="1" Grid.Column="0" x:Name="SnapshotLevel" Maximum="20"/>
+        </Grid>
         
     </Grid>
 </controls:MetroWindow>

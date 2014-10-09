@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using AdventurePlanner.Core.Snapshots;
 using Newtonsoft.Json;
@@ -8,6 +9,10 @@ namespace AdventurePlanner.Core.Planning
     [JsonObject(MemberSerialization.OptIn)]
     public class CharacterPlan
     {
+        [JsonProperty("snapshot_level", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(20)]
+        public int SnapshotLevel { get; set; }
+
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
 
@@ -75,7 +80,7 @@ namespace AdventurePlanner.Core.Planning
                 SkinColor = SkinColor,
 
                 Classes = (from l in applicable
-                          group l by l.ClassName into c
+                          group l by l.ClassName ?? "<not set>" into c
                           select new { c.Key, Value = c.Count() }).ToDictionary(l => l.Key, l => l.Value)
             };
 
