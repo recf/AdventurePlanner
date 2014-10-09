@@ -75,7 +75,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <TextBox x:Name="SnapshotAsMarkdown" IsReadOnly="true"/>
+            <TextBox x:Name="SnapshotAsMarkdown" IsReadOnly="true" FontFamily="Courier New"/>
             <Slider Grid.Row="1" Grid.Column="0" x:Name="SnapshotLevel" Maximum="20"/>
         </Grid>
         

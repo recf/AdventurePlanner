@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using AdventurePlanner.Core.Planning;
+using MarkdownLog;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ReactiveUI;
@@ -364,7 +365,7 @@ namespace AdventurePlanner.UI.ViewModels
         {
             var snapshot = GetPlan().ToSnapshot(SnapshotLevel);
 
-            return SnapshotLevel.ToString();
+            return snapshot.ToMarkdownCharacterSheet().ToMarkdown();
         }
     }
 }
