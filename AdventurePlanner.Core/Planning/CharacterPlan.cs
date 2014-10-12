@@ -97,6 +97,11 @@ namespace AdventurePlanner.Core.Planning
                 {
                     snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
                 }
+
+                foreach (var skillName in plan.AddSkillProficiencies ?? new string[0])
+                {
+                    snapshot.Skills[skillName].IsProficient = true;
+                }
             }
 
             return snapshot;

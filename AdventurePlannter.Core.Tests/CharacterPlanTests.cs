@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core;
+using AdventurePlanner.Core.Meta;
 using AdventurePlanner.Core.Planning;
 using AdventurePlanner.Core.Snapshots;
 using Newtonsoft.Json;
@@ -51,10 +52,18 @@ namespace AdventurePlannter.Core.Tests
                         IncreaseCha = 11,
 
                         SetProficiencyBonus = 2,
+
+                        AddSkillProficiencies = new[] { "Perception", "Insight" }
                     },
                     new CharacterLevelPlan { Level = 2, ClassName = "Cleric" },
                     new CharacterLevelPlan { Level = 3, ClassName = "Cleric" },
-                    new CharacterLevelPlan { Level = 4, ClassName = "Cleric", IncreaseWis = 1 },
+                    new CharacterLevelPlan
+                    {
+                        Level = 4,
+                        ClassName = "Cleric",
+                        IncreaseWis = 1,
+                        AddSkillProficiencies = new[] { "Athletics" }
+                    },
                     new CharacterLevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
                 }
             };
@@ -82,10 +91,14 @@ namespace AdventurePlannter.Core.Tests
             };
             expectedSnapshot.Abilities["Str"].Score = 10;
             expectedSnapshot.Abilities["Dex"].Score = 12;
-            expectedSnapshot.Abilities["Con"].Score = 4;
+            expectedSnapshot.Abilities["Con"].Score = 14;
             expectedSnapshot.Abilities["Int"].Score = 8;
             expectedSnapshot.Abilities["Wis"].Score = 16;
             expectedSnapshot.Abilities["Cha"].Score = 11;
+
+            expectedSnapshot.Skills["Perception"].IsProficient = true;
+            expectedSnapshot.Skills["Insight"].IsProficient = true;
+            expectedSnapshot.Skills["Athletics"].IsProficient = true;
             
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
@@ -108,7 +121,15 @@ namespace AdventurePlannter.Core.Tests
                 var actual = actualSnapshot.Abilities[abbr];
                 var expected = expectedSnapshot.Abilities[abbr];
 
-                Assert.That(actual.Score, Is.EqualTo(expected.Score));
+                Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
+            }
+
+            foreach (var skillName in expectedSnapshot.Skills.Keys)
+            {
+                var actual = actualSnapshot.Skills[skillName];
+                var expected = expectedSnapshot.Skills[skillName];
+
+                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
             }
 
             Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));

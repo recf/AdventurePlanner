@@ -11,6 +11,7 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("class", Required = Required.Always)]
         public string ClassName { get; set; }
 
+        // TODO: Convert Ability Score increases to to a dictionary (to map to snapshot)
         #region Ability Scores
 
         [JsonProperty("increase_str", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
@@ -35,5 +36,8 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int SetProficiencyBonus { get; set; }
+
+        [JsonProperty("add_skill_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] AddSkillProficiencies { get; set; }
     }
 }
