@@ -86,12 +86,12 @@ namespace AdventurePlanner.Core.Planning
 
             foreach (var plan in applicable)
             {
-                snapshot.StrScore.Score += plan.IncreaseStr;
-                snapshot.DexScore.Score += plan.IncreaseDex;
-                snapshot.ConScore.Score += plan.IncreaseCon;
-                snapshot.IntScore.Score += plan.IncreaseInt;
-                snapshot.WisScore.Score += plan.IncreaseWis;
-                snapshot.ChaScore.Score += plan.IncreaseCha;
+                snapshot.Abilities["Str"].Score += plan.IncreaseStr;
+                snapshot.Abilities["Dex"].Score += plan.IncreaseDex;
+                snapshot.Abilities["Con"].Score += plan.IncreaseCon;
+                snapshot.Abilities["Int"].Score += plan.IncreaseInt;
+                snapshot.Abilities["Wis"].Score += plan.IncreaseWis;
+                snapshot.Abilities["Cha"].Score += plan.IncreaseCha;
 
                 if (plan.SetProficiencyBonus > 0)
                 {

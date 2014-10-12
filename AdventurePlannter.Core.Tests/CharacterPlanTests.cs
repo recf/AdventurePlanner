@@ -77,16 +77,15 @@ namespace AdventurePlannter.Core.Tests
                 SkinColor = "Tan",
 
                 Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
-
-                StrScore = { Score = 10 },
-                DexScore = { Score = 12 },
-                ConScore = { Score = 14 },
-                IntScore = { Score = 8 },
-                WisScore = { Score = 16 },
-                ChaScore = { Score = 11 },
-
+                
                 ProficiencyBonus = 3
             };
+            expectedSnapshot.Abilities["Str"].Score = 10;
+            expectedSnapshot.Abilities["Dex"].Score = 12;
+            expectedSnapshot.Abilities["Con"].Score = 4;
+            expectedSnapshot.Abilities["Int"].Score = 8;
+            expectedSnapshot.Abilities["Wis"].Score = 16;
+            expectedSnapshot.Abilities["Cha"].Score = 11;
             
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
@@ -104,12 +103,13 @@ namespace AdventurePlannter.Core.Tests
 
             Assert.That(actualSnapshot.Classes, Is.EquivalentTo(expectedSnapshot.Classes));
 
-            Assert.That(actualSnapshot.StrScore.Score, Is.EqualTo(expectedSnapshot.StrScore.Score));
-            Assert.That(actualSnapshot.DexScore.Score, Is.EqualTo(expectedSnapshot.DexScore.Score));
-            Assert.That(actualSnapshot.ConScore.Score, Is.EqualTo(expectedSnapshot.ConScore.Score));
-            Assert.That(actualSnapshot.IntScore.Score, Is.EqualTo(expectedSnapshot.IntScore.Score));
-            Assert.That(actualSnapshot.WisScore.Score, Is.EqualTo(expectedSnapshot.WisScore.Score));
-            Assert.That(actualSnapshot.ChaScore.Score, Is.EqualTo(expectedSnapshot.ChaScore.Score));
+            foreach (var abbr in expectedSnapshot.Abilities.Keys)
+            {
+                var actual = actualSnapshot.Abilities[abbr];
+                var expected = expectedSnapshot.Abilities[abbr];
+
+                Assert.That(actual.Score, Is.EqualTo(expected.Score));
+            }
 
             Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core.Snapshots;
@@ -32,27 +33,36 @@ namespace AdventurePlanner.UI
                 { "Hair", snapshot.HairColor },
             }.ToMarkdownBulletedList();
 
-            var abilityScores = new[]
-            {
-                new { Ability = "STR", snapshot.StrScore.Score, Mod = snapshot.StrScore.Modifier },
-                new { Ability = "DEX", snapshot.DexScore.Score, Mod = snapshot.DexScore.Modifier },
-                new { Ability = "CON", snapshot.ConScore.Score, Mod = snapshot.ConScore.Modifier },
-                new { Ability = "INT", snapshot.IntScore.Score, Mod = snapshot.IntScore.Modifier },
-                new { Ability = "WIS", snapshot.WisScore.Score, Mod = snapshot.WisScore.Modifier },
-                new { Ability = "CHA", snapshot.ChaScore.Score, Mod = snapshot.ChaScore.Modifier },
-            }.ToMarkdownTable();
+            var abilityScores = snapshot.Abilities.Values.Select(
+                a => new { Ability = a.Abbreviation, a.Score, a.Modifier }).ToMarkdownTable();
 
+            // TODO: To paragraph/subheader?
             var profBonus = new Dictionary<string, object>
             {
                 { "Proficiency Bonus", snapshot.ProficiencyBonus }
             }.ToMarkdownBulletedList();
 
+            var skills = snapshot.Skills.Values.Select(
+                s => new
+                {
+                    Prof = s.IsProficient.ToMarkdownCheckbox(),
+                    Mod = s.Modifier,
+                    Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation),
+                    Notes = string.Empty
+                }).ToMarkdownTable();
+
             container.Append(header);
             container.Append(infoBlock);
             container.Append(abilityScores);
             container.Append(profBonus);
+            container.Append(skills);
 
             return container;
+        }
+
+        public static string ToMarkdownCheckbox(this bool check)
+        {
+            return check ? "[x]" : "[ ]";
         }
 
         public static BulletedList ToMarkdownBulletedList(this Dictionary<string, object> dict)

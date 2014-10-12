@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
+using AdventurePlanner.Core.Meta;
 
 namespace AdventurePlanner.Core.Snapshots
 {
@@ -41,32 +44,25 @@ namespace AdventurePlanner.Core.Snapshots
 
         public IDictionary<string, int> Classes { get; set; }
 
-        #region Ability Scores
-
-        public AbilitySnapshot StrScore { get; private set; }
-
-        public AbilitySnapshot DexScore { get; private set; }
-
-        public AbilitySnapshot ConScore { get; private set; }
-
-        public AbilitySnapshot IntScore { get; private set; }
-
-        public AbilitySnapshot WisScore { get; private set; }
-
-        public AbilitySnapshot ChaScore { get; private set; }
-
-        #endregion
+        public IReadOnlyDictionary<string, AbilitySnapshot> Abilities { get; private set; }
 
         public int ProficiencyBonus { get; set; }
 
+        public IReadOnlyDictionary<string, SkillSnapshot> Skills { get; private set; }
+
         public CharacterSnapshot()
         {
-            StrScore = new AbilitySnapshot();
-            DexScore = new AbilitySnapshot();
-            ConScore = new AbilitySnapshot();
-            IntScore = new AbilitySnapshot();
-            WisScore = new AbilitySnapshot();
-            ChaScore = new AbilitySnapshot();
+            var abilities =
+                Ability.All.Select(conf => new AbilitySnapshot(conf.Abbreviation, conf.AbilityName))
+                    .ToDictionary(a => a.Abbreviation);
+
+            Abilities = new ReadOnlyDictionary<string, AbilitySnapshot>(abilities);
+
+            var skills =
+                Skill.All.Select(conf => new SkillSnapshot(this, conf.SkillName, Abilities[conf.Ability]))
+                    .ToDictionary(s => s.SkillName);
+
+            Skills = new ReadOnlyDictionary<string, SkillSnapshot>(skills);
         }
     }
 }
