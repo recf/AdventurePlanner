@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using AdventurePlanner.Core.Meta;
 using AdventurePlanner.Core.Planning;
 using MarkdownLog;
 using Microsoft.Win32;
@@ -314,6 +315,8 @@ namespace AdventurePlanner.UI.ViewModels
                     IncreaseCha = view.IncreaseCha,
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
+
+                    NewSkillProficiencies = view.NewSkillProficiencies.Select(s => s.Value.SkillName).ToArray()
                 }).ToList()
             };
 
@@ -342,7 +345,7 @@ namespace AdventurePlanner.UI.ViewModels
             LevelPlans.Clear();
             foreach (var lp in plan.LevelPlans)
             {
-                LevelPlans.Add(new CharacterLevelPlanViewModel
+                var levelPlanVm = new CharacterLevelPlanViewModel
                 {
                     Level = lp.Level,
                     ClassName = lp.ClassName,
@@ -354,8 +357,18 @@ namespace AdventurePlanner.UI.ViewModels
                     IncreaseWis = lp.IncreaseWis,
                     IncreaseCha = lp.IncreaseCha,
 
-                    SetProficiencyBonus = lp.SetProficiencyBonus,
-                });
+                    SetProficiencyBonus = lp.SetProficiencyBonus
+                };
+
+                foreach (var skillProf in lp.NewSkillProficiencies)
+                {
+                    var skillProfVm = new SkillProficiencyViewModel();
+                    skillProfVm.AvailableOptions.AddRange(Skill.All);
+                    skillProfVm.Value = skillProfVm.AvailableOptions.First(s => s.SkillName == skillProf);
+                    levelPlanVm.NewSkillProficiencies.Add(skillProfVm);
+                }
+
+                LevelPlans.Add(levelPlanVm);
             }
         }
 

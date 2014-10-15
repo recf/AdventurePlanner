@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdventurePlanner.Core.Meta;
 using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
@@ -22,6 +25,10 @@ namespace AdventurePlanner.UI.ViewModels
 
         public CharacterLevelPlanViewModel()
         {
+            NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>();
+
+            AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
+
             var abilityScoreChanged = Changed.Where(e => AbilityScoreProperties.Contains(e.PropertyName));
             
             abilityScoreChanged.Select(_ => (IncreaseStr +
@@ -31,8 +38,12 @@ namespace AdventurePlanner.UI.ViewModels
                                              IncreaseWis +
                                              IncreaseCha) > 0)
                 .ToProperty(this, x => x.HasAbilityScoreIncreases, out _hasAbilityScoreIncreases);
+
+
         }
 
+        public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }
+        
         public string Header
         {
             get
@@ -124,5 +135,17 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _setProficiencyBonus, value); }
         }
 
+        public ReactiveList<SkillProficiencyViewModel> NewSkillProficiencies { get; private set; }
+        
+        private IObservable<SkillProficiencyViewModel> AddSkillProficiencyImpl()
+        {
+            var skillProf = new SkillProficiencyViewModel();
+            
+            skillProf.AvailableOptions.AddRange(Skill.All);
+
+            NewSkillProficiencies.Add(skillProf);
+
+            return Observable.Return(skillProf);
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace AdventurePlanner.Core.Planning
 
         public CharacterSnapshot ToSnapshot(int level)
         {
-            var applicable = LevelPlans.Where(l => l.Level <= level);
+            var applicable = LevelPlans.Where(l => l.Level <= level).ToList();
 
             var snapshot = new CharacterSnapshot
             {
@@ -98,7 +98,7 @@ namespace AdventurePlanner.Core.Planning
                     snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
                 }
 
-                foreach (var skillName in plan.AddSkillProficiencies ?? new string[0])
+                foreach (var skillName in plan.NewSkillProficiencies ?? new string[0])
                 {
                     snapshot.Skills[skillName].IsProficient = true;
                 }

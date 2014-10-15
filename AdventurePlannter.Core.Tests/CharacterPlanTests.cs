@@ -53,7 +53,7 @@ namespace AdventurePlannter.Core.Tests
 
                         SetProficiencyBonus = 2,
 
-                        AddSkillProficiencies = new[] { "Perception", "Insight" }
+                        NewSkillProficiencies = new[] { "Perception", "Insight" }
                     },
                     new CharacterLevelPlan { Level = 2, ClassName = "Cleric" },
                     new CharacterLevelPlan { Level = 3, ClassName = "Cleric" },
@@ -62,7 +62,7 @@ namespace AdventurePlannter.Core.Tests
                         Level = 4,
                         ClassName = "Cleric",
                         IncreaseWis = 1,
-                        AddSkillProficiencies = new[] { "Athletics" }
+                        NewSkillProficiencies = new[] { "Athletics" }
                     },
                     new CharacterLevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
                 }

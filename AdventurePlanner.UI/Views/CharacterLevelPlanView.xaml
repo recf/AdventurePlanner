@@ -41,5 +41,12 @@
 
             </UniformGrid>
         </Expander>
+
+        <Expander Header="Skill Proficiencies">
+            <StackPanel>
+                <Button Content="" FontFamily="Segoe UI Symbol" Command="{Binding AddSkillProficiency}"/>
+                <ItemsControl x:Name="NewSkillProficiencies"/>
+            </StackPanel>
+        </Expander>
     </StackPanel>
 </UserControl>
