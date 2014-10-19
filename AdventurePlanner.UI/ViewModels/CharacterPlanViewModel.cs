@@ -28,7 +28,7 @@ namespace AdventurePlanner.UI.ViewModels
 
             LevelPlans = new ReactiveList<CharacterLevelPlanViewModel> { ChangeTrackingEnabled = true };
 
-            // TODO: Bug: marking dirty on modify level plans means we are not marked clean on load.
+            // TODO: Bug: marking dirty on modify level plans means we are not marked clean on load. Seems related to LevelPlan VMs being Dirtifiable. Need MarkRelatedClean()?
             var levelPlansModified = Observable.Merge<object>(
                 LevelPlans.ItemsAdded,
                 LevelPlans.ItemsRemoved,
@@ -40,7 +40,7 @@ namespace AdventurePlanner.UI.ViewModels
             
             DataChanged.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
             
-            //AddLevel.Execute(null);
+            AddLevel.Execute(null);
             MarkClean();
         }
         
