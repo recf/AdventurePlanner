@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
 {
-    public class CharacterLevelPlanViewModel : ReactiveObject
+    public class CharacterLevelPlanViewModel : DirtifiableObject
     {
         private static string[] AbilityScoreProperties = new[]
         {
@@ -28,8 +28,6 @@ namespace AdventurePlanner.UI.ViewModels
             NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
 
             AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
-
-            var abilityScoreChanged = Changed.Where(e => AbilityScoreProperties.Contains(e.PropertyName));
         }
 
         public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }

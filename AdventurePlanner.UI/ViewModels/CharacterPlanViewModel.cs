@@ -13,13 +13,12 @@ using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
 {
-    public class CharacterPlanViewModel : ReactiveObject
+    public class CharacterPlanViewModel : DirtifiableObject
     {
         public const string FileDialogFilter = "Adventure Planner Character files (*.apc)|*.apchar";
 
-        private static readonly string[] BookkeepingProperties = { "IsDirty", "BackingFile" };
-        
         public CharacterPlanViewModel()
+            : base("BackingFile", "SnapshotAsMarkdown")
         {
             var canSave = this.ObservableForProperty(x => x.IsDirty).Select(y => y.Value);
 
@@ -29,36 +28,30 @@ namespace AdventurePlanner.UI.ViewModels
 
             LevelPlans = new ReactiveList<CharacterLevelPlanViewModel> { ChangeTrackingEnabled = true };
 
-            var dataChanged = Observable.Merge(
-                Changed.Where(e => !BookkeepingProperties.Contains(e.PropertyName)).Select(_ => Unit.Default),
-                LevelPlans.ItemsAdded.Select(_ => Unit.Default),
-                LevelPlans.ItemChanged.Select(_ => Unit.Default));
+            // TODO: Bug: marking dirty on modify level plans means we are not marked clean on load.
+            var levelPlansModified = Observable.Merge<object>(
+                LevelPlans.ItemsAdded,
+                LevelPlans.ItemsRemoved,
+                LevelPlans.ItemChanged);
+            levelPlansModified.Subscribe(_ => MarkDirty());
 
-            dataChanged.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
-
-            Observable.Merge(
-                Load.Where(loaded => loaded).Select(_ => false),
-                Save.Where(saved => saved).Select(_ => false),
-                dataChanged.Select(_ => true)).ToProperty(this, x => x.IsDirty, out _dirty);
-
-            AddLevel.Execute(null);
+            var saveLoad = Observable.Merge(Load, Save);
+            saveLoad.Subscribe(_ => MarkClean());
+            
+            DataChanged.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
+            
+            //AddLevel.Execute(null);
+            MarkClean();
         }
         
-        public ReactiveCommand<bool> Load { get; private set; }
-        
-        public ReactiveCommand<bool> Save { get; private set; }
+        public ReactiveCommand<Unit> Load { get; private set; }
+
+        public ReactiveCommand<Unit> Save { get; private set; }
 
         public ReactiveCommand<CharacterLevelPlanViewModel> AddLevel { get; private set; }
 
         #region Bookkeeping Properties
-
-        private readonly ObservableAsPropertyHelper<bool> _dirty;
-
-        public bool IsDirty
-        {
-            get { return _dirty.Value; }
-        }
-
+        
         private string _backingFile;
 
         public string BackingFile
@@ -71,7 +64,8 @@ namespace AdventurePlanner.UI.ViewModels
 
         #region Level Snapshot properties
 
-        private int _snapshotLevel = 1;
+        // TODO: Bug: SnapshotLevel is loading as whatever is in the file for the slider, but always as 1 in the markdown.
+        private int _snapshotLevel = 0;
 
         public int SnapshotLevel
         {
@@ -184,10 +178,8 @@ namespace AdventurePlanner.UI.ViewModels
 
         #region Command Implementations
 
-        private IObservable<bool> LoadImpl()
+        private IObservable<Unit> LoadImpl()
         {
-            var loaded = false;
-
             var dialog = new OpenFileDialog
             {
                 Filter = FileDialogFilter
@@ -195,22 +187,22 @@ namespace AdventurePlanner.UI.ViewModels
 
             var result = dialog.ShowDialog();
 
-            if (result.HasValue && result.Value)
+            if (result != true)
             {
-                var contents = File.ReadAllText(dialog.FileName);
-                var plan = JsonConvert.DeserializeObject<CharacterPlan>(contents);
-
-                SetFromPlan(plan);
-
-                BackingFile = dialog.FileName;
-
-                loaded = true;
+                return Observable.Never(Unit.Default);
             }
 
-            return Observable.Return(loaded);
+            var contents = File.ReadAllText(dialog.FileName);
+            var plan = JsonConvert.DeserializeObject<CharacterPlan>(contents);
+
+            SetFromPlan(plan);
+
+            BackingFile = dialog.FileName;
+
+            return Observable.Return(Unit.Default);
         }
 
-        private IObservable<bool> SaveImpl()
+        private IObservable<Unit> SaveImpl()
         {
             if (BackingFile == null)
             {
@@ -221,14 +213,12 @@ namespace AdventurePlanner.UI.ViewModels
 
                 var result = dialog.ShowDialog();
 
-                if (result == true)
+                if (result != true)
                 {
-                    BackingFile = dialog.FileName;
+                    return Observable.Never(Unit.Default);
                 }
-                else
-                {
-                    return Observable.Return(false);
-                }
+
+                BackingFile = dialog.FileName;
             }
 
             var plan = GetPlan();
@@ -237,7 +227,7 @@ namespace AdventurePlanner.UI.ViewModels
 
             File.WriteAllText(BackingFile, contents);
 
-            return Observable.Return(true);
+            return Observable.Return(Unit.Default);
         }
 
         private IObservable<CharacterLevelPlanViewModel> AddLevelImpl()
@@ -316,7 +306,7 @@ namespace AdventurePlanner.UI.ViewModels
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
-                    NewSkillProficiencies = view.NewSkillProficiencies.Select(s => s.Value.SkillName).ToArray()
+                    NewSkillProficiencies = view.NewSkillProficiencies.Where(s => s.Value != null).Select(s => s.Value.SkillName).ToArray()
                 }).ToList()
             };
 
