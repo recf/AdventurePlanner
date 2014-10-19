@@ -16,7 +16,7 @@
             <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
         </UniformGrid>
 
-        <Expander Header="Ability Score Increases" IsExpanded="{Binding HasAbilityScoreIncreases, Mode=OneTime}">
+        <Expander Header="Ability Score Increases">
             <UniformGrid Columns="2">
                 <UniformGrid Columns="2">
                     <Label Content="STR"/>
@@ -44,7 +44,7 @@
 
         <Expander Header="Skill Proficiencies">
             <StackPanel>
-                <Button Content="" FontFamily="Segoe UI Symbol" Command="{Binding AddSkillProficiency}"/>
+                <Button Content="" FontFamily="Segoe UI Symbol" Command="{Binding AddSkillProficiency}" BorderThickness="0"/>
                 <ItemsControl x:Name="NewSkillProficiencies"/>
             </StackPanel>
         </Expander>

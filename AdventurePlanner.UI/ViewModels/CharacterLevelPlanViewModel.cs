@@ -25,21 +25,11 @@ namespace AdventurePlanner.UI.ViewModels
 
         public CharacterLevelPlanViewModel()
         {
-            NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>();
+            NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
 
             AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
 
             var abilityScoreChanged = Changed.Where(e => AbilityScoreProperties.Contains(e.PropertyName));
-            
-            abilityScoreChanged.Select(_ => (IncreaseStr +
-                                             IncreaseDex +
-                                             IncreaseCon +
-                                             IncreaseInt +
-                                             IncreaseWis +
-                                             IncreaseCha) > 0)
-                .ToProperty(this, x => x.HasAbilityScoreIncreases, out _hasAbilityScoreIncreases);
-
-
         }
 
         public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }
@@ -69,13 +59,6 @@ namespace AdventurePlanner.UI.ViewModels
         }
 
         #region Ability Score increases
-
-        private readonly ObservableAsPropertyHelper<bool> _hasAbilityScoreIncreases;
-
-        public bool HasAbilityScoreIncreases
-        {
-            get { return _hasAbilityScoreIncreases.Value; }
-        }
 
         private int _increaseStr;
 

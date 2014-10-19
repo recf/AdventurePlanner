@@ -335,7 +335,6 @@ namespace AdventurePlanner.UI.ViewModels
             HeightFeet = plan.HeightFeet;
             HeightInches = plan.HeightInches;
             Weight = plan.Weight;
-
             EyeColor = plan.EyeColor;
             HairColor = plan.HairColor;
             SkinColor = plan.SkinColor;
