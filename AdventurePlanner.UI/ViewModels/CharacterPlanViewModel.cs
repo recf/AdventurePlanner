@@ -27,13 +27,7 @@ namespace AdventurePlanner.UI.ViewModels
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
             LevelPlans = new ReactiveList<LevelPlanViewModel> { ChangeTrackingEnabled = true };
-
-            // TODO: Bug: marking dirty on modify level plans means we are not marked clean on load. Seems related to LevelPlan VMs being Dirtifiable. Need MarkRelatedClean()?
-            var levelPlansModified = Observable.Merge<object>(
-                LevelPlans.ItemsAdded,
-                LevelPlans.ItemsRemoved,
-                LevelPlans.ItemChanged);
-            levelPlansModified.Subscribe(_ => MarkDirty());
+            Monitor(LevelPlans);
 
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
@@ -172,7 +166,7 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _characterBackground, value); }
         }
 
-        public ReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
+        public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
 
         #endregion
 
