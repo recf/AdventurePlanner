@@ -297,12 +297,15 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = view.Level,
                     ClassName = view.ClassName,
 
-                    IncreaseStr = view.IncreaseStr,
-                    IncreaseDex = view.IncreaseDex,
-                    IncreaseCon = view.IncreaseCon,
-                    IncreaseInt = view.IncreaseInt,
-                    IncreaseWis = view.IncreaseWis,
-                    IncreaseCha = view.IncreaseCha,
+                    AbilityScoreIncreases = new Dictionary<string, int>()
+                    {
+                        {"Str", view.IncreaseStr},
+                        {"Dex", view.IncreaseDex},
+                        {"Con", view.IncreaseCon},
+                        {"Int", view.IncreaseInt},
+                        {"Wis", view.IncreaseWis},
+                        {"Cha", view.IncreaseCha},
+                    },
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
@@ -339,12 +342,12 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = lp.Level,
                     ClassName = lp.ClassName,
 
-                    IncreaseStr = lp.IncreaseStr,
-                    IncreaseDex = lp.IncreaseDex,
-                    IncreaseCon = lp.IncreaseCon,
-                    IncreaseInt = lp.IncreaseInt,
-                    IncreaseWis = lp.IncreaseWis,
-                    IncreaseCha = lp.IncreaseCha,
+                    IncreaseStr = lp.AbilityScoreIncreases["Str"],
+                    IncreaseDex = lp.AbilityScoreIncreases["Dex"],
+                    IncreaseCon = lp.AbilityScoreIncreases["Con"],
+                    IncreaseInt = lp.AbilityScoreIncreases["Int"],
+                    IncreaseWis = lp.AbilityScoreIncreases["Wis"],
+                    IncreaseCha = lp.AbilityScoreIncreases["Cha"],
 
                     SetProficiencyBonus = lp.SetProficiencyBonus
                 };

@@ -44,12 +44,15 @@ namespace AdventurePlannter.Core.Tests
                         Level = 1,
                         ClassName = "Fighter",
 
-                        IncreaseStr = 10,
-                        IncreaseDex = 12,
-                        IncreaseCon = 14,
-                        IncreaseInt = 8,
-                        IncreaseWis = 15,
-                        IncreaseCha = 11,
+                        AbilityScoreIncreases = new Dictionary<string, int>()
+                        {
+                            { "Str", 10 },
+                            { "Dex", 12 },
+                            { "Con", 14 },
+                            { "Int", 8 },
+                            { "Wis", 15 },
+                            { "Cha", 11 },
+                        },
 
                         SetProficiencyBonus = 2,
 
@@ -61,7 +64,12 @@ namespace AdventurePlannter.Core.Tests
                     {
                         Level = 4,
                         ClassName = "Cleric",
-                        IncreaseWis = 1,
+
+                        AbilityScoreIncreases = new Dictionary<string, int>()
+                        {
+                            { "Wis", 1 },
+                        },
+
                         NewSkillProficiencies = new[] { "Athletics" }
                     },
                     new LevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }

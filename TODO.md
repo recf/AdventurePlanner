@@ -4,8 +4,6 @@
 Source TODOs
 ============
 
-* \AdventurePlanner.Core\Planning\LevelPlan.cs
-    * 14 Convert Ability Score increases to to a dictionary (to map to snapshot)
 * \AdventurePlanner.UI\MarkdownExtensions.cs
     * 39 To paragraph/subheader?
 * \AdventurePlanner.UI\ViewModels\CharacterPlanViewModel.cs

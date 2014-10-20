@@ -86,12 +86,10 @@ namespace AdventurePlanner.Core.Planning
 
             foreach (var plan in applicable)
             {
-                snapshot.Abilities["Str"].Score += plan.IncreaseStr;
-                snapshot.Abilities["Dex"].Score += plan.IncreaseDex;
-                snapshot.Abilities["Con"].Score += plan.IncreaseCon;
-                snapshot.Abilities["Int"].Score += plan.IncreaseInt;
-                snapshot.Abilities["Wis"].Score += plan.IncreaseWis;
-                snapshot.Abilities["Cha"].Score += plan.IncreaseCha;
+                foreach (var kvp in plan.AbilityScoreIncreases ?? new Dictionary<string, int>())
+                {
+                    snapshot.Abilities[kvp.Key].Score += kvp.Value;
+                }
 
                 if (plan.SetProficiencyBonus > 0)
                 {
