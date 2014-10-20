@@ -3,7 +3,7 @@
 namespace AdventurePlanner.Core.Planning
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class CharacterLevelPlan
+    public class LevelPlan
     {
         [JsonProperty("level", Required = Required.Always)]
         public int Level { get; set; }

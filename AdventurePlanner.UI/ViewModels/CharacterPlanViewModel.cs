@@ -26,7 +26,7 @@ namespace AdventurePlanner.UI.ViewModels
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
-            LevelPlans = new ReactiveList<CharacterLevelPlanViewModel> { ChangeTrackingEnabled = true };
+            LevelPlans = new ReactiveList<LevelPlanViewModel> { ChangeTrackingEnabled = true };
 
             // TODO: Bug: marking dirty on modify level plans means we are not marked clean on load. Seems related to LevelPlan VMs being Dirtifiable. Need MarkRelatedClean()?
             var levelPlansModified = Observable.Merge<object>(
@@ -48,7 +48,7 @@ namespace AdventurePlanner.UI.ViewModels
 
         public ReactiveCommand<Unit> Save { get; private set; }
 
-        public ReactiveCommand<CharacterLevelPlanViewModel> AddLevel { get; private set; }
+        public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
 
         #region Bookkeeping Properties
         
@@ -172,7 +172,7 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _characterBackground, value); }
         }
 
-        public ReactiveList<CharacterLevelPlanViewModel> LevelPlans { get; private set; }
+        public ReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
 
         #endregion
 
@@ -230,15 +230,15 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(Unit.Default);
         }
 
-        private IObservable<CharacterLevelPlanViewModel> AddLevelImpl()
+        private IObservable<LevelPlanViewModel> AddLevelImpl()
         {
             var maxLevel = LevelPlans.LastOrDefault();
 
-            CharacterLevelPlanViewModel nextLevel;
+            LevelPlanViewModel nextLevel;
 
             if (maxLevel == null)
             {
-                nextLevel = new CharacterLevelPlanViewModel
+                nextLevel = new LevelPlanViewModel
                 {
                     Level = 1,
                     IncreaseStr = 10,
@@ -252,7 +252,7 @@ namespace AdventurePlanner.UI.ViewModels
             }
             else
             {
-                nextLevel = new CharacterLevelPlanViewModel
+                nextLevel = new LevelPlanViewModel
                 {
                     Level = maxLevel.Level + 1,
                     ClassName = maxLevel.ClassName,
@@ -292,7 +292,7 @@ namespace AdventurePlanner.UI.ViewModels
 
                 Background = CharacterBackground,
 
-                LevelPlans = LevelPlans.Select(view => new CharacterLevelPlan
+                LevelPlans = LevelPlans.Select(view => new LevelPlan
                 {
                     Level = view.Level,
                     ClassName = view.ClassName,
@@ -334,7 +334,7 @@ namespace AdventurePlanner.UI.ViewModels
             LevelPlans.Clear();
             foreach (var lp in plan.LevelPlans)
             {
-                var levelPlanVm = new CharacterLevelPlanViewModel
+                var levelPlanVm = new LevelPlanViewModel
                 {
                     Level = lp.Level,
                     ClassName = lp.ClassName,

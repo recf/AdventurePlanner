@@ -37,9 +37,9 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                LevelPlans = new List<CharacterLevelPlan>
+                LevelPlans = new List<LevelPlan>
                 {
-                    new CharacterLevelPlan
+                    new LevelPlan
                     {
                         Level = 1,
                         ClassName = "Fighter",
@@ -55,16 +55,16 @@ namespace AdventurePlannter.Core.Tests
 
                         NewSkillProficiencies = new[] { "Perception", "Insight" }
                     },
-                    new CharacterLevelPlan { Level = 2, ClassName = "Cleric" },
-                    new CharacterLevelPlan { Level = 3, ClassName = "Cleric" },
-                    new CharacterLevelPlan
+                    new LevelPlan { Level = 2, ClassName = "Cleric" },
+                    new LevelPlan { Level = 3, ClassName = "Cleric" },
+                    new LevelPlan
                     {
                         Level = 4,
                         ClassName = "Cleric",
                         IncreaseWis = 1,
                         NewSkillProficiencies = new[] { "Athletics" }
                     },
-                    new CharacterLevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
+                    new LevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
                 }
             };
 

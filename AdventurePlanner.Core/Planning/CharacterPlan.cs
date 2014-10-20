@@ -58,7 +58,7 @@ namespace AdventurePlanner.Core.Planning
         #endregion
 
         [JsonProperty("level_plans", Required = Required.Always)]
-        public IList<CharacterLevelPlan> LevelPlans { get; set; }
+        public IList<LevelPlan> LevelPlans { get; set; }
 
         public CharacterSnapshot ToSnapshot(int level)
         {

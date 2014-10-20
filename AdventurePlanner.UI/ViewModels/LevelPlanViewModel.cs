@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
 {
-    public class CharacterLevelPlanViewModel : DirtifiableObject
+    public class LevelPlanViewModel : DirtifiableObject
     {
         private static string[] AbilityScoreProperties = new[]
         {
@@ -23,7 +23,7 @@ namespace AdventurePlanner.UI.ViewModels
             "IncreaseCha"
         };
 
-        public CharacterLevelPlanViewModel()
+        public LevelPlanViewModel()
         {
             NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
 
