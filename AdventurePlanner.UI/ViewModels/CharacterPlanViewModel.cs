@@ -32,7 +32,7 @@ namespace AdventurePlanner.UI.ViewModels
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
             
-            DataChanged.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
+            Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
             
             AddLevel.Execute(null);
             MarkClean();
@@ -58,7 +58,6 @@ namespace AdventurePlanner.UI.ViewModels
 
         #region Level Snapshot properties
 
-        // TODO: Bug: SnapshotLevel is loading as whatever is in the file for the slider, but always as 1 in the markdown.
         private int _snapshotLevel = 0;
 
         public int SnapshotLevel
@@ -306,8 +305,6 @@ namespace AdventurePlanner.UI.ViewModels
 
         private void SetFromPlan(CharacterPlan plan)
         {
-            SnapshotLevel = plan.SnapshotLevel;
-
             CharacterName = plan.Name;
             Race = plan.Race;
             Speed = plan.Speed;
@@ -354,6 +351,11 @@ namespace AdventurePlanner.UI.ViewModels
 
                 LevelPlans.Add(levelPlanVm);
             }
+            
+            // Set snapshot level last so that the SnapshotMarkdown property is 
+            // set correctly. Otherwise it will try to render at a level that 
+            // isn't in the list yet.
+            SnapshotLevel = plan.SnapshotLevel;
         }
 
         #endregion
