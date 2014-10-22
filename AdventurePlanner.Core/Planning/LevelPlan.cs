@@ -13,8 +13,8 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("class", Required = Required.Always)]
         public string ClassName { get; set; }
 
-        [JsonProperty("ability_score_increases", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public IDictionary<string, int> AbilityScoreIncreases { get; set; }
+        [JsonProperty("ability_score_improvements", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IDictionary<string, int> AbilityScoreImprovements { get; set; }
 
         [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int SetProficiencyBonus { get; set; }

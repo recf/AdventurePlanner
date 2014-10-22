@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Runtime.Remoting;
 using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
@@ -27,9 +28,13 @@ namespace AdventurePlanner.UI.ViewModels
 
             DataChanged = Changed.Where(e => !excludes.Contains(e.PropertyName));
             DataChanged.Subscribe(_ => MarkDirty());
+
+            Dirtied = _dirtySubject.Where(x => x).Select(_ => Unit.Default);
         }
 
         public IObservable<IReactivePropertyChangedEventArgs<IReactiveObject>> DataChanged { get; private set; }
+        
+        public IObservable<Unit> Dirtied { get; set; }
 
         public bool IsDirty
         {
@@ -64,7 +69,7 @@ namespace AdventurePlanner.UI.ViewModels
 
         protected void Monitor(DirtifiableObject dirtifiable)
         {
-            var sub = dirtifiable.DataChanged.Subscribe(x => MarkDirty());
+            var sub = dirtifiable.Dirtied.Subscribe(_ => MarkDirty());
             _monitored.Add(dirtifiable, sub);
         }
 

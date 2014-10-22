@@ -235,14 +235,16 @@ namespace AdventurePlanner.UI.ViewModels
                 nextLevel = new LevelPlanViewModel
                 {
                     Level = 1,
-                    IncreaseStr = 10,
-                    IncreaseDex = 10,
-                    IncreaseCon = 10,
-                    IncreaseInt = 10,
-                    IncreaseWis = 10,
-                    IncreaseCha = 10,
                     SetProficiencyBonus = 2
                 };
+                
+                foreach (var ability in Ability.All)
+                {
+                    var abilityVm = new AbilityScoreImprovementViewModel { Ability = ability, Improvement = 10 };
+                    abilityVm.AvailableOptions.AddRange(Ability.All);
+
+                    nextLevel.AbilityScoreImprovements.Add(abilityVm);
+                }
             }
             else
             {
@@ -291,15 +293,7 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = view.Level,
                     ClassName = view.ClassName,
 
-                    AbilityScoreIncreases = new Dictionary<string, int>()
-                    {
-                        {"Str", view.IncreaseStr},
-                        {"Dex", view.IncreaseDex},
-                        {"Con", view.IncreaseCon},
-                        {"Int", view.IncreaseInt},
-                        {"Wis", view.IncreaseWis},
-                        {"Cha", view.IncreaseCha},
-                    },
+                    AbilityScoreImprovements = view.AbilityScoreImprovements.ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
@@ -336,21 +330,25 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = lp.Level,
                     ClassName = lp.ClassName,
 
-                    IncreaseStr = lp.AbilityScoreIncreases["Str"],
-                    IncreaseDex = lp.AbilityScoreIncreases["Dex"],
-                    IncreaseCon = lp.AbilityScoreIncreases["Con"],
-                    IncreaseInt = lp.AbilityScoreIncreases["Int"],
-                    IncreaseWis = lp.AbilityScoreIncreases["Wis"],
-                    IncreaseCha = lp.AbilityScoreIncreases["Cha"],
-
                     SetProficiencyBonus = lp.SetProficiencyBonus
                 };
+
+                foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())
+                {
+                    var asiVm = new AbilityScoreImprovementViewModel();
+                    asiVm.AvailableOptions.AddRange(Ability.All);
+                    asiVm.Ability = asiVm.AvailableOptions.First(a => a.Abbreviation == kvp.Key);
+                    asiVm.Improvement = kvp.Value;
+
+                    levelPlanVm.AbilityScoreImprovements.Add(asiVm);
+                }
 
                 foreach (var skillProf in lp.NewSkillProficiencies)
                 {
                     var skillProfVm = new SkillProficiencyViewModel();
                     skillProfVm.AvailableOptions.AddRange(Skill.All);
                     skillProfVm.Value = skillProfVm.AvailableOptions.First(s => s.SkillName == skillProf);
+
                     levelPlanVm.NewSkillProficiencies.Add(skillProfVm);
                 }
 

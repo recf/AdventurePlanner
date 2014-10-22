@@ -86,7 +86,7 @@ namespace AdventurePlanner.Core.Planning
 
             foreach (var plan in applicable)
             {
-                foreach (var kvp in plan.AbilityScoreIncreases ?? new Dictionary<string, int>())
+                foreach (var kvp in plan.AbilityScoreImprovements ?? new Dictionary<string, int>())
                 {
                     snapshot.Abilities[kvp.Key].Score += kvp.Value;
                 }

@@ -8,6 +8,7 @@
              d:DesignHeight="300" 
              d:DesignWidth="300">
     <StackPanel>
+        
         <UniformGrid Columns="4">
             <Label Content="Class"/>
             <TextBox x:Name="ClassName"/>
@@ -16,30 +17,30 @@
             <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
         </UniformGrid>
 
-        <Expander Header="Ability Score Increases">
-            <UniformGrid Columns="2">
-                <UniformGrid Columns="2">
-                    <Label Content="STR"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseStr}"/>
+        <Expander Header="Ability Score Improvements">
+            <Grid IsSharedSizeScope="True">
 
-                    <Label Content="DEX"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseDex}"/>
+                <ItemsControl x:Name="AbilityScoreImprovements">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
 
-                    <Label Content="CON"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseCon}"/>
-                </UniformGrid>
-                <UniformGrid Columns="2">
-                    <Label Content="INT"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseInt}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                </Grid.ColumnDefinitions>
 
-                    <Label Content="WIS"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseWis}"/>
+                                <CheckBox Grid.Column="0" />
+                                <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding Ability}" DisplayMemberPath="AbilityName"/>
+                                <controls:NumericUpDown Grid.Column="2" Value="{Binding Improvement}"/>
+                            </Grid>
 
-                    <Label Content="CON"/>
-                    <controls:NumericUpDown Value="{Binding IncreaseCha}"/>
-                </UniformGrid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-            </UniformGrid>
+            </Grid>
         </Expander>
 
         <Expander Header="Skill Proficiencies">

@@ -13,23 +13,20 @@ namespace AdventurePlanner.UI.ViewModels
 {
     public class LevelPlanViewModel : DirtifiableObject
     {
-        private static string[] AbilityScoreProperties = new[]
-        {
-            "IncreaseStr",
-            "IncreaseDex",
-            "IncreaseCon",
-            "IncreaseInt", 
-            "IncreaseWis", 
-            "IncreaseCha"
-        };
-
         public LevelPlanViewModel()
         {
-            NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
+            AbilityScoreImprovements = new ReactiveList<AbilityScoreImprovementViewModel>()
+            {
+                ChangeTrackingEnabled = true
+            };
+            Monitor(AbilityScoreImprovements);
 
+            NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
+            Monitor(NewSkillProficiencies);
+            
             AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
         }
-
+        
         public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }
         
         public string Header
@@ -56,58 +53,6 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _className, value); }
         }
 
-        #region Ability Score increases
-
-        private int _increaseStr;
-
-        public int IncreaseStr
-        {
-            get { return _increaseStr; }
-            set { this.RaiseAndSetIfChanged(ref _increaseStr, value); }
-        }
-
-        private int _increaseDex;
-
-        public int IncreaseDex
-        {
-            get { return _increaseDex; }
-            set { this.RaiseAndSetIfChanged(ref _increaseDex, value); }
-        }
-
-        private int _increaseCon;
-
-        public int IncreaseCon
-        {
-            get { return _increaseCon; }
-            set { this.RaiseAndSetIfChanged(ref _increaseCon, value); }
-        }
-
-        private int _increaseInt;
-
-        public int IncreaseInt
-        {
-            get { return _increaseInt; }
-            set { this.RaiseAndSetIfChanged(ref _increaseInt, value); }
-        }
-
-        private int _increaseWis;
-
-        public int IncreaseWis
-        {
-            get { return _increaseWis; }
-            set { this.RaiseAndSetIfChanged(ref _increaseWis, value); }
-        }
-
-        private int _increaseCha;
-
-        public int IncreaseCha
-        {
-            get { return _increaseCha; }
-            set { this.RaiseAndSetIfChanged(ref _increaseCha, value); }
-        }
-
-        #endregion
-
         private int _setProficiencyBonus;
 
         public int SetProficiencyBonus
@@ -115,6 +60,8 @@ namespace AdventurePlanner.UI.ViewModels
             get { return _setProficiencyBonus; }
             set { this.RaiseAndSetIfChanged(ref _setProficiencyBonus, value); }
         }
+
+        public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 
         public ReactiveList<SkillProficiencyViewModel> NewSkillProficiencies { get; private set; }
         

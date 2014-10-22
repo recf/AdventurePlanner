@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
 {
-    public class SkillProficiencyViewModel : ReactiveObject
+    public class SkillProficiencyViewModel : DirtifiableObject
     {
         public SkillProficiencyViewModel()
         {

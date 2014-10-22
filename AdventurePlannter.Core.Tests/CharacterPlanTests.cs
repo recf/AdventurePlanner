@@ -44,7 +44,7 @@ namespace AdventurePlannter.Core.Tests
                         Level = 1,
                         ClassName = "Fighter",
 
-                        AbilityScoreIncreases = new Dictionary<string, int>()
+                        AbilityScoreImprovements = new Dictionary<string, int>()
                         {
                             { "Str", 10 },
                             { "Dex", 12 },
@@ -65,7 +65,7 @@ namespace AdventurePlannter.Core.Tests
                         Level = 4,
                         ClassName = "Cleric",
 
-                        AbilityScoreIncreases = new Dictionary<string, int>()
+                        AbilityScoreImprovements = new Dictionary<string, int>()
                         {
                             { "Wis", 1 },
                         },
