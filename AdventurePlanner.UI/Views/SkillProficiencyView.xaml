@@ -5,16 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ComboBox x:Name="AvailableOptions" SelectedItem="{Binding Value}">
-        <ComboBox.ItemTemplate>
-            <DataTemplate>
-                <TextBlock>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" />
+        <ComboBox Grid.Column="1" x:Name="AvailableOptions" SelectedItem="{Binding Value}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
                     <Run Text="{Binding SkillName}"/>
                     <Run Text="("
                          /><Run Text="{Binding Ability}"
                          /><Run Text=")"/>
-                </TextBlock>
-            </DataTemplate>
-        </ComboBox.ItemTemplate>
-    </ComboBox>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
 </UserControl>

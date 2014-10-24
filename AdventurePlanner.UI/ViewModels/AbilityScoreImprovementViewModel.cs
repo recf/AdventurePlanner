@@ -31,6 +31,14 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _improvement, value); }
         }
 
+        private bool _selected;
+
+        public bool IsSelected
+        {
+            get { return _selected; }
+            set { this.RaiseAndSetIfChanged(ref _selected, value); }
+        }
+
         public ReactiveList<Ability> AvailableOptions { get; private set; }
     }
 }

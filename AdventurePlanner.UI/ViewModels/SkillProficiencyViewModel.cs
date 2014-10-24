@@ -24,5 +24,13 @@ namespace AdventurePlanner.UI.ViewModels
         }
 
         public ReactiveList<Skill> AvailableOptions { get; private set; }
+
+        private bool _selected;
+
+        public bool IsSelected 
+        {
+            get { return _selected; }
+            set { this.RaiseAndSetIfChanged(ref _selected, value); }
+        }
     }
 }

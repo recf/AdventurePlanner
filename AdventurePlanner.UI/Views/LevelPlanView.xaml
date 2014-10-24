@@ -16,36 +16,50 @@
             <Label Content="Set Proficiency Bonus to"/>
             <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
         </UniformGrid>
-
+        
         <Expander Header="Ability Score Improvements">
-            <Grid IsSharedSizeScope="True">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <ItemsControl x:Name="AbilityScoreImprovements">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                    <Button Grid.Column="1" Command="{Binding AddAbilityScoreImprovement}">
+                        <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Add"/>
+                        </TextBlock>
+                    </Button>
+                    <Button Grid.Column="2" Command="{Binding RemoveSelectedAbilityScoreImprovements}">
+                        <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Remove Selected"/>
+                        </TextBlock>
+                    </Button>
+                </Grid>
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="5*"/>
-                                </Grid.ColumnDefinitions>
+                <ItemsControl x:Name="AbilityScoreImprovements"/>
 
-                                <CheckBox Grid.Column="0" />
-                                <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding Ability}" DisplayMemberPath="AbilityName"/>
-                                <controls:NumericUpDown Grid.Column="2" Value="{Binding Improvement}"/>
-                            </Grid>
-
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-            </Grid>
+            </StackPanel>
         </Expander>
 
         <Expander Header="Skill Proficiencies">
             <StackPanel>
-                <Button Content="" FontFamily="Segoe UI Symbol" Command="{Binding AddSkillProficiency}" BorderThickness="0"/>
+                <Button  Command="{Binding AddSkillProficiency}">
+                    <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Add"/>
+                    </TextBlock>
+                </Button>
+                <Button Command="{Binding RemoveSelectedSkillProficiencies}">
+                    <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Remove Selected"/>
+                    </TextBlock>
+                </Button>
+                
                 <ItemsControl x:Name="NewSkillProficiencies"/>
             </StackPanel>
         </Expander>

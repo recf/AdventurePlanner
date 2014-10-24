@@ -63,8 +63,8 @@ namespace AdventurePlanner.UI.ViewModels
                 Monitor(dirtifiable);
             }
 
-            dirtifiables.ItemsAdded.Subscribe(Monitor);
-            dirtifiables.ItemsRemoved.Subscribe(Unmonitor);
+            dirtifiables.ItemsAdded.Subscribe(x => { Monitor(x); MarkDirty(); });
+            dirtifiables.ItemsRemoved.Subscribe(x => { Unmonitor(x); MarkDirty(); });
         }
 
         protected void Monitor(DirtifiableObject dirtifiable)

@@ -31,13 +31,14 @@ namespace AdventurePlanner.UI.ViewModels
 
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
-            
+
             Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
-            
+
+            // TODO: Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
             AddLevel.Execute(null);
             MarkClean();
         }
-        
+
         public ReactiveCommand<Unit> Load { get; private set; }
 
         public ReactiveCommand<Unit> Save { get; private set; }
@@ -45,7 +46,7 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
 
         #region Bookkeeping Properties
-        
+
         private string _backingFile;
 
         public string BackingFile
@@ -236,7 +237,7 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = 1,
                     SetProficiencyBonus = 2
                 };
-                
+
                 foreach (var ability in Ability.All)
                 {
                     var abilityVm = new AbilityScoreImprovementViewModel { Ability = ability, Improvement = 10 };
@@ -257,6 +258,8 @@ namespace AdventurePlanner.UI.ViewModels
             }
 
             LevelPlans.Add(nextLevel);
+
+            SnapshotLevel = nextLevel.Level;
 
             return Observable.Return(nextLevel);
         }
@@ -292,11 +295,15 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = view.Level,
                     ClassName = view.ClassName,
 
-                    AbilityScoreImprovements = view.AbilityScoreImprovements.ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
+                    AbilityScoreImprovements = view.AbilityScoreImprovements
+                        .Where(asi => asi.Ability != null)
+                        .ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
-                    NewSkillProficiencies = view.NewSkillProficiencies.Where(s => s.Value != null).Select(s => s.Value.SkillName).ToArray()
+                    NewSkillProficiencies = view.NewSkillProficiencies
+                        .Where(s => s.Value != null)
+                        .Select(s => s.Value.SkillName).ToArray()
                 }).ToList()
             };
 
@@ -351,7 +358,7 @@ namespace AdventurePlanner.UI.ViewModels
 
                 LevelPlans.Add(levelPlanVm);
             }
-            
+
             // Set snapshot level last so that the SnapshotMarkdown property is 
             // set correctly. Otherwise it will try to render at a level that 
             // isn't in the list yet.
@@ -359,7 +366,7 @@ namespace AdventurePlanner.UI.ViewModels
         }
 
         #endregion
-        
+
         private string GetMarkdownString()
         {
             var snapshot = GetPlan().ToSnapshot(SnapshotLevel);
