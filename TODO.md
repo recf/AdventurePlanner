@@ -10,6 +10,7 @@
 * For the expanders in LevelPlanView.xaml, I'd like to have the buttons in the
   header. Research Attached Properties (local:Expander.HeaderCommands) and
   overriding the HeaderTemplate style, based on the Mahapps style.
+* Need to be able to have features replace older versions of themselves.
 
 
 Source TODOs

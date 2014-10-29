@@ -50,6 +50,8 @@ namespace AdventurePlanner.Core.Snapshots
 
         public IReadOnlyDictionary<string, SkillSnapshot> Skills { get; private set; }
 
+        public IList<FeatureSnapshot> Features { get; private set; }
+
         public CharacterSnapshot()
         {
             var abilities =
@@ -63,6 +65,8 @@ namespace AdventurePlanner.Core.Snapshots
                     .ToDictionary(s => s.SkillName);
 
             Skills = new ReadOnlyDictionary<string, SkillSnapshot>(skills);
+
+            Features = new List<FeatureSnapshot>();
         }
     }
 }

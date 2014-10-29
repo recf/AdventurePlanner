@@ -21,16 +21,16 @@ namespace AdventurePlanner.UI
 
             var infoBlock = new Dictionary<string, object>
             {
-                { "Character level", snapshot.CharacterLevel },
-                { "Class levels", string.Join(", ", classes) },
-                { "Race", snapshot.Race },
-                { "Alignment", snapshot.Alignment },
-                { "Age", snapshot.Age },
-                { "Weight", string.Format("{0} lbs.", snapshot.Weight) },
-                { "Height", string.Format("{0}'{1}\"", snapshot.HeightFeet, snapshot.HeightInches) },
-                { "Eyes", snapshot.EyeColor },
-                { "Skin", snapshot.SkinColor },
-                { "Hair", snapshot.HairColor },
+                { "Character level", snapshot.CharacterLevel }, 
+                { "Class levels", string.Join(", ", classes) }, 
+                { "Race", snapshot.Race }, 
+                { "Alignment", snapshot.Alignment }, 
+                { "Age", snapshot.Age }, 
+                { "Weight", string.Format("{0} lbs.", snapshot.Weight) }, 
+                { "Height", string.Format("{0}'{1}\"", snapshot.HeightFeet, snapshot.HeightInches) }, 
+                { "Eyes", snapshot.EyeColor }, 
+                { "Skin", snapshot.SkinColor }, 
+                { "Hair", snapshot.HairColor }, 
             }.ToMarkdownBulletedList();
 
             var abilityScores = snapshot.Abilities.Values.Select(
@@ -45,17 +45,28 @@ namespace AdventurePlanner.UI
             var skills = snapshot.Skills.Values.Select(
                 s => new
                 {
-                    Prof = s.IsProficient.ToMarkdownCheckbox(),
-                    Mod = s.Modifier,
-                    Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation),
+                    Prof = s.IsProficient.ToMarkdownCheckbox(), 
+                    Mod = s.Modifier, 
+                    Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation), 
                     Notes = string.Empty
                 }).ToMarkdownTable();
+
+            var featuresSubHeader = "Features".ToMarkdownSubHeader();
+            var features = snapshot.Features.Select(
+                f => string.Format(
+                    string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0} - {1}",
+                    f.Name,
+                    f.Description))
+                .ToMarkdownBulletedList();
 
             container.Append(header);
             container.Append(infoBlock);
             container.Append(abilityScores);
             container.Append(profBonus);
             container.Append(skills);
+
+            container.Append(featuresSubHeader);
+            container.Append(features);
 
             return container;
         }

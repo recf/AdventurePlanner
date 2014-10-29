@@ -100,6 +100,15 @@ namespace AdventurePlanner.Core.Planning
                 {
                     snapshot.Skills[skillName].IsProficient = true;
                 }
+
+                foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])
+                {
+                    snapshot.Features.Add(new FeatureSnapshot()
+                    {
+                        Name = feature.Name,
+                        Description = feature.Description
+                    });
+                }
             }
 
             return snapshot;

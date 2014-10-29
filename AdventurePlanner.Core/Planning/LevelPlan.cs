@@ -21,5 +21,8 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("new_skill_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string[] NewSkillProficiencies { get; set; }
+        
+        [JsonProperty("features", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IList<FeaturePlan> FeaturePlans { get; set; }
     }
 }

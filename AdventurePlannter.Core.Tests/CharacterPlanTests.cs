@@ -56,7 +56,13 @@ namespace AdventurePlannter.Core.Tests
 
                         SetProficiencyBonus = 2,
 
-                        NewSkillProficiencies = new[] { "Perception", "Insight" }
+                        NewSkillProficiencies = new[] { "Perception", "Insight" },
+
+                        FeaturePlans = new List<FeaturePlan>()
+                        {
+                            new FeaturePlan() {Name = "Quick Wits"},
+                            new FeaturePlan() {Name = "Nimble", Description = "Half penalty on rough terrain"}
+                        },
                     },
                     new LevelPlan { Level = 2, ClassName = "Cleric" },
                     new LevelPlan { Level = 3, ClassName = "Cleric" },
@@ -95,7 +101,7 @@ namespace AdventurePlannter.Core.Tests
 
                 Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
                 
-                ProficiencyBonus = 3
+                ProficiencyBonus = 3,
             };
             expectedSnapshot.Abilities["Str"].Score = 10;
             expectedSnapshot.Abilities["Dex"].Score = 12;
@@ -107,6 +113,14 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Skills["Perception"].IsProficient = true;
             expectedSnapshot.Skills["Insight"].IsProficient = true;
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
+
+            expectedSnapshot.Features.Add(
+                new FeatureSnapshot { Name = "Quick Wits" });
+            expectedSnapshot.Features.Add(new FeatureSnapshot()
+            {
+                Name = "Nimble",
+                Description = "Half penalty on rough terrain"
+            });
             
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
@@ -132,6 +146,8 @@ namespace AdventurePlannter.Core.Tests
                 Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
             }
 
+            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
+
             foreach (var skillName in expectedSnapshot.Skills.Keys)
             {
                 var actual = actualSnapshot.Skills[skillName];
@@ -140,7 +156,13 @@ namespace AdventurePlannter.Core.Tests
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
             }
 
-            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
+            foreach (var expected in expectedSnapshot.Features)
+            {
+                var actual = actualSnapshot.Features.FirstOrDefault(f => f.Name == expected.Name);
+                Assert.That(actual, Is.Not.Null, "Feature with name '{0}' not found.", expected.Name);
+
+                Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            }
         }
     }
 }

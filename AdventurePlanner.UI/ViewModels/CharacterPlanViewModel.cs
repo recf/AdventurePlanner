@@ -303,7 +303,15 @@ namespace AdventurePlanner.UI.ViewModels
 
                     NewSkillProficiencies = view.NewSkillProficiencies
                         .Where(s => s.Value != null)
-                        .Select(s => s.Value.SkillName).ToArray()
+                        .Select(s => s.Value.SkillName).ToArray(),
+
+                    FeaturePlans = view.NewFeatures
+                        .Where(f => !string.IsNullOrWhiteSpace(f.FeatureName))
+                        .Select(f => new FeaturePlan
+                        {
+                            Name = f.FeatureName,
+                            Description = f.Description
+                        }).ToArray(),
                 }).ToList()
             };
 
@@ -354,6 +362,17 @@ namespace AdventurePlanner.UI.ViewModels
                     skillProfVm.Value = skillProfVm.AvailableOptions.First(s => s.SkillName == skillProf);
 
                     levelPlanVm.NewSkillProficiencies.Add(skillProfVm);
+                }
+
+                foreach (var feature in lp.FeaturePlans)
+                {
+                    var featureVm = new FeaturePlanViewModel()
+                    {
+                        FeatureName = feature.Name,
+                        Description = feature.Description
+                    };
+                    
+                    levelPlanVm.NewFeatures.Add(featureVm);
                 }
 
                 LevelPlans.Add(levelPlanVm);

@@ -24,16 +24,21 @@ namespace AdventurePlanner.UI.ViewModels
             NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
             Monitor(NewSkillProficiencies);
 
-            AddAbilityScoreImprovement = ReactiveCommand.CreateAsyncObservable(_ => AddAbilityScoreImprovementImpl());
+            NewFeatures = new ReactiveList<FeaturePlanViewModel>();
+            Monitor(NewFeatures);
 
+            // Connect commands
+            AddAbilityScoreImprovement = ReactiveCommand.CreateAsyncObservable(_ => AddAbilityScoreImprovementImpl());
             RemoveSelectedAbilityScoreImprovements =
                 ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedAbilityScoreImprovementsImpl());
 
             AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
-
             RemoveSelectedSkillProficiencies = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedSkillProficienciesImpl());
+
+            AddFeature = ReactiveCommand.CreateAsyncObservable(_ => AddFeatureImpl());
+            RemoveSelectedFeatures = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedAddFeatureImpl());
         }
-        
+
         public ReactiveCommand<AbilityScoreImprovementViewModel> AddAbilityScoreImprovement { get; private set; }
 
         public ReactiveCommand<IList<AbilityScoreImprovementViewModel>> RemoveSelectedAbilityScoreImprovements
@@ -45,6 +50,10 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }
 
         public ReactiveCommand<IList<SkillProficiencyViewModel>> RemoveSelectedSkillProficiencies { get; private set; }
+
+        public ReactiveCommand<FeaturePlanViewModel> AddFeature { get; private set; }
+
+        public ReactiveCommand<IList<FeaturePlanViewModel>> RemoveSelectedFeatures { get; private set; }
 
         #region Data Properties
 
@@ -83,6 +92,8 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 
         public ReactiveList<SkillProficiencyViewModel> NewSkillProficiencies { get; private set; }
+
+        public ReactiveList<FeaturePlanViewModel> NewFeatures { get; private set; }
 
         #endregion
 
@@ -133,6 +144,26 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(selected);
         }
 
+        private IObservable<FeaturePlanViewModel> AddFeatureImpl()
+        {
+            var featureVm = new FeaturePlanViewModel();
+
+            NewFeatures.Add(featureVm);
+
+            return Observable.Return(featureVm);
+        }
+
+        private IObservable<IList<FeaturePlanViewModel>> RemoveSelectedAddFeatureImpl()
+        {
+            var selected = NewFeatures.Where(f => f.IsSelected).ToList();
+
+            foreach (var feature in selected)
+            {
+                NewFeatures.Remove(feature);
+            }
+
+            return Observable.Return(selected);
+        }
         #endregion
     }
 }

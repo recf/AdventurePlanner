@@ -42,7 +42,7 @@
             </Expander>
 
             <Expander Header="Skill Proficiencies" 
-                  IsExpanded="{Binding NewSkillProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                      IsExpanded="{Binding NewSkillProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
                 <StackPanel>
                     <WrapPanel HorizontalAlignment="Right">
                         <Button  Command="{Binding AddSkillProficiency}">
@@ -62,6 +62,29 @@
                     <ItemsControl x:Name="NewSkillProficiencies"/>
                 </StackPanel>
             </Expander>
+
+            <Expander Header="Features"
+                      IsExpanded="{Binding NewFeatures, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                <StackPanel>
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button  Command="{Binding AddFeature}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Add"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Command="{Binding RemoveSelectedFeatures}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Remove Selected"/>
+                            </TextBlock>
+                        </Button>
+                    </WrapPanel>
+
+                    <ItemsControl x:Name="NewFeatures"/>
+                </StackPanel>
+            </Expander>
+            
         </StackPanel>
     </ScrollViewer>
 </UserControl>
