@@ -57,14 +57,20 @@ namespace AdventurePlannter.Core.Tests
                         SetProficiencyBonus = 2,
 
                         NewSkillProficiencies = new[] { "Perception", "Insight" },
+                        NewSaveProficiencies = new[] { "Str", "Con" },
 
                         FeaturePlans = new List<FeaturePlan>()
                         {
-                            new FeaturePlan() {Name = "Quick Wits"},
-                            new FeaturePlan() {Name = "Nimble", Description = "Half penalty on rough terrain"}
+                            new FeaturePlan() { Name = "Quick Wits" },
+                            new FeaturePlan() { Name = "Nimble", Description = "Half penalty on rough terrain" }
                         },
                     },
-                    new LevelPlan { Level = 2, ClassName = "Cleric" },
+                    new LevelPlan
+                    {
+                        Level = 2,
+                        ClassName = "Cleric",
+                        NewSaveProficiencies = new[] { "Wis", "Cha" },
+                    },
                     new LevelPlan { Level = 3, ClassName = "Cleric" },
                     new LevelPlan
                     {
@@ -110,6 +116,11 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Abilities["Wis"].Score = 16;
             expectedSnapshot.Abilities["Cha"].Score = 11;
 
+            expectedSnapshot.SavingThrows["Str"].IsProficient = true;
+            expectedSnapshot.SavingThrows["Con"].IsProficient = true;
+            expectedSnapshot.SavingThrows["Wis"].IsProficient = true;
+            expectedSnapshot.SavingThrows["Cha"].IsProficient = true;
+
             expectedSnapshot.Skills["Perception"].IsProficient = true;
             expectedSnapshot.Skills["Insight"].IsProficient = true;
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
@@ -154,6 +165,14 @@ namespace AdventurePlannter.Core.Tests
                 var expected = expectedSnapshot.Skills[skillName];
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
+            }
+
+            foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
+            {
+                var actual = actualSnapshot.SavingThrows[savingThrowKey];
+                var expected = expectedSnapshot.SavingThrows[savingThrowKey];
+
+                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "SavingThrows[{0}].IsProficient", savingThrowKey);
             }
 
             foreach (var expected in expectedSnapshot.Features)

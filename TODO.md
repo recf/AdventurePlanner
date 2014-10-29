@@ -1,7 +1,6 @@
 ﻿TODOs
 =====
 
-* Add / Delete buttons for Ability Score Improvements
 * :bug: Level Plan: Ability Score Improvements will throw if you try to add the
   same Ability more than once. Look into filtering available options based on
   what has already been selected. I should do the same thing for New Skill
@@ -10,14 +9,20 @@
 * For the expanders in LevelPlanView.xaml, I'd like to have the buttons in the
   header. Research Attached Properties (local:Expander.HeaderCommands) and
   overriding the HeaderTemplate style, based on the Mahapps style.
-* Need to be able to have features replace older versions of themselves.
+* Need to be able to have features replace older versions of
+  themselves. Alternatively, a way to remove features. Probably need the same
+  thing when I get to spells, attacks, weapons, etc.
+* Create a Build project. To start, it should run ExtractSourceTodos and generate 
+  the JSON schema.
 
 
 Source TODOs
 ============
 
+* \AdventurePlanner.Core\Planning\CharacterPlan.cs
+    * 63 :question: Consider moving ToSnapshot into an extension method.
 * \AdventurePlanner.UI\MarkdownExtensions.cs
-    * 39 To paragraph/subheader?
+    * 50 To paragraph/subheader?
 * \AdventurePlanner.UI\ViewModels\CharacterPlanViewModel.cs
     * 37 Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
 * \AdventurePlannter.Core.Tests\CharacterPlanTests.cs

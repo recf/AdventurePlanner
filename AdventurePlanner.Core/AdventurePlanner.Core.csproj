@@ -52,6 +52,7 @@
     <Compile Include="Snapshots\AbilitySnapshot.cs" />
     <Compile Include="Snapshots\CharacterSnapshot.cs" />
     <Compile Include="Snapshots\FeatureSnapshot.cs" />
+    <Compile Include="Snapshots\SavingThrowSnapshot.cs" />
     <Compile Include="Snapshots\SkillSnapshot.cs" />
   </ItemGroup>
   <ItemGroup>

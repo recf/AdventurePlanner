@@ -33,8 +33,19 @@ namespace AdventurePlanner.UI
                 { "Hair", snapshot.HairColor }, 
             }.ToMarkdownBulletedList();
 
+            var abilityScoresHeader = "Ability Scores".ToMarkdownSubHeader();
             var abilityScores = snapshot.Abilities.Values.Select(
-                a => new { Ability = a.Abbreviation, a.Score, a.Modifier }).ToMarkdownTable();
+                a => new { Ability = a.Abbreviation, a.Score, Mod = a.Modifier }).ToMarkdownTable();
+
+            var savingThrowHeader = "Saving Throws".ToMarkdownSubHeader();
+            var savingThrows = snapshot.SavingThrows.Values.Select(
+                s => new
+                {
+                    Prof = s.IsProficient.ToMarkdownCheckbox(),
+                    Mod = s.Modifier,
+                    Saving_Throw = s.Ability.AbilityName,
+                    Notes = string.Empty,
+                }).ToMarkdownTable();
 
             // TODO: To paragraph/subheader?
             var profBonus = new Dictionary<string, object>
@@ -42,6 +53,7 @@ namespace AdventurePlanner.UI
                 { "Proficiency Bonus", snapshot.ProficiencyBonus }
             }.ToMarkdownBulletedList();
 
+            var skillsHeader = "Skills".ToMarkdownSubHeader();
             var skills = snapshot.Skills.Values.Select(
                 s => new
                 {
@@ -51,8 +63,8 @@ namespace AdventurePlanner.UI
                     Notes = string.Empty
                 }).ToMarkdownTable();
 
-            var featuresSubHeader = "Features".ToMarkdownSubHeader();
-            var features = snapshot.Features.Select(
+            var featuresSubHeader = "Other Features & Traits".ToMarkdownSubHeader();
+            var features = snapshot.Features.OrderBy(f => f.Name).Select(
                 f => string.Format(
                     string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0} - {1}",
                     f.Name,
@@ -61,8 +73,16 @@ namespace AdventurePlanner.UI
 
             container.Append(header);
             container.Append(infoBlock);
+
+            container.Append(abilityScoresHeader);
             container.Append(abilityScores);
+
             container.Append(profBonus);
+
+            container.Append(savingThrowHeader);
+            container.Append(savingThrows);
+
+            container.Append(skillsHeader);
             container.Append(skills);
 
             container.Append(featuresSubHeader);

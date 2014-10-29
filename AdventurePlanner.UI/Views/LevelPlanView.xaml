@@ -41,7 +41,7 @@
                 </StackPanel>
             </Expander>
 
-            <Expander Header="Skill Proficiencies" 
+            <Expander Header="New Skill Proficiencies" 
                       IsExpanded="{Binding NewSkillProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
                 <StackPanel>
                     <WrapPanel HorizontalAlignment="Right">
@@ -60,6 +60,28 @@
                     </WrapPanel>
 
                     <ItemsControl x:Name="NewSkillProficiencies"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="New Save Proficiencies" 
+                      IsExpanded="{Binding NewSaveProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                <StackPanel>
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button  Command="{Binding AddSaveProficiency}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Add"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Command="{Binding RemoveSelectedSaveProficiencies}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Remove Selected"/>
+                            </TextBlock>
+                        </Button>
+                    </WrapPanel>
+
+                    <ItemsControl x:Name="NewSaveProficiencies"/>
                 </StackPanel>
             </Expander>
 

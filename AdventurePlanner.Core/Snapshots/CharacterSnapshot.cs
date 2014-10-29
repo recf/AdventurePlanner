@@ -46,6 +46,8 @@ namespace AdventurePlanner.Core.Snapshots
 
         public IReadOnlyDictionary<string, AbilitySnapshot> Abilities { get; private set; }
 
+        public IReadOnlyDictionary<string, SavingThrowSnapshot> SavingThrows { get; private set; }
+
         public int ProficiencyBonus { get; set; }
 
         public IReadOnlyDictionary<string, SkillSnapshot> Skills { get; private set; }
@@ -65,6 +67,12 @@ namespace AdventurePlanner.Core.Snapshots
                     .ToDictionary(s => s.SkillName);
 
             Skills = new ReadOnlyDictionary<string, SkillSnapshot>(skills);
+
+            var savingThrows =
+                Abilities.Values.Select(a => new SavingThrowSnapshot(this, a))
+                    .ToDictionary(s => s.Ability.Abbreviation);
+
+            SavingThrows = new ReadOnlyDictionary<string, SavingThrowSnapshot>(savingThrows);
 
             Features = new List<FeatureSnapshot>();
         }

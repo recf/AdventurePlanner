@@ -13,7 +13,7 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
 
-        [JsonProperty("description", Required = Required.AllowNull, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty("description", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue("")]
         public string Description { get; set; }
     }

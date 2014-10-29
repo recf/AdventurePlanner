@@ -10,7 +10,7 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("level", Required = Required.Always)]
         public int Level { get; set; }
 
-        [JsonProperty("class", Required = Required.Always)]
+        [JsonProperty("class", Required = Required.Always)] 
         public string ClassName { get; set; }
 
         [JsonProperty("ability_score_improvements", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
@@ -21,6 +21,9 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("new_skill_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string[] NewSkillProficiencies { get; set; }
+
+        [JsonProperty("new_save_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] NewSaveProficiencies { get; set; }
         
         [JsonProperty("features", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<FeaturePlan> FeaturePlans { get; set; }

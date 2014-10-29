@@ -100,6 +100,7 @@
     <Compile Include="ViewModels\LevelPlanViewModel.cs" />
     <Compile Include="ViewModels\CharacterPlanViewModel.cs" />
     <Compile Include="ViewModels\DirtifiableObject.cs" />
+    <Compile Include="ViewModels\SaveProficiencyViewModel.cs" />
     <Compile Include="ViewModels\SkillProficiencyViewModel.cs" />
     <Compile Include="Views\AbilityScoreImprovementView.xaml.cs">
       <DependentUpon>AbilityScoreImprovementView.xaml</DependentUpon>
@@ -118,6 +119,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Views\SaveProficiencyView.xaml.cs">
+      <DependentUpon>SaveProficiencyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SkillProficiencyView.xaml.cs">
       <DependentUpon>SkillProficiencyView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +144,10 @@
     <Page Include="Views\CharacterPlanView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SaveProficiencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SkillProficiencyView.xaml">
       <SubType>Designer</SubType>

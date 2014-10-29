@@ -60,6 +60,7 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("level_plans", Required = Required.Always)]
         public IList<LevelPlan> LevelPlans { get; set; }
 
+        // TODO: :question: Consider moving ToSnapshot into an extension method.
         public CharacterSnapshot ToSnapshot(int level)
         {
             var applicable = LevelPlans.Where(l => l.Level <= level).ToList();
@@ -99,6 +100,11 @@ namespace AdventurePlanner.Core.Planning
                 foreach (var skillName in plan.NewSkillProficiencies ?? new string[0])
                 {
                     snapshot.Skills[skillName].IsProficient = true;
+                }
+
+                foreach (var savingThrowKey in plan.NewSaveProficiencies ?? new string[0])
+                {
+                    snapshot.SavingThrows[savingThrowKey].IsProficient = true;
                 }
 
                 foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])

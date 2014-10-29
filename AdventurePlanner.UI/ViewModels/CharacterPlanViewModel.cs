@@ -301,6 +301,10 @@ namespace AdventurePlanner.UI.ViewModels
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
+                    NewSaveProficiencies = view.NewSaveProficiencies
+                        .Where(s => s.Ability != null)
+                        .Select(s => s.Ability.Abbreviation).ToArray(),
+
                     NewSkillProficiencies = view.NewSkillProficiencies
                         .Where(s => s.Value != null)
                         .Select(s => s.Value.SkillName).ToArray(),
@@ -353,6 +357,15 @@ namespace AdventurePlanner.UI.ViewModels
                     asiVm.Improvement = kvp.Value;
 
                     levelPlanVm.AbilityScoreImprovements.Add(asiVm);
+                }
+
+                foreach (var abilityAbbr in lp.NewSaveProficiencies ?? new string[0])
+                {
+                    var saveProfVm = new SaveProficiencyViewModel();
+                    saveProfVm.AvailableOptions.AddRange(Ability.All);
+                    saveProfVm.Ability = saveProfVm.AvailableOptions.First(a => a.Abbreviation == abilityAbbr);
+
+                    levelPlanVm.NewSaveProficiencies.Add(saveProfVm);
                 }
 
                 foreach (var skillProf in lp.NewSkillProficiencies)

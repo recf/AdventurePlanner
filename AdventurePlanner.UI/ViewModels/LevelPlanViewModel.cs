@@ -21,6 +21,9 @@ namespace AdventurePlanner.UI.ViewModels
             };
             Monitor(AbilityScoreImprovements);
 
+            NewSaveProficiencies = new ReactiveList<SaveProficiencyViewModel>() { ChangeTrackingEnabled = true };
+            Monitor(NewSaveProficiencies);
+
             NewSkillProficiencies = new ReactiveList<SkillProficiencyViewModel>() { ChangeTrackingEnabled = true };
             Monitor(NewSkillProficiencies);
 
@@ -34,6 +37,9 @@ namespace AdventurePlanner.UI.ViewModels
 
             AddSkillProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSkillProficiencyImpl());
             RemoveSelectedSkillProficiencies = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedSkillProficienciesImpl());
+            
+            AddSaveProficiency = ReactiveCommand.CreateAsyncObservable(_ => AddSaveProficiencyImpl());
+            RemoveSelectedSaveProficiencies = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedSaveProficienciesImpl());
 
             AddFeature = ReactiveCommand.CreateAsyncObservable(_ => AddFeatureImpl());
             RemoveSelectedFeatures = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedAddFeatureImpl());
@@ -46,6 +52,10 @@ namespace AdventurePlanner.UI.ViewModels
             get;
             private set;
         }
+
+        public ReactiveCommand<SaveProficiencyViewModel> AddSaveProficiency { get; private set; }
+
+        public ReactiveCommand<IList<SaveProficiencyViewModel>> RemoveSelectedSaveProficiencies { get; private set; }
 
         public ReactiveCommand<SkillProficiencyViewModel> AddSkillProficiency { get; private set; }
 
@@ -91,6 +101,8 @@ namespace AdventurePlanner.UI.ViewModels
 
         public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 
+        public ReactiveList<SaveProficiencyViewModel> NewSaveProficiencies { get; private set; }
+
         public ReactiveList<SkillProficiencyViewModel> NewSkillProficiencies { get; private set; }
 
         public ReactiveList<FeaturePlanViewModel> NewFeatures { get; private set; }
@@ -116,6 +128,29 @@ namespace AdventurePlanner.UI.ViewModels
             foreach (var asi in selected)
             {
                 AbilityScoreImprovements.Remove(asi);
+            }
+
+            return Observable.Return(selected);
+        }
+
+        private IObservable<SaveProficiencyViewModel> AddSaveProficiencyImpl()
+        {
+            var saveProfVm = new SaveProficiencyViewModel();
+
+            saveProfVm.AvailableOptions.AddRange(Ability.All);
+
+            NewSaveProficiencies.Add(saveProfVm);
+
+            return Observable.Return(saveProfVm);
+        }
+
+        private IObservable<IList<SaveProficiencyViewModel>> RemoveSelectedSaveProficienciesImpl()
+        {
+            var selected = NewSaveProficiencies.Where(s => s.IsSelected).ToList();
+
+            foreach (var sprof in selected)
+            {
+                NewSaveProficiencies.Remove(sprof);
             }
 
             return Observable.Return(selected);
