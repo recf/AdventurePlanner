@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\EnumerableToBoolConverter.cs" />
     <Compile Include="MarkdownExtensions.cs" />
     <Compile Include="ViewModels\AbilityScoreImprovementViewModel.cs" />
     <Compile Include="ViewModels\LevelPlanViewModel.cs" />

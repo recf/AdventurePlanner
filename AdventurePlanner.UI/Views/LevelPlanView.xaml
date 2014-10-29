@@ -7,61 +7,61 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              d:DesignHeight="300" 
              d:DesignWidth="300">
-    <StackPanel>
-        
-        <UniformGrid Columns="4">
-            <Label Content="Class"/>
-            <TextBox x:Name="ClassName"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
 
-            <Label Content="Set Proficiency Bonus to"/>
-            <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
-        </UniformGrid>
-        
-        <Expander Header="Ability Score Improvements">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <UniformGrid Columns="4">
+                <Label Content="Class"/>
+                <TextBox x:Name="ClassName"/>
 
-                    <Button Grid.Column="1" Command="{Binding AddAbilityScoreImprovement}">
-                        <TextBlock>
+                <Label Content="Set Proficiency Bonus to"/>
+                <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
+            </UniformGrid>
+
+            <Expander Header="Ability Score Improvements" 
+                  IsExpanded="{Binding AbilityScoreImprovements, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                <StackPanel>
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button Command="{Binding AddAbilityScoreImprovement}">
+                            <TextBlock>
                         <Run Text="" FontFamily="Segoe UI Symbol"/>
                         <Run Text="Add"/>
-                        </TextBlock>
-                    </Button>
-                    <Button Grid.Column="2" Command="{Binding RemoveSelectedAbilityScoreImprovements}">
-                        <TextBlock>
+                            </TextBlock>
+                        </Button>
+                        <Button Command="{Binding RemoveSelectedAbilityScoreImprovements}">
+                            <TextBlock>
                         <Run Text="" FontFamily="Segoe UI Symbol"/>
                         <Run Text="Remove Selected"/>
-                        </TextBlock>
-                    </Button>
-                </Grid>
+                            </TextBlock>
+                        </Button>
+                    </WrapPanel>
 
-                <ItemsControl x:Name="AbilityScoreImprovements"/>
+                    <ItemsControl x:Name="AbilityScoreImprovements"/>
 
-            </StackPanel>
-        </Expander>
+                </StackPanel>
+            </Expander>
 
-        <Expander Header="Skill Proficiencies">
-            <StackPanel>
-                <Button  Command="{Binding AddSkillProficiency}">
-                    <TextBlock>
+            <Expander Header="Skill Proficiencies" 
+                  IsExpanded="{Binding NewSkillProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                <StackPanel>
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button  Command="{Binding AddSkillProficiency}">
+                            <TextBlock>
                         <Run Text="" FontFamily="Segoe UI Symbol"/>
                         <Run Text="Add"/>
-                    </TextBlock>
-                </Button>
-                <Button Command="{Binding RemoveSelectedSkillProficiencies}">
-                    <TextBlock>
+                            </TextBlock>
+                        </Button>
+                        <Button Command="{Binding RemoveSelectedSkillProficiencies}">
+                            <TextBlock>
                         <Run Text="" FontFamily="Segoe UI Symbol"/>
                         <Run Text="Remove Selected"/>
-                    </TextBlock>
-                </Button>
-                
-                <ItemsControl x:Name="NewSkillProficiencies"/>
-            </StackPanel>
-        </Expander>
-    </StackPanel>
+                            </TextBlock>
+                        </Button>
+                    </WrapPanel>
+
+                    <ItemsControl x:Name="NewSkillProficiencies"/>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
