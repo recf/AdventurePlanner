@@ -57,12 +57,13 @@ namespace AdventurePlannter.Core.Tests
                         SetProficiencyBonus = 2,
 
                         NewSkillProficiencies = new[] { "Perception", "Insight" },
+
                         NewSaveProficiencies = new[] { "Str", "Con" },
 
                         FeaturePlans = new List<FeaturePlan>()
                         {
                             new FeaturePlan() { Name = "Quick Wits" },
-                            new FeaturePlan() { Name = "Nimble", Description = "Half penalty on rough terrain" }
+                            new FeaturePlan() { Name = "Nimble", Description = "Half penalty on rough terrain", SkillName = "Acrobatics"}
                         },
                     },
                     new LevelPlan
@@ -125,13 +126,14 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Skills["Insight"].IsProficient = true;
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
 
-            expectedSnapshot.Features.Add(
-                new FeatureSnapshot { Name = "Quick Wits" });
-            expectedSnapshot.Features.Add(new FeatureSnapshot()
+            expectedSnapshot.Skills["Acrobatics"].Features.Add(new FeatureSnapshot()
             {
                 Name = "Nimble",
                 Description = "Half penalty on rough terrain"
             });
+
+            expectedSnapshot.Features.Add(
+                new FeatureSnapshot { Name = "Quick Wits" });
             
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
@@ -165,6 +167,8 @@ namespace AdventurePlannter.Core.Tests
                 var expected = expectedSnapshot.Skills[skillName];
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
+
+                AssertEquivalentFeatureLists(actual.Features, expected.Features, string.Format("Skills[{0}].Features", skillName));
             }
 
             foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
@@ -175,13 +179,18 @@ namespace AdventurePlannter.Core.Tests
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "SavingThrows[{0}].IsProficient", savingThrowKey);
             }
 
-            foreach (var expected in expectedSnapshot.Features)
-            {
-                var actual = actualSnapshot.Features.FirstOrDefault(f => f.Name == expected.Name);
-                Assert.That(actual, Is.Not.Null, "Feature with name '{0}' not found.", expected.Name);
+            AssertEquivalentFeatureLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
+        }
 
-                Assert.That(actual.Description, Is.EqualTo(expected.Description));
-            }
+        private void AssertEquivalentFeatureLists(
+            IList<FeatureSnapshot> actualFeatures,
+            IList<FeatureSnapshot> expectedFeatures, 
+            string context)
+        {   
+            var actual = actualFeatures.Select(JsonConvert.SerializeObject).ToArray();
+            var expected = expectedFeatures.Select(JsonConvert.SerializeObject).ToArray();
+
+            Assert.That(actual, Is.EquivalentTo(expected), context);
         }
     }
 }

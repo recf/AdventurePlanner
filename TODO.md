@@ -25,5 +25,7 @@ Source TODOs
     * 50 To paragraph/subheader?
 * \AdventurePlanner.UI\ViewModels\CharacterPlanViewModel.cs
     * 37 Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
+* \AdventurePlanner.UI\ViewModels\FeaturePlanViewModel.cs
+    * 34 :bug: Cannot be deselected. Add Null Item?
 * \AdventurePlannter.Core.Tests\CharacterPlanTests.cs
     * 21 Figure out how I want to test multiple cases (snapshot at different levels, etc).

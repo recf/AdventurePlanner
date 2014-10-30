@@ -53,6 +53,12 @@ namespace AdventurePlanner.UI
                 { "Proficiency Bonus", snapshot.ProficiencyBonus }
             }.ToMarkdownBulletedList();
 
+
+            Func<FeatureSnapshot, string> formatFeature = f => string.Format(
+                string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0} - {1}",
+                f.Name,
+                f.Description);
+
             var skillsHeader = "Skills".ToMarkdownSubHeader();
             var skills = snapshot.Skills.Values.Select(
                 s => new
@@ -60,16 +66,11 @@ namespace AdventurePlanner.UI
                     Prof = s.IsProficient.ToMarkdownCheckbox(), 
                     Mod = s.Modifier, 
                     Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation), 
-                    Notes = string.Empty
+                    Notes = string.Join("; ", s.Features.Select(formatFeature))
                 }).ToMarkdownTable();
 
             var featuresSubHeader = "Other Features & Traits".ToMarkdownSubHeader();
-            var features = snapshot.Features.OrderBy(f => f.Name).Select(
-                f => string.Format(
-                    string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0} - {1}",
-                    f.Name,
-                    f.Description))
-                .ToMarkdownBulletedList();
+            var features = snapshot.Features.OrderBy(f => f.Name).Select(formatFeature).ToMarkdownBulletedList();
 
             container.Append(header);
             container.Append(infoBlock);

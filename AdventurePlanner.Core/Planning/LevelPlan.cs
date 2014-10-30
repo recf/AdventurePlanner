@@ -18,12 +18,12 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int SetProficiencyBonus { get; set; }
+        
+        [JsonProperty("new_save_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] NewSaveProficiencies { get; set; }
 
         [JsonProperty("new_skill_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string[] NewSkillProficiencies { get; set; }
-
-        [JsonProperty("new_save_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] NewSaveProficiencies { get; set; }
         
         [JsonProperty("features", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<FeaturePlan> FeaturePlans { get; set; }

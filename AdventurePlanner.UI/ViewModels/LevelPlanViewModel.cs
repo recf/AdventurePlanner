@@ -182,6 +182,7 @@ namespace AdventurePlanner.UI.ViewModels
         private IObservable<FeaturePlanViewModel> AddFeatureImpl()
         {
             var featureVm = new FeaturePlanViewModel();
+            featureVm.AvailableSkills.AddRange(Skill.All);
 
             NewFeatures.Add(featureVm);
 

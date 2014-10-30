@@ -16,11 +16,15 @@ namespace AdventurePlanner.Core.Snapshots
 
             SkillName = skillName;
             Ability = ability;
+
+            Features = new List<FeatureSnapshot>();
         }
 
         public string SkillName { get; private set; }
 
         public AbilitySnapshot Ability { get; private set; }
+
+        public IList<FeatureSnapshot> Features { get; private set; }
 
         public bool IsProficient { get; set; }
 
