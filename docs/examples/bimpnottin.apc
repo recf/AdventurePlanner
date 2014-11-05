@@ -1,0 +1,91 @@
+{
+  "snapshot_level": 1,
+  "name": "Bimpnottin \"Filchbatter\" Nackle",
+  "race": "Rock Gnome",
+  "speed": 25,
+  "alignment": "TN",
+  "age": 114,
+  "height_feet": 3,
+  "height_inches": 7,
+  "weight": 45,
+  "eyes": "Gold",
+  "hair": "Moss Green",
+  "skin": "Tan",
+  "background": "Hermit",
+  "level_plans": [
+    {
+      "level": 1,
+      "class": "Druid",
+      "ability_score_improvements": {
+        "Str": 16,
+        "Dex": 12,
+        "Con": 15,
+        "Int": 12,
+        "Wis": 15,
+        "Cha": 14
+      },
+      "set_prof_bonus": 2,
+      "new_save_proficiencies": [
+        "Wis",
+        "Int"
+      ],
+      "new_skill_proficiencies": [
+        "Insight",
+        "Medicine",
+        "Nature",
+        "Religion"
+      ],
+      "features": [
+        {
+          "name": "Speak with Small Beasts",
+          "description": "Communicate simple ideas with Small or smaller beasts, using sounds and gestures."
+        },
+        {
+          "name": "Tinker"
+        },
+        {
+          "name": "Darkvision 60'",
+          "description": null
+        },
+        {
+          "name": "Artificer's Lore",
+          "skill": "History",
+          "description": "Double proficiency on checks related to magic items, alchemical objects, or technological devices."
+        },
+        {
+          "name": "Gnome Cunning",
+          "description": "Advantage on all mental saves against magic."
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "class": "Druid",
+      "ability_score_improvements": {},
+      "set_prof_bonus": 2,
+      "new_save_proficiencies": [],
+      "new_skill_proficiencies": [],
+      "features": []
+    },
+    {
+      "level": 3,
+      "class": "Druid",
+      "ability_score_improvements": {},
+      "set_prof_bonus": 2,
+      "new_save_proficiencies": [],
+      "new_skill_proficiencies": [],
+      "features": []
+    },
+    {
+      "level": 4,
+      "class": "Druid",
+      "ability_score_improvements": {
+        "Con": 1
+      },
+      "set_prof_bonus": 3,
+      "new_save_proficiencies": [],
+      "new_skill_proficiencies": [],
+      "features": []
+    }
+  ]
+}

@@ -12,9 +12,6 @@
 * Need to be able to have features replace older versions of
   themselves. Alternatively, a way to remove features. Probably need the same
   thing when I get to spells, attacks, weapons, etc.
-* Create a Build project. To start, it should run ExtractSourceTodos and generate 
-  the JSON schema.
-
 
 Source TODOs
 ============

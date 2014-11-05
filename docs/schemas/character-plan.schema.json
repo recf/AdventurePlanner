@@ -1,0 +1,148 @@
+{
+  "title": "Character Plan",
+  "description": "Adventure Planner: Levelling plan for a D&D 5e character.",
+  "type": "object",
+  "properties": {
+    "snapshot_level": {
+      "type": "integer",
+      "default": 20
+    },
+    "name": {
+      "required": true,
+      "type": "string"
+    },
+    "race": {
+      "required": true,
+      "type": "string"
+    },
+    "speed": {
+      "required": true,
+      "type": "integer"
+    },
+    "alignment": {
+      "required": true,
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "height_feet": {
+      "type": "integer"
+    },
+    "height_inches": {
+      "type": "integer"
+    },
+    "weight": {
+      "type": "integer"
+    },
+    "eyes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hair": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "skin": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "background": {
+      "required": true,
+      "type": "string"
+    },
+    "level_plans": {
+      "required": true,
+      "type": "array",
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "level": {
+            "required": true,
+            "type": "integer"
+          },
+          "class": {
+            "required": true,
+            "type": "string"
+          },
+          "ability_score_improvements": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "set_prof_bonus": {
+            "type": "integer"
+          },
+          "new_save_proficiencies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "new_skill_proficiencies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "features": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "name": {
+                  "required": true,
+                  "type": "string"
+                },
+                "skill": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "description": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "default": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

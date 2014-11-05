@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace AdventurePlanner.Core.Planning
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptIn, Title = "Character Plan", Description = "Adventure Planner: Levelling plan for a D&D 5e character.")]
     public class CharacterPlan
     {
         [JsonProperty("snapshot_level", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]

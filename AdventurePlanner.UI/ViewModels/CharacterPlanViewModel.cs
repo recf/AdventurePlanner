@@ -15,7 +15,7 @@ namespace AdventurePlanner.UI.ViewModels
 {
     public class CharacterPlanViewModel : DirtifiableObject
     {
-        public const string FileDialogFilter = "Adventure Planner Character files (*.apc)|*.apchar";
+        public const string FileDialogFilter = "Adventure Planner Character files (*.apc,*.apchar)|*.apc;*.apchar";
 
         public CharacterPlanViewModel()
             : base("BackingFile", "SnapshotAsMarkdown")
