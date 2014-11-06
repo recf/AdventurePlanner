@@ -16,6 +16,20 @@
 * :question: I liked the Attribute based approach to JSON serialization, but
   seems to be a bit limited compared to custom converters and hand-written
   schemas. Consider switching.
+* Some info is only added when you first take a class. Extract that stuff into a
+  class plan, and change the class field in the Level Plan UI to a combo box
+  that pulls from that list. The ClassPlan class needs the following properties:
+  * Class Name
+  * Hit Dice
+  * Armor/Weapon/Tool Proficiencies
+  * Saving Throws
+  * Specialization (e.g. Druid Circle, Cleric Domain)
+* Spells. While it's possible to find spell books, I think planning ahead for
+  spell progression is the more common case, so it should be part of the level
+  plan.
+* Equipment. Should be separate from the level plan, since equipment changes are
+  probably coming from loot or stores, this should be separate from level plan.
+
 
 Source TODOs
 ============
