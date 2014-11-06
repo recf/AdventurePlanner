@@ -19,6 +19,15 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int SetProficiencyBonus { get; set; }
         
+        [JsonProperty("armor_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] ArmorProficiencies { get; set; }
+
+        [JsonProperty("weapon_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] WeaponProficiencies { get; set; }
+
+        [JsonProperty("tool_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public string[] ToolProficiencies { get; set; }
+
         [JsonProperty("new_save_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string[] NewSaveProficiencies { get; set; }
 

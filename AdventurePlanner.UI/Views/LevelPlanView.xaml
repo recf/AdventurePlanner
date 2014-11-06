@@ -17,6 +17,27 @@
                 <Label Content="Set Proficiency Bonus to"/>
                 <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
             </UniformGrid>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="Armor Proficiencies"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="ArmorProficiencies"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Weapon Proficiencies"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="WeaponProficiencies"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Tool Proficiencies"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="ToolProficiencies"/>
+            </Grid>
 
             <Expander Header="Ability Score Improvements" 
                   IsExpanded="{Binding AbilityScoreImprovements, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
@@ -40,6 +61,28 @@
 
                 </StackPanel>
             </Expander>
+            
+            <Expander Header="New Save Proficiencies" 
+                      IsExpanded="{Binding NewSaveProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
+                <StackPanel>
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button  Command="{Binding AddSaveProficiency}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Add"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Command="{Binding RemoveSelectedSaveProficiencies}">
+                            <TextBlock>
+                        <Run Text="" FontFamily="Segoe UI Symbol"/>
+                        <Run Text="Remove Selected"/>
+                            </TextBlock>
+                        </Button>
+                    </WrapPanel>
+
+                    <ItemsControl x:Name="NewSaveProficiencies"/>
+                </StackPanel>
+            </Expander>
 
             <Expander Header="New Skill Proficiencies" 
                       IsExpanded="{Binding NewSkillProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
@@ -60,28 +103,6 @@
                     </WrapPanel>
 
                     <ItemsControl x:Name="NewSkillProficiencies"/>
-                </StackPanel>
-            </Expander>
-
-            <Expander Header="New Save Proficiencies" 
-                      IsExpanded="{Binding NewSaveProficiencies, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
-                <StackPanel>
-                    <WrapPanel HorizontalAlignment="Right">
-                        <Button  Command="{Binding AddSaveProficiency}">
-                            <TextBlock>
-                        <Run Text="" FontFamily="Segoe UI Symbol"/>
-                        <Run Text="Add"/>
-                            </TextBlock>
-                        </Button>
-                        <Button Command="{Binding RemoveSelectedSaveProficiencies}">
-                            <TextBlock>
-                        <Run Text="" FontFamily="Segoe UI Symbol"/>
-                        <Run Text="Remove Selected"/>
-                            </TextBlock>
-                        </Button>
-                    </WrapPanel>
-
-                    <ItemsControl x:Name="NewSaveProficiencies"/>
                 </StackPanel>
             </Expander>
 

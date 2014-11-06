@@ -86,6 +86,42 @@
           "set_prof_bonus": {
             "type": "integer"
           },
+          "armor_proficiencies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "weapon_proficiencies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "tool_proficiencies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
           "new_save_proficiencies": {
             "type": [
               "array",

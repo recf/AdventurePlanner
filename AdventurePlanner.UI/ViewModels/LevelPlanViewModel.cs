@@ -99,6 +99,30 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _setProficiencyBonus, value); }
         }
 
+        private string _armorProficiencies = string.Empty;
+
+        public string ArmorProficiencies
+        {
+            get { return _armorProficiencies; }
+            set { this.RaiseAndSetIfChanged(ref _armorProficiencies, value); }
+        }
+
+        private string _weaponProficiencies = string.Empty;
+
+        public string WeaponProficiencies
+        {
+            get { return _weaponProficiencies; }
+            set { this.RaiseAndSetIfChanged(ref _weaponProficiencies, value); }
+        }
+
+        private string _toolProficiencies = string.Empty;
+
+        public string ToolProficiencies
+        {
+            get { return _toolProficiencies; }
+            set { this.RaiseAndSetIfChanged(ref _toolProficiencies, value); }
+        }
+
         public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 
         public ReactiveList<SaveProficiencyViewModel> NewSaveProficiencies { get; private set; }

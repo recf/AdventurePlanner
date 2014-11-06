@@ -25,6 +25,26 @@
         "Cha": 14
       },
       "set_prof_bonus": 2,
+      "armor_proficiencies": [
+        "light armor",
+        "medium armor",
+        "shields"
+      ],
+      "weapon_proficiencies": [
+        "clubs",
+        "daggers",
+        "darts",
+        "javelins",
+        "maces",
+        "quarterstaffs",
+        "scimitars",
+        "sickles",
+        "slings",
+        "spears"
+      ],
+      "tool_proficiencies": [
+        "herbalism kit"
+      ],
       "new_save_proficiencies": [
         "Wis",
         "Int"
@@ -63,6 +83,15 @@
       "class": "Druid",
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
+      "armor_proficiencies": [
+        ""
+      ],
+      "weapon_proficiencies": [
+        ""
+      ],
+      "tool_proficiencies": [
+        ""
+      ],
       "new_save_proficiencies": [],
       "new_skill_proficiencies": [],
       "features": []
@@ -72,6 +101,15 @@
       "class": "Druid",
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
+      "armor_proficiencies": [
+        ""
+      ],
+      "weapon_proficiencies": [
+        ""
+      ],
+      "tool_proficiencies": [
+        ""
+      ],
       "new_save_proficiencies": [],
       "new_skill_proficiencies": [],
       "features": []
@@ -83,6 +121,15 @@
         "Con": 1
       },
       "set_prof_bonus": 3,
+      "armor_proficiencies": [
+        ""
+      ],
+      "weapon_proficiencies": [
+        ""
+      ],
+      "tool_proficiencies": [
+        ""
+      ],
       "new_save_proficiencies": [],
       "new_skill_proficiencies": [],
       "features": []

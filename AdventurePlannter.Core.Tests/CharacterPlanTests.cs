@@ -56,6 +56,10 @@ namespace AdventurePlannter.Core.Tests
 
                         SetProficiencyBonus = 2,
 
+                        ArmorProficiencies = new[] { "All Armor", "Shields" },
+                        WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                        ToolProficiencies = new[] { "Fighter kit" },
+
                         NewSkillProficiencies = new[] { "Perception", "Insight" },
 
                         NewSaveProficiencies = new[] { "Str", "Con" },
@@ -71,6 +75,10 @@ namespace AdventurePlannter.Core.Tests
                         Level = 2,
                         ClassName = "Cleric",
                         NewSaveProficiencies = new[] { "Wis", "Cha" },
+                        
+                        ArmorProficiencies = new[] { "Light Armor", "Medium Armor", "Shields" },
+                        WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                        ToolProficiencies = new[] { "Cleric kit" },
                     },
                     new LevelPlan { Level = 3, ClassName = "Cleric" },
                     new LevelPlan
@@ -107,7 +115,7 @@ namespace AdventurePlannter.Core.Tests
                 SkinColor = "Tan",
 
                 Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
-                
+
                 ProficiencyBonus = 3,
             };
             expectedSnapshot.Abilities["Str"].Score = 10;
@@ -132,9 +140,22 @@ namespace AdventurePlannter.Core.Tests
                 Description = "Half penalty on rough terrain"
             });
 
+            foreach (var prof in new[] { "All Armor", "Light Armor", "Medium Armor", "Shields" })
+            {
+                expectedSnapshot.ArmorProficiencies.Add(prof);
+            }
+            foreach (var prof in new[] { "Simple Weapons", "Martial Weapons" })
+            {
+                expectedSnapshot.WeaponProficiencies.Add(prof);
+            }
+            foreach (var prof in new[] { "Fighter kit", "Cleric kit" })
+            {
+                expectedSnapshot.ToolProficiencies.Add(prof);
+            }
+
             expectedSnapshot.Features.Add(
                 new FeatureSnapshot { Name = "Quick Wits" });
-            
+
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
             Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
@@ -179,14 +200,18 @@ namespace AdventurePlannter.Core.Tests
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "SavingThrows[{0}].IsProficient", savingThrowKey);
             }
 
+            Assert.That(actualSnapshot.ArmorProficiencies, Is.EquivalentTo(expectedSnapshot.ArmorProficiencies));
+            Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
+            Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
+
             AssertEquivalentFeatureLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
         }
 
         private void AssertEquivalentFeatureLists(
             IList<FeatureSnapshot> actualFeatures,
-            IList<FeatureSnapshot> expectedFeatures, 
+            IList<FeatureSnapshot> expectedFeatures,
             string context)
-        {   
+        {
             var actual = actualFeatures.Select(JsonConvert.SerializeObject).ToArray();
             var expected = expectedFeatures.Select(JsonConvert.SerializeObject).ToArray();
 

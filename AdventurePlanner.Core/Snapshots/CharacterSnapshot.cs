@@ -54,6 +54,12 @@ namespace AdventurePlanner.Core.Snapshots
 
         public IList<FeatureSnapshot> Features { get; private set; }
 
+        public ISet<string> ArmorProficiencies { get; private set; }
+
+        public ISet<string> WeaponProficiencies { get; private set; }
+
+        public ISet<string> ToolProficiencies { get; private set; }
+
         public CharacterSnapshot()
         {
             var abilities =
@@ -75,6 +81,10 @@ namespace AdventurePlanner.Core.Snapshots
             SavingThrows = new ReadOnlyDictionary<string, SavingThrowSnapshot>(savingThrows);
 
             Features = new List<FeatureSnapshot>();
+
+            ArmorProficiencies = new SortedSet<string>();
+            WeaponProficiencies = new SortedSet<string>();
+            ToolProficiencies = new SortedSet<string>();
         }
     }
 }

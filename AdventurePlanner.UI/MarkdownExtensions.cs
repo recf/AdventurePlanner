@@ -69,6 +69,14 @@ namespace AdventurePlanner.UI
                     Notes = string.Join("; ", s.Features.Select(formatFeature))
                 }).ToMarkdownTable();
 
+            var proficienciesSubHeader = "Proficiencies".ToMarkdownSubHeader();
+            var proficiencies = new Dictionary<string, string>
+            {
+                { "Armor", string.Join(", ", snapshot.ArmorProficiencies) },
+                { "Weapons", string.Join(", ", snapshot.WeaponProficiencies) },
+                { "Tools", string.Join(", ", snapshot.ToolProficiencies) },
+            }.ToMarkdownBulletedList();
+
             var featuresSubHeader = "Other Features & Traits".ToMarkdownSubHeader();
             var features = snapshot.Features.OrderBy(f => f.Name).Select(formatFeature).ToMarkdownBulletedList();
 
@@ -86,6 +94,9 @@ namespace AdventurePlanner.UI
             container.Append(skillsHeader);
             container.Append(skills);
 
+            container.Append(proficienciesSubHeader);
+            container.Append(proficiencies);
+
             container.Append(featuresSubHeader);
             container.Append(features);
 
@@ -97,7 +108,7 @@ namespace AdventurePlanner.UI
             return check ? "[x]" : "[ ]";
         }
 
-        public static BulletedList ToMarkdownBulletedList(this Dictionary<string, object> dict)
+        public static BulletedList ToMarkdownBulletedList<T>(this Dictionary<string, T> dict)
         {
             return dict.ToMarkdownBulletedList(kvp => string.Format("{0}: {1}", kvp.Key, kvp.Value));
         }

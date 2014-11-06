@@ -12,6 +12,10 @@
 * Need to be able to have features replace older versions of
   themselves. Alternatively, a way to remove features. Probably need the same
   thing when I get to spells, attacks, weapons, etc.
+* Convert this file and Snapshot Char Sheet to AsciiDoc
+* :question: I liked the Attribute based approach to JSON serialization, but
+  seems to be a bit limited compared to custom converters and hand-written
+  schemas. Consider switching.
 
 Source TODOs
 ============

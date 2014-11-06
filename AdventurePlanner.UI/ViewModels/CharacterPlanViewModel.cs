@@ -301,6 +301,10 @@ namespace AdventurePlanner.UI.ViewModels
 
                     SetProficiencyBonus = view.SetProficiencyBonus,
 
+                    ArmorProficiencies = view.ArmorProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+                    WeaponProficiencies = view.WeaponProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+                    ToolProficiencies = view.ToolProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+
                     NewSaveProficiencies = view.NewSaveProficiencies
                         .Where(s => s.Ability != null)
                         .Select(s => s.Ability.Abbreviation).ToArray(),
@@ -347,7 +351,11 @@ namespace AdventurePlanner.UI.ViewModels
                     Level = lp.Level,
                     ClassName = lp.ClassName,
 
-                    SetProficiencyBonus = lp.SetProficiencyBonus
+                    SetProficiencyBonus = lp.SetProficiencyBonus,
+
+                    ArmorProficiencies = string.Join(", ", lp.ArmorProficiencies ?? new string[0]),
+                    WeaponProficiencies = string.Join(", ", lp.WeaponProficiencies ?? new string[0]),
+                    ToolProficiencies = string.Join(", ", lp.ToolProficiencies ?? new string[0]),
                 };
 
                 foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())

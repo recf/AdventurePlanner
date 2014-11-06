@@ -97,14 +97,29 @@ namespace AdventurePlanner.Core.Planning
                     snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
                 }
 
-                foreach (var skillName in plan.NewSkillProficiencies ?? new string[0])
+                foreach (var prof in plan.ArmorProficiencies ?? new string[0])
                 {
-                    snapshot.Skills[skillName].IsProficient = true;
+                    snapshot.ArmorProficiencies.Add(prof);
+                }
+
+                foreach (var prof in plan.WeaponProficiencies ?? new string[0])
+                {
+                    snapshot.WeaponProficiencies.Add(prof);
+                }
+
+                foreach (var prof in plan.ToolProficiencies ?? new string[0])
+                {
+                    snapshot.ToolProficiencies.Add(prof);
                 }
 
                 foreach (var savingThrowKey in plan.NewSaveProficiencies ?? new string[0])
                 {
                     snapshot.SavingThrows[savingThrowKey].IsProficient = true;
+                }
+
+                foreach (var skillName in plan.NewSkillProficiencies ?? new string[0])
+                {
+                    snapshot.Skills[skillName].IsProficient = true;
                 }
 
                 foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])
