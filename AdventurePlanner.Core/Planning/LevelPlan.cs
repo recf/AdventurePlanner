@@ -10,29 +10,14 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("level", Required = Required.Always)]
         public int Level { get; set; }
 
-        [JsonProperty("class", Required = Required.Always)] 
-        public string ClassName { get; set; }
+        [JsonProperty("class", Required = Required.Always, IsReference = true)]
+        public ClassPlan ClassPlan { get; set; }
 
         [JsonProperty("ability_score_improvements", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IDictionary<string, int> AbilityScoreImprovements { get; set; }
 
         [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int SetProficiencyBonus { get; set; }
-        
-        [JsonProperty("armor_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] ArmorProficiencies { get; set; }
-
-        [JsonProperty("weapon_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] WeaponProficiencies { get; set; }
-
-        [JsonProperty("tool_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] ToolProficiencies { get; set; }
-
-        [JsonProperty("new_save_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] NewSaveProficiencies { get; set; }
-
-        [JsonProperty("new_skill_proficiencies", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public string[] NewSkillProficiencies { get; set; }
         
         [JsonProperty("features", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<FeaturePlan> FeaturePlans { get; set; }

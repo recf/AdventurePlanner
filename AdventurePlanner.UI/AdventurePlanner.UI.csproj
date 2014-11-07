@@ -96,6 +96,7 @@
     <Compile Include="Converters\EnumerableToBoolConverter.cs" />
     <Compile Include="MarkdownExtensions.cs" />
     <Compile Include="ViewModels\AbilityScoreImprovementViewModel.cs" />
+    <Compile Include="ViewModels\ClassPlanViewModel.cs" />
     <Compile Include="ViewModels\FeaturePlanViewModel.cs" />
     <Compile Include="ViewModels\LevelPlanViewModel.cs" />
     <Compile Include="ViewModels\CharacterPlanViewModel.cs" />
@@ -104,6 +105,9 @@
     <Compile Include="ViewModels\SkillProficiencyViewModel.cs" />
     <Compile Include="Views\AbilityScoreImprovementView.xaml.cs">
       <DependentUpon>AbilityScoreImprovementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClassPlanView.xaml.cs">
+      <DependentUpon>ClassPlanView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FeaturePlanView.xaml.cs">
       <DependentUpon>FeaturePlanView.xaml</DependentUpon>
@@ -130,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AbilityScoreImprovementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClassPlanView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

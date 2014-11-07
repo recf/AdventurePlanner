@@ -10,11 +10,6 @@ namespace AdventurePlanner.UI.ViewModels
 {
     public class SaveProficiencyViewModel : DirtifiableObject
     {
-        public SaveProficiencyViewModel()
-        {
-            AvailableOptions = new ReactiveList<Ability>();
-        }
-
         private Ability _ability;
 
         public Ability Ability
@@ -23,14 +18,12 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _ability, value); }
         }
         
-        private bool _selected;
+        private bool _proficient;
 
-        public bool IsSelected
+        public bool IsProficient
         {
-            get { return _selected; }
-            set { this.RaiseAndSetIfChanged(ref _selected, value); }
+            get { return _proficient; }
+            set { this.RaiseAndSetIfChanged(ref _proficient, value); }
         }
-
-        public ReactiveList<Ability> AvailableOptions { get; private set; }
     }
 }

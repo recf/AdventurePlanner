@@ -7,11 +7,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" />
-        <ComboBox Grid.Column="1" x:Name="AvailableOptions" SelectedItem="{Binding Ability}" DisplayMemberPath="AbilityName"/>
+        <CheckBox Grid.Column="0" 
+                  IsChecked="{Binding IsProficient}" 
+                  Content="{Binding Ability.AbilityName}" />
     </Grid>
 </UserControl>

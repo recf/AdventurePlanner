@@ -12,19 +12,10 @@
   "hair": "Moss Green",
   "skin": "Tan",
   "background": "Hermit",
-  "level_plans": [
+  "class_plans": [
     {
-      "level": 1,
-      "class": "Druid",
-      "ability_score_improvements": {
-        "Str": 16,
-        "Dex": 12,
-        "Con": 15,
-        "Int": 12,
-        "Wis": 15,
-        "Cha": 14
-      },
-      "set_prof_bonus": 2,
+      "$id": "1",
+      "class_name": "Druid",
       "armor_proficiencies": [
         "light armor",
         "medium armor",
@@ -45,16 +36,33 @@
       "tool_proficiencies": [
         "herbalism kit"
       ],
-      "new_save_proficiencies": [
-        "Wis",
-        "Int"
+      "save_proficiencies": [
+        "Int",
+        "Wis"
       ],
-      "new_skill_proficiencies": [
+      "skill_proficiencies": [
         "Insight",
         "Medicine",
         "Nature",
         "Religion"
-      ],
+      ]
+    }
+  ],
+  "level_plans": [
+    {
+      "level": 1,
+      "class": {
+        "$ref": "1"
+      },
+      "ability_score_improvements": {
+        "Str": 16,
+        "Dex": 12,
+        "Con": 15,
+        "Int": 12,
+        "Wis": 15,
+        "Cha": 14
+      },
+      "set_prof_bonus": 2,
       "features": [
         {
           "name": "Speak with Small Beasts",
@@ -80,58 +88,31 @@
     },
     {
       "level": 2,
-      "class": "Druid",
+      "class": {
+        "$ref": "1"
+      },
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
-      "armor_proficiencies": [
-        ""
-      ],
-      "weapon_proficiencies": [
-        ""
-      ],
-      "tool_proficiencies": [
-        ""
-      ],
-      "new_save_proficiencies": [],
-      "new_skill_proficiencies": [],
       "features": []
     },
     {
       "level": 3,
-      "class": "Druid",
+      "class": {
+        "$ref": "1"
+      },
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
-      "armor_proficiencies": [
-        ""
-      ],
-      "weapon_proficiencies": [
-        ""
-      ],
-      "tool_proficiencies": [
-        ""
-      ],
-      "new_save_proficiencies": [],
-      "new_skill_proficiencies": [],
       "features": []
     },
     {
       "level": 4,
-      "class": "Druid",
+      "class": {
+        "$ref": "1"
+      },
       "ability_score_improvements": {
         "Con": 1
       },
       "set_prof_bonus": 3,
-      "armor_proficiencies": [
-        ""
-      ],
-      "weapon_proficiencies": [
-        ""
-      ],
-      "tool_proficiencies": [
-        ""
-      ],
-      "new_save_proficiencies": [],
-      "new_skill_proficiencies": [],
       "features": []
     }
   ]

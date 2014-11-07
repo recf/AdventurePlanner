@@ -22,6 +22,30 @@ namespace AdventurePlannter.Core.Tests
         [Test]
         public void TestToSnapshot()
         {
+            var fighter = new ClassPlan
+            {
+                ClassName = "Fighter",
+
+                ArmorProficiencies = new[] { "All Armor", "Shields" },
+                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                ToolProficiencies = new[] { "Fighter kit" },
+
+                SaveProficiencies = new[] { "Str", "Con" },
+                SkillProficiencies = new[] { "Athletics" },
+            };
+
+            var cleric = new ClassPlan
+            {
+                ClassName = "Cleric",
+
+                ArmorProficiencies = new[] { "Light Armor", "Medium Armor", "Shields" },
+                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                ToolProficiencies = new[] { "Cleric kit" },
+
+                SaveProficiencies = new[] { "Wis", "Cha" },
+                SkillProficiencies = new[] { "Perception", "Insight" },
+            };
+
             var plan = new CharacterPlan
             {
                 Name = "Balin Thundershield",
@@ -37,12 +61,18 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
+                ClassPlans = new List<ClassPlan>
+                {
+                    fighter,
+                    cleric
+                },
+
                 LevelPlans = new List<LevelPlan>
                 {
                     new LevelPlan
                     {
                         Level = 1,
-                        ClassName = "Fighter",
+                        ClassPlan = fighter,
 
                         AbilityScoreImprovements = new Dictionary<string, int>()
                         {
@@ -56,44 +86,43 @@ namespace AdventurePlannter.Core.Tests
 
                         SetProficiencyBonus = 2,
 
-                        ArmorProficiencies = new[] { "All Armor", "Shields" },
-                        WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                        ToolProficiencies = new[] { "Fighter kit" },
-
-                        NewSkillProficiencies = new[] { "Perception", "Insight" },
-
-                        NewSaveProficiencies = new[] { "Str", "Con" },
-
                         FeaturePlans = new List<FeaturePlan>()
                         {
                             new FeaturePlan() { Name = "Quick Wits" },
-                            new FeaturePlan() { Name = "Nimble", Description = "Half penalty on rough terrain", SkillName = "Acrobatics"}
+                            new FeaturePlan()
+                            {
+                                Name = "Nimble",
+                                Description = "Half penalty on rough terrain",
+                                SkillName = "Acrobatics"
+                            }
                         },
                     },
                     new LevelPlan
                     {
                         Level = 2,
-                        ClassName = "Cleric",
-                        NewSaveProficiencies = new[] { "Wis", "Cha" },
-                        
-                        ArmorProficiencies = new[] { "Light Armor", "Medium Armor", "Shields" },
-                        WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                        ToolProficiencies = new[] { "Cleric kit" },
+                        ClassPlan = cleric,
                     },
-                    new LevelPlan { Level = 3, ClassName = "Cleric" },
+                    new LevelPlan
+                    {
+                        Level = 3,
+                        ClassPlan = cleric,
+                    },
                     new LevelPlan
                     {
                         Level = 4,
-                        ClassName = "Cleric",
+                        ClassPlan = cleric,
 
                         AbilityScoreImprovements = new Dictionary<string, int>()
                         {
                             { "Wis", 1 },
                         },
-
-                        NewSkillProficiencies = new[] { "Athletics" }
                     },
-                    new LevelPlan { Level = 4, ClassName = "Cleric", SetProficiencyBonus = 3 }
+                    new LevelPlan
+                    {
+                        Level = 4,
+                        ClassPlan = cleric,
+                        SetProficiencyBonus = 3
+                    }
                 }
             };
 

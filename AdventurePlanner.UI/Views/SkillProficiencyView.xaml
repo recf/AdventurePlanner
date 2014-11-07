@@ -11,18 +11,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" />
-        <ComboBox Grid.Column="1" x:Name="AvailableOptions" SelectedItem="{Binding Value}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                    <Run Text="{Binding SkillName}"/>
+        <CheckBox Grid.Column="0" IsChecked="{Binding IsProficient}">
+            <TextBlock>
+                    <Run Text="{Binding Skill.SkillName}"/>
                     <Run Text="("
-                         /><Run Text="{Binding Ability}"
+                         /><Run Text="{Binding Skill.Ability}"
                          /><Run Text=")"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+            </TextBlock>
+        </CheckBox>
     </Grid>
 </UserControl>

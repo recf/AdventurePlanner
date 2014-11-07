@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Meta\Ability.cs" />
     <Compile Include="Meta\Skill.cs" />
+    <Compile Include="Planning\ClassPlan.cs" />
     <Compile Include="Planning\FeaturePlan.cs" />
     <Compile Include="Planning\LevelPlan.cs" />
     <Compile Include="Planning\CharacterPlan.cs" />

@@ -57,7 +57,7 @@
       "required": true,
       "type": "string"
     },
-    "level_plans": {
+    "class_plans": {
       "required": true,
       "type": "array",
       "items": {
@@ -66,25 +66,9 @@
           "null"
         ],
         "properties": {
-          "level": {
-            "required": true,
-            "type": "integer"
-          },
-          "class": {
+          "class_name": {
             "required": true,
             "type": "string"
-          },
-          "ability_score_improvements": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "additionalProperties": {
-              "type": "integer"
-            }
-          },
-          "set_prof_bonus": {
-            "type": "integer"
           },
           "armor_proficiencies": {
             "type": [
@@ -122,7 +106,7 @@
               ]
             }
           },
-          "new_save_proficiencies": {
+          "save_proficiencies": {
             "type": [
               "array",
               "null"
@@ -134,7 +118,7 @@
               ]
             }
           },
-          "new_skill_proficiencies": {
+          "skill_proficiencies": {
             "type": [
               "array",
               "null"
@@ -145,6 +129,104 @@
                 "null"
               ]
             }
+          }
+        }
+      }
+    },
+    "level_plans": {
+      "required": true,
+      "type": "array",
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "level": {
+            "required": true,
+            "type": "integer"
+          },
+          "class": {
+            "required": true,
+            "type": "object",
+            "properties": {
+              "class_name": {
+                "required": true,
+                "type": "string"
+              },
+              "armor_proficiencies": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "weapon_proficiencies": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "tool_proficiencies": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "save_proficiencies": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "skill_proficiencies": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "ability_score_improvements": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "set_prof_bonus": {
+            "type": "integer"
           },
           "features": {
             "type": [

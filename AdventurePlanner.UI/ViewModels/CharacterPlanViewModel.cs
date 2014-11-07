@@ -24,7 +24,11 @@ namespace AdventurePlanner.UI.ViewModels
 
             Load = ReactiveCommand.CreateAsyncObservable(_ => LoadImpl());
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
+            AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
+
+            ClassPlans = new ReactiveList<ClassPlanViewModel> { ChangeTrackingEnabled = true };
+            Monitor(ClassPlans);
 
             LevelPlans = new ReactiveList<LevelPlanViewModel> { ChangeTrackingEnabled = true };
             Monitor(LevelPlans);
@@ -35,6 +39,7 @@ namespace AdventurePlanner.UI.ViewModels
             Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
 
             // TODO: Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
+            AddClass.Execute(null);
             AddLevel.Execute(null);
             MarkClean();
         }
@@ -42,6 +47,8 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<Unit> Load { get; private set; }
 
         public ReactiveCommand<Unit> Save { get; private set; }
+
+        public ReactiveCommand<ClassPlanViewModel> AddClass { get; private set; }
 
         public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
 
@@ -166,6 +173,8 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _characterBackground, value); }
         }
 
+        public IReactiveList<ClassPlanViewModel> ClassPlans { get; private set; }
+
         public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
 
         #endregion
@@ -224,6 +233,15 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(Unit.Default);
         }
 
+        private IObservable<ClassPlanViewModel> AddClassImpl()
+        {
+            var classPlanVm = new ClassPlanViewModel();
+
+            ClassPlans.Add(classPlanVm);
+
+            return Observable.Return(classPlanVm);
+        }
+
         private IObservable<LevelPlanViewModel> AddLevelImpl()
         {
             var maxLevel = LevelPlans.LastOrDefault();
@@ -235,6 +253,7 @@ namespace AdventurePlanner.UI.ViewModels
                 nextLevel = new LevelPlanViewModel
                 {
                     Level = 1,
+                    ClassPlan = ClassPlans.First(),
                     SetProficiencyBonus = 2
                 };
 
@@ -251,11 +270,14 @@ namespace AdventurePlanner.UI.ViewModels
                 nextLevel = new LevelPlanViewModel
                 {
                     Level = maxLevel.Level + 1,
-                    ClassName = maxLevel.ClassName,
+
+                    ClassPlan = maxLevel.ClassPlan,
 
                     SetProficiencyBonus = maxLevel.SetProficiencyBonus
                 };
             }
+
+            nextLevel.AvailableClassPlans = ClassPlans;
 
             LevelPlans.Add(nextLevel);
 
@@ -290,39 +312,45 @@ namespace AdventurePlanner.UI.ViewModels
 
                 Background = CharacterBackground,
 
-                LevelPlans = LevelPlans.Select(view => new LevelPlan
+                ClassPlans = ClassPlans.Select(view => new ClassPlan
                 {
-                    Level = view.Level,
                     ClassName = view.ClassName,
-
-                    AbilityScoreImprovements = view.AbilityScoreImprovements
-                        .Where(asi => asi.Ability != null)
-                        .ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
-
-                    SetProficiencyBonus = view.SetProficiencyBonus,
 
                     ArmorProficiencies = view.ArmorProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
                     WeaponProficiencies = view.WeaponProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
                     ToolProficiencies = view.ToolProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
 
-                    NewSaveProficiencies = view.NewSaveProficiencies
-                        .Where(s => s.Ability != null)
+                    SaveProficiencies = view.SaveProficiencies
+                        .Where(s => s.IsProficient)
                         .Select(s => s.Ability.Abbreviation).ToArray(),
 
-                    NewSkillProficiencies = view.NewSkillProficiencies
-                        .Where(s => s.Value != null)
-                        .Select(s => s.Value.SkillName).ToArray(),
-
-                    FeaturePlans = view.NewFeatures
-                        .Where(f => !string.IsNullOrWhiteSpace(f.FeatureName))
-                        .Select(f => new FeaturePlan
-                        {
-                            Name = f.FeatureName,
-                            Description = f.Description, 
-                            SkillName = f.Skill == null ? null : f.Skill.SkillName
-                        }).ToArray(),
-                }).ToList()
+                    SkillProficiencies = view.SkillProficiencies
+                        .Where(s => s.IsProficient)
+                        .Select(s => s.Skill.SkillName).ToArray(),
+                }).ToList(),
             };
+
+            plan.LevelPlans = LevelPlans.Select(view => new LevelPlan
+            {
+                Level = view.Level,
+
+                ClassPlan = plan.ClassPlans.FirstOrDefault(cp => cp.ClassName == view.ClassPlan.ClassName),
+
+                AbilityScoreImprovements = view.AbilityScoreImprovements
+                    .Where(asi => asi.Ability != null)
+                    .ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
+
+                SetProficiencyBonus = view.SetProficiencyBonus,
+
+                FeaturePlans = view.NewFeatures
+                    .Where(f => !string.IsNullOrWhiteSpace(f.FeatureName))
+                    .Select(f => new FeaturePlan
+                    {
+                        Name = f.FeatureName,
+                        Description = f.Description,
+                        SkillName = f.Skill == null ? null : f.Skill.SkillName
+                    }).ToArray(),
+            }).ToList();
 
             return plan;
         }
@@ -343,19 +371,43 @@ namespace AdventurePlanner.UI.ViewModels
 
             CharacterBackground = plan.Background;
 
+            ClassPlans.Clear();
+            foreach (var lp in plan.ClassPlans)
+            {
+                var classPlanVm = new ClassPlanViewModel
+                {
+                    ClassName = lp.ClassName,
+
+                    ArmorProficiencies = string.Join(", ", lp.ArmorProficiencies ?? new string[0]),
+                    WeaponProficiencies = string.Join(", ", lp.WeaponProficiencies ?? new string[0]),
+                    ToolProficiencies = string.Join(", ", lp.ToolProficiencies ?? new string[0]),
+                };
+
+                foreach (var abilityAbbr in lp.SaveProficiencies ?? new string[0])
+                {
+                    var saveProfVm = classPlanVm.SaveProficiencies.First(spvm => spvm.Ability.Abbreviation == abilityAbbr);
+                    saveProfVm.IsProficient = true;
+                }
+
+                foreach (var skillProf in lp.SkillProficiencies)
+                {
+                    var skillProfVm = classPlanVm.SkillProficiencies.First(spvm => spvm.Skill.SkillName == skillProf);
+                    skillProfVm.IsProficient = true;
+                }
+
+                ClassPlans.Add(classPlanVm);
+            }
+
             LevelPlans.Clear();
             foreach (var lp in plan.LevelPlans)
             {
                 var levelPlanVm = new LevelPlanViewModel
                 {
                     Level = lp.Level,
-                    ClassName = lp.ClassName,
+
+                    ClassPlan = ClassPlans.FirstOrDefault(cp => cp.ClassName == lp.ClassPlan.ClassName),
 
                     SetProficiencyBonus = lp.SetProficiencyBonus,
-
-                    ArmorProficiencies = string.Join(", ", lp.ArmorProficiencies ?? new string[0]),
-                    WeaponProficiencies = string.Join(", ", lp.WeaponProficiencies ?? new string[0]),
-                    ToolProficiencies = string.Join(", ", lp.ToolProficiencies ?? new string[0]),
                 };
 
                 foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())
@@ -366,24 +418,6 @@ namespace AdventurePlanner.UI.ViewModels
                     asiVm.Improvement = kvp.Value;
 
                     levelPlanVm.AbilityScoreImprovements.Add(asiVm);
-                }
-
-                foreach (var abilityAbbr in lp.NewSaveProficiencies ?? new string[0])
-                {
-                    var saveProfVm = new SaveProficiencyViewModel();
-                    saveProfVm.AvailableOptions.AddRange(Ability.All);
-                    saveProfVm.Ability = saveProfVm.AvailableOptions.First(a => a.Abbreviation == abilityAbbr);
-
-                    levelPlanVm.NewSaveProficiencies.Add(saveProfVm);
-                }
-
-                foreach (var skillProf in lp.NewSkillProficiencies)
-                {
-                    var skillProfVm = new SkillProficiencyViewModel();
-                    skillProfVm.AvailableOptions.AddRange(Skill.All);
-                    skillProfVm.Value = skillProfVm.AvailableOptions.First(s => s.SkillName == skillProf);
-
-                    levelPlanVm.NewSkillProficiencies.Add(skillProfVm);
                 }
 
                 foreach (var feature in lp.FeaturePlans)
@@ -400,7 +434,7 @@ namespace AdventurePlanner.UI.ViewModels
                     {
                         featureVm.Skill = featureVm.AvailableSkills.First(s => s.SkillName == feature.SkillName);
                     }
-                    
+
                     levelPlanVm.NewFeatures.Add(featureVm);
                 }
 

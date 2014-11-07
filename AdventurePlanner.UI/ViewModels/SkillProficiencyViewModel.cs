@@ -10,27 +10,20 @@ namespace AdventurePlanner.UI.ViewModels
 {
     public class SkillProficiencyViewModel : DirtifiableObject
     {
-        public SkillProficiencyViewModel()
+        private Skill _skill;
+
+        public Skill Skill
         {
-            AvailableOptions = new ReactiveList<Skill>();
+            get { return _skill; }
+            set { this.RaiseAndSetIfChanged(ref _skill, value); }
         }
 
-        private Skill _value;
+        private bool _proficient;
 
-        public Skill Value
+        public bool IsProficient 
         {
-            get { return _value; }
-            set { this.RaiseAndSetIfChanged(ref _value, value); }
-        }
-
-        public ReactiveList<Skill> AvailableOptions { get; private set; }
-
-        private bool _selected;
-
-        public bool IsSelected 
-        {
-            get { return _selected; }
-            set { this.RaiseAndSetIfChanged(ref _selected, value); }
+            get { return _proficient; }
+            set { this.RaiseAndSetIfChanged(ref _proficient, value); }
         }
     }
 }
