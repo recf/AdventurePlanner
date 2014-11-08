@@ -40,7 +40,7 @@ Source TODOs
     * 67 :question: Consider moving ToSnapshot into an extension method.
     * 93 :poop: This is really clunky
 * \AdventurePlanner.UI\ViewModels\CharacterPlanViewModel.cs
-    * 42 Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
+    * 44 Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
 * \AdventurePlanner.UI\ViewModels\ClassPlanViewModel.cs
     * 36 :bug: Not running when loading a file. I ran into this issue before, but can't remember where or how I got around it. Look into dispatchers.
 * \AdventurePlanner.UI\ViewModels\FeaturePlanViewModel.cs

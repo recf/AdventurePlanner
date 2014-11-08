@@ -1,0 +1,80 @@
+Bimpnottin "Filchbatter" Nackle
+===============================
+
+   * Character level: 1
+   * Class levels: Druid 1
+   * Race: Rock Gnome
+   * Alignment: TN
+   * Age: 114
+   * Weight: 45 lbs.
+   * Height: 3'7"
+   * Eyes: Gold
+   * Skin: Tan
+   * Hair: Moss Green
+
+Ability Scores
+--------------
+
+     Ability | Score | Mod
+     ------- | -----:| ---:
+     Str     |    16 |   3
+     Dex     |    12 |   1
+     Con     |    15 |   2
+     Int     |    12 |   1
+     Wis     |    15 |   2
+     Cha     |    14 |   2
+
+   * Proficiency Bonus: 2
+
+Saving Throws
+-------------
+
+     Prof | Mod | Saving_Throw | Notes
+     ---- | ---:| ------------ | -----:
+     [ ]  |   3 | Strength     |      
+     [ ]  |   1 | Dexterity    |      
+     [ ]  |   2 | Constitution |      
+     [x]  |   3 | Intelligence |      
+     [x]  |   4 | Wisdom       |      
+     [ ]  |   2 | Charisma     |      
+
+Skills
+------
+
+     Prof | Mod | Skill                 | Notes                                                                                                                
+     ---- | ---:| --------------------- | --------------------------------------------------------------------------------------------------------------------- 
+     [ ]  |   1 | Acrobatics (Dex)      |                                                                                                                      
+     [ ]  |   2 | Animal Handling (Wis) |                                                                                                                      
+     [ ]  |   1 | Arcana (Int)          |                                                                                                                      
+     [ ]  |   3 | Athletics (Str)       |                                                                                                                      
+     [ ]  |   2 | Deception (Cha)       |                                                                                                                      
+     [ ]  |   1 | History (Int)         | Artificer's Lore - Double proficiency on checks related to magic items, alchemical objects, or technological devices.
+     [x]  |   4 | Insight (Wis)         |                                                                                                                      
+     [ ]  |   2 | Intimidation (Cha)    |                                                                                                                      
+     [ ]  |   1 | Investigation (Int)   |                                                                                                                      
+     [x]  |   4 | Medicine (Wis)        |                                                                                                                      
+     [x]  |   3 | Nature (Int)          |                                                                                                                      
+     [ ]  |   2 | Perception (Wis)      |                                                                                                                      
+     [ ]  |   1 | Performance (Dex)     |                                                                                                                      
+     [ ]  |   2 | Persuasion (Cha)      |                                                                                                                      
+     [x]  |   3 | Religion (Int)        |                                                                                                                      
+     [ ]  |   1 | Sleight of Hand (Dex) |                                                                                                                      
+     [ ]  |   1 | Stealth (Dex)         |                                                                                                                      
+     [ ]  |   2 | Survival (Wis)        |                                                                                                                      
+
+Proficiencies
+-------------
+
+   * Armor: light armor, medium armor, shields
+   * Weapons: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, 
+     sickles, slings, spears
+   * Tools: herbalism kit
+
+Other Features & Traits
+-----------------------
+
+   * Darkvision 60'
+   * Gnome Cunning - Advantage on all mental saves against magic.
+   * Speak with Small Beasts - Communicate simple ideas with Small or smaller 
+     beasts, using sounds and gestures.
+   * Tinker
