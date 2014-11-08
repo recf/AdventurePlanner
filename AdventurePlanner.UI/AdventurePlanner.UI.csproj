@@ -43,9 +43,6 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownLog">
-      <HintPath>..\packages\MarkdownLog.0.9.3\lib\portable-windows8+net45\MarkdownLog.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -94,7 +91,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumerableToBoolConverter.cs" />
-    <Compile Include="MarkdownExtensions.cs" />
     <Compile Include="ViewModels\AbilityScoreImprovementViewModel.cs" />
     <Compile Include="ViewModels\ClassPlanViewModel.cs" />
     <Compile Include="ViewModels\FeaturePlanViewModel.cs" />

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MarkdownLog">
+      <HintPath>..\packages\MarkdownLog.0.9.3\lib\portable-windows8+net45\MarkdownLog.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -43,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextExtensions.cs" />
     <Compile Include="Meta\Ability.cs" />
     <Compile Include="Meta\Skill.cs" />
     <Compile Include="Planning\ClassPlan.cs" />

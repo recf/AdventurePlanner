@@ -17,6 +17,7 @@
             <Button Content="Add Class" Command="{Binding AddClass}"/>
             <Button Content="Add Level" Command="{Binding AddLevel}"/>
             <Button Content="Save" Command="{Binding Save}"/>
+            <Button Content="Save Current Snapshot" Command="{Binding SaveSnapshot}"/>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
@@ -82,12 +83,17 @@
         
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <TextBox x:Name="SnapshotAsMarkdown" IsReadOnly="true" FontFamily="Courier New" />
-            <Slider Grid.Row="1" Grid.Column="0" x:Name="SnapshotLevel" Minimum="1" Maximum="{Binding LevelPlans.Count}"/>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Snapshot"/>
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="SnapshotAsText" IsReadOnly="true" FontFamily="Courier New" />
+
+            <Label Grid.Row="2" Grid.Column="0" Content="Snapshot Level"/>
+            <Slider Grid.Row="3" Grid.Column="0" x:Name="SnapshotLevel" Minimum="1" Maximum="{Binding LevelPlans.Count}"/>
         </Grid>
         
     </Grid>

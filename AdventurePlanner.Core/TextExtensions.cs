@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using AdventurePlanner.Core.Snapshots;
 using MarkdownLog;
 
-namespace AdventurePlanner.UI
+namespace AdventurePlanner.Core
 {
-    public static class MarkdownExtensions
+    public static class TextExtensions
     {
-        public static MarkdownContainer ToMarkdownCharacterSheet(this CharacterSnapshot snapshot)
+        public static string ToText(this CharacterSnapshot snapshot)
         {
             var container = new MarkdownContainer();
 
@@ -41,7 +41,7 @@ namespace AdventurePlanner.UI
             var savingThrows = snapshot.SavingThrows.Values.Select(
                 s => new
                 {
-                    Prof = s.IsProficient.ToMarkdownCheckbox(),
+                    Prof = s.IsProficient.ToTextCheckbox(),
                     Mod = s.Modifier,
                     Saving_Throw = s.Ability.AbilityName,
                     Notes = string.Empty,
@@ -63,7 +63,7 @@ namespace AdventurePlanner.UI
             var skills = snapshot.Skills.Values.Select(
                 s => new
                 {
-                    Prof = s.IsProficient.ToMarkdownCheckbox(), 
+                    Prof = s.IsProficient.ToTextCheckbox(), 
                     Mod = s.Modifier, 
                     Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation), 
                     Notes = string.Join("; ", s.Features.Select(formatFeature))
@@ -100,10 +100,10 @@ namespace AdventurePlanner.UI
             container.Append(featuresSubHeader);
             container.Append(features);
 
-            return container;
+            return container.ToMarkdown();
         }
 
-        public static string ToMarkdownCheckbox(this bool check)
+        public static string ToTextCheckbox(this bool check)
         {
             return check ? "[x]" : "[ ]";
         }

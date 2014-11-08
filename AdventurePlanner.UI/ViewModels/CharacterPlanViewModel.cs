@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using AdventurePlanner.Core;
 using AdventurePlanner.Core.Meta;
 using AdventurePlanner.Core.Planning;
-using MarkdownLog;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ReactiveUI;
@@ -18,12 +18,15 @@ namespace AdventurePlanner.UI.ViewModels
         public const string FileDialogFilter = "Adventure Planner Character files (*.apc,*.apchar)|*.apc;*.apchar";
 
         public CharacterPlanViewModel()
-            : base("BackingFile", "SnapshotAsMarkdown")
+            : base("BackingFile", "SnapshotAsText")
         {
             var canSave = this.ObservableForProperty(x => x.IsDirty).Select(y => y.Value);
 
             Load = ReactiveCommand.CreateAsyncObservable(_ => LoadImpl());
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
+
+            SaveSnapshot = ReactiveCommand.CreateAsyncObservable(_ => SaveSnapshotImpl());
+
             AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
@@ -36,7 +39,7 @@ namespace AdventurePlanner.UI.ViewModels
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
 
-            Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsMarkdown, out _snapShotAsMarkdown);
+            Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsText, out _snapShotAsText);
 
             // TODO: Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
             AddClass.Execute(null);
@@ -47,6 +50,8 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<Unit> Load { get; private set; }
 
         public ReactiveCommand<Unit> Save { get; private set; }
+
+        public ReactiveCommand<Unit> SaveSnapshot { get; private set; }
 
         public ReactiveCommand<ClassPlanViewModel> AddClass { get; private set; }
 
@@ -74,11 +79,11 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _snapshotLevel, value); }
         }
 
-        private readonly ObservableAsPropertyHelper<string> _snapShotAsMarkdown;
+        private readonly ObservableAsPropertyHelper<string> _snapShotAsText;
 
-        public string SnapshotAsMarkdown
+        public string SnapshotAsText
         {
-            get { return _snapShotAsMarkdown.Value; }
+            get { return _snapShotAsText.Value; }
         }
 
         #endregion
@@ -229,6 +234,27 @@ namespace AdventurePlanner.UI.ViewModels
             var contents = JsonConvert.SerializeObject(plan, Formatting.Indented);
 
             File.WriteAllText(BackingFile, contents);
+
+            return Observable.Return(Unit.Default);
+        }
+
+        private IObservable<Unit> SaveSnapshotImpl()
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Text files (*.txt)|*.txt;"
+            };
+
+            var result = dialog.ShowDialog();
+
+            if (result != true)
+            {
+                return Observable.Never(Unit.Default);
+            }
+
+            var fileName = dialog.FileName;
+
+            File.WriteAllText(fileName, SnapshotAsText);
 
             return Observable.Return(Unit.Default);
         }
@@ -453,7 +479,7 @@ namespace AdventurePlanner.UI.ViewModels
         {
             var snapshot = GetPlan().ToSnapshot(SnapshotLevel);
 
-            return snapshot.ToMarkdownCharacterSheet().ToMarkdown();
+            return snapshot.ToText();
         }
     }
 }
