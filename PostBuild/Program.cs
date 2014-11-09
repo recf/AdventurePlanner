@@ -43,7 +43,7 @@ namespace Build
 
                     var fileName = Path.Combine(
                         examplesDirectory,
-                        string.Format("{0}-at-level-{1}.txt", planFileBaseName, levelNum));
+                        string.Format("{0}-at-level-{1}.adoc", planFileBaseName, levelNum));
 
                     File.WriteAllText(fileName, snapshot.ToText());
                 }

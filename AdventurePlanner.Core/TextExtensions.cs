@@ -11,19 +11,108 @@ namespace AdventurePlanner.Core
 {
     public static class TextExtensions
     {
+        public static string ToAsciiDocCheckbox(this bool check)
+        {
+            return check ? "icon:check-square-o[] " : "icon:square-o[] ";
+        }
+
+        public static StringBuilder AppendAsciiDocHeader(this StringBuilder builder, string headerText, int level = 1)
+        {
+            var prefix = new string('=', level);
+            builder.AppendLine(string.Format("{0} {1}", prefix, headerText));
+
+            if (level > 1)
+            {
+                builder.AppendLine();
+            }
+
+            return builder;
+        }
+
+        public static StringBuilder AppendAsciiDocAttribute(
+            this StringBuilder builder, 
+            string attribute,
+            object value = null)
+        {
+            return builder.AppendLine(string.Format(":{0}: {1}", attribute, value).Trim());
+        }
+
+        public static StringBuilder AppendAsciiDocLabeledList<T>(this StringBuilder builder, Dictionary<string, T> items)
+        {
+            foreach (var kvp in items)
+            {
+                builder.AppendLine(string.Format("*{0}*:: {1}", kvp.Key, kvp.Value));
+            }
+
+            builder.AppendLine();
+
+            return builder;
+        }
+        
+        private const string TableDelim = "|===";
+
+        public static StringBuilder AppendAsciiDocTable(
+            this StringBuilder builder,
+            IList<Dictionary<string, object>> items,
+            string columnSpec = null)
+        {
+            var firstItem = items.First();
+
+            if (string.IsNullOrWhiteSpace(columnSpec))
+            {
+                columnSpec = string.Format("{0}*", firstItem.Keys.Count);
+            }
+
+            builder.AppendLine(string.Format("[cols=\"{0}\", options=\"header\"]", columnSpec));
+
+            builder.AppendLine(TableDelim);
+
+            foreach (var key in firstItem.Keys)
+            {
+                builder.AppendLine(string.Format("| {0} ", key));
+            }
+
+            foreach (var item in items)
+            {
+                builder.AppendLine();
+                foreach (var key in item.Keys)
+                {
+                    var value = item[key];
+
+                    value = string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
+                    
+                    builder.AppendLine(string.Format("| {0}", value));
+                }
+            }
+
+            builder.AppendLine(TableDelim);
+            builder.AppendLine();
+
+            return builder;
+        }
+
         public static string ToText(this CharacterSnapshot snapshot)
         {
-            var container = new MarkdownContainer();
+            var builder = new StringBuilder();
 
-            var header = snapshot.Name.ToMarkdownHeader();
+            // Header
+            builder.AppendAsciiDocHeader(snapshot.Name);
+            builder.AppendAsciiDocAttribute("revnumber", snapshot.CharacterLevel);
+            builder.AppendAsciiDocAttribute("revdate", DateTime.Today.ToString("yyyy-MM-dd"));
+
+            builder.AppendAsciiDocAttribute("version-label", "Level");
+            builder.AppendAsciiDocAttribute("nofooter");
+            builder.AppendAsciiDocAttribute("icons", "font");
+            builder.AppendLine();
 
             var classes = snapshot.Classes.Select(kvp => string.Format("{0} {1}", kvp.Key, kvp.Value));
 
-            var infoBlock = new Dictionary<string, object>
+            builder.AppendLine("[horizontal]");
+            builder.AppendAsciiDocLabeledList(new Dictionary<string, object>
             {
-                { "Character level", snapshot.CharacterLevel }, 
                 { "Class levels", string.Join(", ", classes) }, 
                 { "Race", snapshot.Race }, 
+                { "Speed", snapshot.Speed },
                 { "Alignment", snapshot.Alignment }, 
                 { "Age", snapshot.Age }, 
                 { "Weight", string.Format("{0} lbs.", snapshot.Weight) }, 
@@ -31,83 +120,71 @@ namespace AdventurePlanner.Core
                 { "Eyes", snapshot.EyeColor }, 
                 { "Skin", snapshot.SkinColor }, 
                 { "Hair", snapshot.HairColor }, 
-            }.ToMarkdownBulletedList();
-
-            var abilityScoresHeader = "Ability Scores".ToMarkdownSubHeader();
-            var abilityScores = snapshot.Abilities.Values.Select(
-                a => new { Ability = a.Abbreviation, a.Score, Mod = a.Modifier }).ToMarkdownTable();
-
-            var savingThrowHeader = "Saving Throws".ToMarkdownSubHeader();
-            var savingThrows = snapshot.SavingThrows.Values.Select(
-                s => new
-                {
-                    Prof = s.IsProficient.ToTextCheckbox(),
-                    Mod = s.Modifier,
-                    Saving_Throw = s.Ability.AbilityName,
-                    Notes = string.Empty,
-                }).ToMarkdownTable();
-
-            // TODO: To paragraph/subheader?
-            var profBonus = new Dictionary<string, object>
-            {
                 { "Proficiency Bonus", snapshot.ProficiencyBonus }
-            }.ToMarkdownBulletedList();
+            });
 
+            builder.AppendAsciiDocHeader("Ability Scores", 2);
 
+            var abilityScores = snapshot.Abilities.Values.Select(
+                a => new Dictionary<string, object>()
+                {
+                    { "Ability", a.Abbreviation },
+                    { "Score", a.Score },
+                    { "Mod", a.Modifier },
+                }).ToList();
+
+            builder.AppendAsciiDocTable(abilityScores);
+
+            builder.AppendAsciiDocHeader("Saving Throws", 2);
+
+            var savingThrows = snapshot.SavingThrows.Values.Select(
+                s => new Dictionary<string, object>()
+                {
+                    { "Prof", s.IsProficient.ToAsciiDocCheckbox() },
+                    { "Mod", s.Modifier },
+                    { "Saving Throw", s.Ability.AbilityName },
+                }).ToList();
+
+            builder.AppendAsciiDocTable(savingThrows, "1*,a,1*");
+            
             Func<FeatureSnapshot, string> formatFeature = f => string.Format(
-                string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0} - {1}",
+                string.IsNullOrWhiteSpace(f.Description) ? "{0}" : "{0}:: {1}",
                 f.Name,
                 f.Description);
 
-            var skillsHeader = "Skills".ToMarkdownSubHeader();
-            var skills = snapshot.Skills.Values.Select(
-                s => new
-                {
-                    Prof = s.IsProficient.ToTextCheckbox(), 
-                    Mod = s.Modifier, 
-                    Skill = string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation), 
-                    Notes = string.Join("; ", s.Features.Select(formatFeature))
-                }).ToMarkdownTable();
+            builder.AppendAsciiDocHeader("Skills", 2);
 
-            var proficienciesSubHeader = "Proficiencies".ToMarkdownSubHeader();
+            var skills = snapshot.Skills.Values.Select(
+                s => new Dictionary<string, object>()
+                {
+                    { "Prof", s.IsProficient.ToAsciiDocCheckbox() },
+                    { "Mod", s.Modifier },
+                    { "Skill", string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation) },
+                    { "Notes", string.Join(Environment.NewLine, s.Features.Select(formatFeature)) },
+                }).ToList();
+
+            builder.AppendAsciiDocTable(skills, "a,2*,a");
+
+            builder.AppendAsciiDocHeader("Proficiencies", 2);
+
             var proficiencies = new Dictionary<string, string>
             {
                 { "Armor", string.Join(", ", snapshot.ArmorProficiencies) },
                 { "Weapons", string.Join(", ", snapshot.WeaponProficiencies) },
                 { "Tools", string.Join(", ", snapshot.ToolProficiencies) },
-            }.ToMarkdownBulletedList();
+            };
 
-            var featuresSubHeader = "Other Features & Traits".ToMarkdownSubHeader();
-            var features = snapshot.Features.OrderBy(f => f.Name).Select(formatFeature).ToMarkdownBulletedList();
+            builder.AppendAsciiDocLabeledList(proficiencies);
 
-            container.Append(header);
-            container.Append(infoBlock);
+            builder.AppendAsciiDocHeader("Other Features & Traits", 2);
 
-            container.Append(abilityScoresHeader);
-            container.Append(abilityScores);
+            var features = snapshot.Features.OrderBy(f => f.Name).ToDictionary(f => f.Name, f => f.Description);
 
-            container.Append(profBonus);
+            builder.AppendAsciiDocLabeledList(features);
 
-            container.Append(savingThrowHeader);
-            container.Append(savingThrows);
-
-            container.Append(skillsHeader);
-            container.Append(skills);
-
-            container.Append(proficienciesSubHeader);
-            container.Append(proficiencies);
-
-            container.Append(featuresSubHeader);
-            container.Append(features);
-
-            return container.ToMarkdown();
+            return builder.ToString();
         }
-
-        public static string ToTextCheckbox(this bool check)
-        {
-            return check ? "[x]" : "[ ]";
-        }
-
+        
         public static BulletedList ToMarkdownBulletedList<T>(this Dictionary<string, T> dict)
         {
             return dict.ToMarkdownBulletedList(kvp => string.Format("{0}: {1}", kvp.Key, kvp.Value));

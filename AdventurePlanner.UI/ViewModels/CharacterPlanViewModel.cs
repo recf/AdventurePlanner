@@ -242,7 +242,7 @@ namespace AdventurePlanner.UI.ViewModels
         {
             var dialog = new SaveFileDialog
             {
-                Filter = "Text files (*.txt)|*.txt;"
+                Filter = "AsciiDoc files (*.adoc, *.txt)|*.adoc;*.txt;"
             };
 
             var result = dialog.ShowDialog();
