@@ -70,7 +70,21 @@
         <TabControl Grid.Row="1" Grid.Column="0">
             
             <TabItem Header="Classes">
-                <TabControl x:Name="ClassPlans" DisplayMemberPath="Header"/>
+                <TabControl x:Name="ClassPlans" >
+                    <TabControl.Resources>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Setter Property="HeaderTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ClassName, 
+                                            Converter={StaticResource DefaultValueConverter}, 
+                                            ConverterParameter=Not Set}"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+                </TabControl>
             </TabItem>
             
             <TabItem Header="Level Planning">

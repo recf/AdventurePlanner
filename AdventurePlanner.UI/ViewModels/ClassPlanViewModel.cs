@@ -32,21 +32,12 @@ namespace AdventurePlanner.UI.ViewModels
                 var skillProfVm = new SkillProficiencyViewModel() { Skill = skill };
                 SkillProficiencies.Add(skillProfVm);
             }
-
-            // TODO :bug: Not running when loading a file. I ran into this issue before, but can't remember where or how I got around it. Look into dispatchers.
-            this.ObservableForProperty(x => x.ClassName, n => string.IsNullOrWhiteSpace(n) ? "<Not Set>" : n)
-                .ToProperty(this, x => x.Header, out _header, "<Not Set>");
         }
         
         #region Data Properties
 
         private readonly ObservableAsPropertyHelper<string> _header;
-
-        public string Header
-        {
-            get { return _header.Value; }
-        }
-
+        
         private string _className;
 
         public string ClassName

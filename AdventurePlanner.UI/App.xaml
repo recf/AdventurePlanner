@@ -18,6 +18,7 @@
                     <local:AppBootstrapper x:Key="Bootstrapper"/>
                     
                     <localconv:EnumerableToBoolConverter x:Key="EnumerableToBoolConverter"/>
+                    <localconv:DefaultValueConverter x:Key="DefaultValueConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
