@@ -1,0 +1,11 @@
+= Adventure Planner
+Aaron Dorheim-Davis
+v0.1.0-alpha
+:nofooter:
+:ci-link: https://ci.appveyor.com/project/recf/adventureplanner
+:ci-img: https://ci.appveyor.com/api/projects/status/40sj047t8k7eab3p?svg=true
+
+image::{ci-img}[alt=Build Status, link={ci-link}]
+
+Adventure Planner is a Windows Desktop application for planning how to level a
+character in D&D 5e.

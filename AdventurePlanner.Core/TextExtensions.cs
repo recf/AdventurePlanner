@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core.Snapshots;
-using MarkdownLog;
 
 namespace AdventurePlanner.Core
 {
@@ -183,11 +182,6 @@ namespace AdventurePlanner.Core
             builder.AppendAsciiDocLabeledList(features);
 
             return builder.ToString();
-        }
-        
-        public static BulletedList ToMarkdownBulletedList<T>(this Dictionary<string, T> dict)
-        {
-            return dict.ToMarkdownBulletedList(kvp => string.Format("{0}: {1}", kvp.Key, kvp.Value));
         }
     }
 }
