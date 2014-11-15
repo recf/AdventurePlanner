@@ -1,4 +1,4 @@
-$todofile = "$PSScriptRoot\TODO.md"
+$todofile = "$PSScriptRoot\TODO.adoc"
 
 $excludeFolders = @('bin', 'obj', 'packages')
 
@@ -19,9 +19,9 @@ $todos = gci $PSScriptRoot -r `
 
 $todoContents = cat $todofile
 
-$srcTodoDelim = 'Source TODOs'
+$srcTodoDelim = '== Source TODOs'
 
-$srcTodoLineNum = $todoContents.IndexOf($srcTodoDelim) + 1
+$srcTodoLineNum = $todoContents.IndexOf($srcTodoDelim)
 
 $cleanTodoLines = $todoContents[0..$srcTodoLineNum] + ""
 
@@ -33,7 +33,7 @@ foreach ($todo in $todos)
         $file = $todo.Path
         $cleanTodoLines += "* $($todo.Path)"
     }
-    $cleanTodoLines += "    * $($todo.LineNum) $($todo.Task)"
+    $cleanTodoLines += "** $($todo.LineNum) $($todo.Task)"
 }
 
 $encoding = New-Object System.Text.UTF8Encoding($true)
