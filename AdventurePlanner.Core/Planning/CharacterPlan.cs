@@ -64,6 +64,9 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("level_plans", Required = Required.Always)]
         public IList<LevelPlan> LevelPlans { get; set; }
 
+        [JsonProperty("armor", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IList<ArmorPlan> ArmorPlans { get; set; }
+
         // TODO: :question: Consider moving ToSnapshot into an extension method.
         public CharacterSnapshot ToSnapshot(int level)
         {
@@ -148,6 +151,17 @@ namespace AdventurePlanner.Core.Planning
                         Description = feature.Description
                     });
                 }
+            }
+
+            foreach (var armor in ArmorPlans)
+            {
+                snapshot.Armor.Add(new ArmorSnapshot(snapshot)
+                {
+                    ArmorName = armor.ArmorName,
+                    ProficiencyGroup = armor.ProficiencyGroup,
+                    BaseArmorClass = armor.ArmorClass,
+                    MaximumDexterityModifier = armor.MaximumDexterityModifier
+                });
             }
 
             return snapshot;

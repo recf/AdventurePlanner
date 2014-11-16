@@ -123,6 +123,17 @@ namespace AdventurePlannter.Core.Tests
                         ClassPlan = cleric,
                         SetProficiencyBonus = 3
                     }
+                },
+
+                ArmorPlans = new List<ArmorPlan>
+                {
+                    new ArmorPlan
+                    {
+                        ArmorName = "Padded",
+                        ArmorClass = 11,
+                        MaximumDexterityModifier = null,
+                        ProficiencyGroup = "light armor"
+                    }
                 }
             };
 
@@ -185,8 +196,21 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Features.Add(
                 new FeatureSnapshot { Name = "Quick Wits" });
 
+            expectedSnapshot.Armor.Add(new ArmorSnapshot(expectedSnapshot)
+            {
+                ArmorName = "Padded",
+                BaseArmorClass = 11,
+                MaximumDexterityModifier = null,
+                ProficiencyGroup = "light armor"
+            });
+
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
+            AssertEqualSnapshots(actualSnapshot, expectedSnapshot);
+        }
+
+        private void AssertEqualSnapshots(CharacterSnapshot actualSnapshot, CharacterSnapshot expectedSnapshot)
+        {
             Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
             Assert.That(actualSnapshot.Race, Is.EqualTo(expectedSnapshot.Race));
             Assert.That(actualSnapshot.Alignment, Is.EqualTo(expectedSnapshot.Alignment));
@@ -218,7 +242,10 @@ namespace AdventurePlannter.Core.Tests
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
 
-                AssertEquivalentFeatureLists(actual.Features, expected.Features, string.Format("Skills[{0}].Features", skillName));
+                AssertEquivalentLists(
+                    actual.Features, 
+                    expected.Features,
+                    string.Format("Skills[{0}].Features", skillName));
             }
 
             foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
@@ -226,23 +253,29 @@ namespace AdventurePlannter.Core.Tests
                 var actual = actualSnapshot.SavingThrows[savingThrowKey];
                 var expected = expectedSnapshot.SavingThrows[savingThrowKey];
 
-                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "SavingThrows[{0}].IsProficient", savingThrowKey);
+                Assert.That(
+                    actual.IsProficient, 
+                    Is.EqualTo(expected.IsProficient), 
+                    "SavingThrows[{0}].IsProficient",
+                    savingThrowKey);
             }
 
             Assert.That(actualSnapshot.ArmorProficiencies, Is.EquivalentTo(expectedSnapshot.ArmorProficiencies));
             Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
             Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
 
-            AssertEquivalentFeatureLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
+            AssertEquivalentLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
+
+            AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, "Armor");
         }
 
-        private void AssertEquivalentFeatureLists(
-            IList<FeatureSnapshot> actualFeatures,
-            IList<FeatureSnapshot> expectedFeatures,
+        private void AssertEquivalentLists<T>(
+            IList<T> actualList,
+            IList<T> expectedList,
             string context)
         {
-            var actual = actualFeatures.Select(JsonConvert.SerializeObject).ToArray();
-            var expected = expectedFeatures.Select(JsonConvert.SerializeObject).ToArray();
+            var actual = actualList.Select(x => JsonConvert.SerializeObject(x)).ToArray();
+            var expected = expectedList.Select(x => JsonConvert.SerializeObject(x)).ToArray();
 
             Assert.That(actual, Is.EquivalentTo(expected), context);
         }

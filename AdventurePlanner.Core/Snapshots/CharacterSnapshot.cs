@@ -56,6 +56,8 @@ namespace AdventurePlanner.Core.Snapshots
 
         public ISet<string> ArmorProficiencies { get; private set; }
 
+        public IList<ArmorSnapshot> Armor { get; private set; } 
+
         public ISet<string> WeaponProficiencies { get; private set; }
 
         public ISet<string> ToolProficiencies { get; private set; }
@@ -85,6 +87,8 @@ namespace AdventurePlanner.Core.Snapshots
             ArmorProficiencies = new SortedSet<string>();
             WeaponProficiencies = new SortedSet<string>();
             ToolProficiencies = new SortedSet<string>();
+
+            Armor = new List<ArmorSnapshot>();
         }
     }
 }

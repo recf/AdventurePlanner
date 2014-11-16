@@ -261,6 +261,38 @@
           }
         }
       }
+    },
+    "armor": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "armor_name": {
+            "required": true,
+            "type": "string"
+          },
+          "proficiency_group": {
+            "required": true,
+            "type": "string"
+          },
+          "ac": {
+            "required": true,
+            "type": "integer"
+          },
+          "max_dex": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
     }
   }
 }

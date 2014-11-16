@@ -91,6 +91,20 @@
                 <TabControl x:Name="LevelPlans" DisplayMemberPath="Level"/>
             </TabItem>
             
+            <TabItem Header="Equipment">
+                <TabControl>
+                    <TabItem Header="Weapons">
+                        
+                    </TabItem>
+                    <TabItem Header="Armor">
+                        
+                    </TabItem>
+                    <TabItem Header="Other Equipment">
+                        
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            
         </TabControl>
 
         <GridSplitter Grid.Row="0" Grid.Column="1" />

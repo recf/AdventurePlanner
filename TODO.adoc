@@ -31,8 +31,8 @@
 == Source TODOs
 
 * link:./AdventurePlanner.Core/Planning/CharacterPlan.cs[]
-** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L67[67] :question: Consider moving ToSnapshot into an extension method.
-** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L93[93] :poop: This is really clunky
+** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L70[70] :question: Consider moving ToSnapshot into an extension method.
+** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L96[96] :poop: This is really clunky
 * link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs[]
 ** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L44[44] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
 * link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs[]

@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Planning\ArmorPlan.cs" />
+    <Compile Include="Snapshots\ArmorSnapshot.cs" />
     <Compile Include="TextExtensions.cs" />
     <Compile Include="Meta\Ability.cs" />
     <Compile Include="Meta\Skill.cs" />
