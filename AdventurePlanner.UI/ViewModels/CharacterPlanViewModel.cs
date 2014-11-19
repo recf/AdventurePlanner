@@ -30,11 +30,14 @@ namespace AdventurePlanner.UI.ViewModels
             AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
-            ClassPlans = new ReactiveList<ClassPlanViewModel> { ChangeTrackingEnabled = true };
+            ClassPlans = new ReactiveList<ClassPlanViewModel>();
             Monitor(ClassPlans);
 
-            LevelPlans = new ReactiveList<LevelPlanViewModel> { ChangeTrackingEnabled = true };
+            LevelPlans = new ReactiveList<LevelPlanViewModel>();
             Monitor(LevelPlans);
+
+            ArmorPlans = new ReactiveList<ArmorPlanViewModel>();
+            Monitor(ArmorPlans);
 
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
@@ -181,6 +184,8 @@ namespace AdventurePlanner.UI.ViewModels
         public IReactiveList<ClassPlanViewModel> ClassPlans { get; private set; }
 
         public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
+
+        public IReactiveList<ArmorPlanViewModel> ArmorPlans { get; private set; } 
 
         #endregion
 
@@ -378,6 +383,14 @@ namespace AdventurePlanner.UI.ViewModels
                     }).ToArray(),
             }).ToList();
 
+            plan.ArmorPlans = ArmorPlans.Select(view => new ArmorPlan
+            {
+                ArmorName = view.ArmorName,
+                ArmorClass = view.ArmorClass,
+                ProficiencyGroup = view.ProficiencyGroup,
+                MaximumDexterityModifier = view.MaximumDexterityModifier
+            }).ToList();
+
             return plan;
         }
 
@@ -465,6 +478,18 @@ namespace AdventurePlanner.UI.ViewModels
                 }
 
                 LevelPlans.Add(levelPlanVm);
+            }
+
+            ArmorPlans.Clear();
+            foreach (var armor in plan.ArmorPlans)
+            {
+                ArmorPlans.Add(new ArmorPlanViewModel()
+                {
+                    ArmorName = armor.ArmorName,
+                    ArmorClass = armor.ArmorClass,
+                    ProficiencyGroup = armor.ProficiencyGroup,
+                    MaximumDexterityModifier = armor.MaximumDexterityModifier
+                });
             }
 
             // Set snapshot level last so that the SnapshotMarkdown property is 

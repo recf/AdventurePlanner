@@ -1,6 +1,6 @@
 = Bimpnottin "Filchbatter" Nackle
 :revnumber: 1
-:revdate: 2014-11-08
+:revdate: 2014-11-18
 :version-label: Level
 :nofooter:
 :icons: font
@@ -196,4 +196,19 @@
 *Gnome Cunning*:: Advantage on all mental saves against magic.
 *Speak with Small Beasts*:: Communicate simple ideas with Small or smaller beasts, using sounds and gestures.
 *Tinker*:: 
+
+== Equipment
+
+=== Armor
+
+[cols="3*", options="header"]
+|===
+| AC 
+| Name 
+| Proficiency Group 
+
+| 12
+| Leather Armor
+| icon:check-square-o[]  Light Armor
+|===
 

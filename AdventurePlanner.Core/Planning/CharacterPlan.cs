@@ -153,7 +153,7 @@ namespace AdventurePlanner.Core.Planning
                 }
             }
 
-            foreach (var armor in ArmorPlans)
+            foreach (var armor in ArmorPlans ?? new ArmorPlan[0])
             {
                 snapshot.Armor.Add(new ArmorSnapshot(snapshot)
                 {

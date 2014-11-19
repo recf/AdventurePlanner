@@ -35,8 +35,6 @@ namespace AdventurePlanner.UI.ViewModels
         }
         
         #region Data Properties
-
-        private readonly ObservableAsPropertyHelper<string> _header;
         
         private string _className;
 

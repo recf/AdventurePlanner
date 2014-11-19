@@ -55,6 +55,11 @@ namespace AdventurePlanner.Core
             IList<Dictionary<string, object>> items,
             string columnSpec = null)
         {
+            if (!items.Any())
+            {
+                return builder;
+            }
+
             var firstItem = items.First();
 
             if (string.IsNullOrWhiteSpace(columnSpec))
@@ -180,6 +185,20 @@ namespace AdventurePlanner.Core
             var features = snapshot.Features.OrderBy(f => f.Name).ToDictionary(f => f.Name, f => f.Description);
 
             builder.AppendAsciiDocLabeledList(features);
+
+            builder.AppendAsciiDocHeader("Equipment", 2);
+
+            builder.AppendAsciiDocHeader("Armor", 3);
+
+            var armor = snapshot.Armor.Select(
+                a => new Dictionary<string, object>
+                {
+                    { "AC", a.TotalArmorClass },
+                    { "Name", a.ArmorName },
+                    { "Proficiency Group", string.Format("{0} {1}", a.IsProficient.ToAsciiDocCheckbox(), a.ProficiencyGroup) },
+                }).ToList();
+
+            builder.AppendAsciiDocTable(armor);
 
             return builder.ToString();
         }

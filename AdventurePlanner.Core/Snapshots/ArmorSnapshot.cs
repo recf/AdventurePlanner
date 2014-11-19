@@ -25,7 +25,7 @@ namespace AdventurePlanner.Core.Snapshots
 
         public bool IsProficient
         {
-            get { return _character.ArmorProficiencies.Contains(ProficiencyGroup); }
+            get { return _character.ArmorProficiencies.Contains(ProficiencyGroup, StringComparer.InvariantCultureIgnoreCase); }
         }
 
         public int TotalArmorClass

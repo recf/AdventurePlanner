@@ -97,7 +97,7 @@
                         
                     </TabItem>
                     <TabItem Header="Armor">
-                        
+                        <ItemsControl x:Name="ArmorPlans"/>
                     </TabItem>
                     <TabItem Header="Other Equipment">
                         
