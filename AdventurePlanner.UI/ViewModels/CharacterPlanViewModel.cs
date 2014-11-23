@@ -30,6 +30,9 @@ namespace AdventurePlanner.UI.ViewModels
             AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
+            AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorPlanImpl());
+            RemoveArmor = ReactiveCommand.CreateAsyncObservable(armorVm => RemoveArmorImpl((ArmorPlanViewModel)armorVm));
+
             ClassPlans = new ReactiveList<ClassPlanViewModel>();
             Monitor(ClassPlans);
 
@@ -59,6 +62,10 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<ClassPlanViewModel> AddClass { get; private set; }
 
         public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
+
+        public ReactiveCommand<ArmorPlanViewModel> AddArmor { get; set; }
+
+        public ReactiveCommand<ArmorPlanViewModel> RemoveArmor { get; set; }
 
         #region Bookkeeping Properties
 
@@ -315,6 +322,21 @@ namespace AdventurePlanner.UI.ViewModels
             SnapshotLevel = nextLevel.Level;
 
             return Observable.Return(nextLevel);
+        }
+        
+        private IObservable<ArmorPlanViewModel> AddArmorPlanImpl()
+        {
+            var armorVm = new ArmorPlanViewModel();
+            ArmorPlans.Add(armorVm);
+
+            return Observable.Return(armorVm);
+        }
+
+        private IObservable<ArmorPlanViewModel> RemoveArmorImpl(ArmorPlanViewModel armorVm)
+        {
+            ArmorPlans.Remove(armorVm);
+
+            return Observable.Return(armorVm);
         }
 
         #endregion
