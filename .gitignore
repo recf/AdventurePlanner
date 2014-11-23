@@ -19,3 +19,6 @@ StyleCop.Cache
 
 # Resharper
 *.DotSettings.user
+
+#
+docs/examples/*.html

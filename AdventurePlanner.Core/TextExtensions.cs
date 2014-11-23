@@ -40,7 +40,7 @@ namespace AdventurePlanner.Core
         {
             foreach (var kvp in items)
             {
-                builder.AppendLine(string.Format("*{0}*:: {1}", kvp.Key, kvp.Value));
+                builder.AppendLine(string.Format("{0}:: {1}", kvp.Key, kvp.Value.OrEmpty()));
             }
 
             builder.AppendLine();
@@ -73,17 +73,16 @@ namespace AdventurePlanner.Core
 
             foreach (var key in firstItem.Keys)
             {
-                builder.AppendLine(string.Format("| {0} ", key));
+                builder.Append(string.Format("| {0} ", key));
             }
+            builder.AppendLine();
 
             foreach (var item in items)
             {
                 builder.AppendLine();
                 foreach (var key in item.Keys)
                 {
-                    var value = item[key];
-
-                    value = string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
+                    var value = item[key].OrEmpty();
                     
                     builder.AppendLine(string.Format("| {0}", value));
                 }
@@ -93,6 +92,11 @@ namespace AdventurePlanner.Core
             builder.AppendLine();
 
             return builder;
+        }
+
+        public static object OrEmpty(this object value)
+        {
+            return string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
         }
 
         public static string ToText(this CharacterSnapshot snapshot)

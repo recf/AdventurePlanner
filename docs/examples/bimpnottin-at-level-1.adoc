@@ -1,30 +1,28 @@
 = Bimpnottin "Filchbatter" Nackle
 :revnumber: 1
-:revdate: 2014-11-18
+:revdate: 2014-11-23
 :version-label: Level
 :nofooter:
 :icons: font
 
 [horizontal]
-*Class levels*:: Druid 1
-*Race*:: Rock Gnome
-*Speed*:: 25
-*Alignment*:: TN
-*Age*:: 114
-*Weight*:: 45 lbs.
-*Height*:: 3'7"
-*Eyes*:: Gold
-*Skin*:: Tan
-*Hair*:: Moss Green
-*Proficiency Bonus*:: 2
+Class levels:: Druid 1
+Race:: Rock Gnome
+Speed:: 25
+Alignment:: TN
+Age:: 114
+Weight:: 45 lbs.
+Height:: 3'7"
+Eyes:: Gold
+Skin:: Tan
+Hair:: Moss Green
+Proficiency Bonus:: 2
 
 == Ability Scores
 
 [cols="3*", options="header"]
 |===
-| Ability 
-| Score 
-| Mod 
+| Ability | Score | Mod 
 
 | Str
 | 16
@@ -55,9 +53,7 @@
 
 [cols="1*,a,1*", options="header"]
 |===
-| Prof 
-| Mod 
-| Saving Throw 
+| Prof | Mod | Saving Throw 
 
 | icon:square-o[] 
 | 3
@@ -88,10 +84,7 @@
 
 [cols="a,2*,a", options="header"]
 |===
-| Prof 
-| Mod 
-| Skill 
-| Notes 
+| Prof | Mod | Skill | Notes 
 
 | icon:square-o[] 
 | 1
@@ -186,16 +179,16 @@
 
 == Proficiencies
 
-*Armor*:: light armor, medium armor, shields
-*Weapons*:: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
-*Tools*:: herbalism kit
+Armor:: light armor, medium armor, shields
+Weapons:: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
+Tools:: herbalism kit
 
 == Other Features & Traits
 
-*Darkvision 60'*:: 
-*Gnome Cunning*:: Advantage on all mental saves against magic.
-*Speak with Small Beasts*:: Communicate simple ideas with Small or smaller beasts, using sounds and gestures.
-*Tinker*:: 
+Darkvision 60':: {empty}
+Gnome Cunning:: Advantage on all mental saves against magic.
+Speak with Small Beasts:: Communicate simple ideas with Small or smaller beasts, using sounds and gestures.
+Tinker:: {empty}
 
 == Equipment
 
@@ -203,9 +196,7 @@
 
 [cols="3*", options="header"]
 |===
-| AC 
-| Name 
-| Proficiency Group 
+| AC | Name | Proficiency Group 
 
 | 12
 | Leather Armor
