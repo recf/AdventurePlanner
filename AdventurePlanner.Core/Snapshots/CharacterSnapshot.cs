@@ -23,7 +23,7 @@ namespace AdventurePlanner.Core.Snapshots
 
         public int Age { get; set; }
 
-        public int? HeightFeet { get; set; }
+        public int HeightFeet { get; set; }
 
         public int HeightInches { get; set; }
 
@@ -56,7 +56,9 @@ namespace AdventurePlanner.Core.Snapshots
 
         public ISet<string> ArmorProficiencies { get; private set; }
 
-        public IList<ArmorSnapshot> Armor { get; private set; } 
+        public IList<ArmorSnapshot> Armor { get; private set; }
+
+        public IList<AttackSnapshot> Attacks { get; private set; }
 
         public ISet<string> WeaponProficiencies { get; private set; }
 
@@ -89,6 +91,8 @@ namespace AdventurePlanner.Core.Snapshots
             ToolProficiencies = new SortedSet<string>();
 
             Armor = new List<ArmorSnapshot>();
+
+            Attacks = new List<AttackSnapshot>();
         }
     }
 }

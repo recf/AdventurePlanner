@@ -67,6 +67,9 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("armor", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<ArmorPlan> ArmorPlans { get; set; }
 
+        [JsonProperty("weapons", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IList<WeaponPlan> WeaponPlans { get; set; }
+
         // TODO: :question: Consider moving ToSnapshot into an extension method.
         public CharacterSnapshot ToSnapshot(int level)
         {

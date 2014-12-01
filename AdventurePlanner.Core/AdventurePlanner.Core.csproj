@@ -36,6 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Polyhedral">
+      <HintPath>..\packages\Polyhedral.0.1.0.5\lib\net45\Polyhedral.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,8 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conversion\DiceRollConverter.cs" />
     <Compile Include="Planning\ArmorPlan.cs" />
+    <Compile Include="Planning\WeaponPlan.cs" />
     <Compile Include="Snapshots\ArmorSnapshot.cs" />
+    <Compile Include="Snapshots\AttackSnapshot.cs" />
     <Compile Include="TextExtensions.cs" />
     <Compile Include="Meta\Ability.cs" />
     <Compile Include="Meta\Skill.cs" />

@@ -31,11 +31,11 @@
 == Source TODOs
 
 * link:./AdventurePlanner.Core/Planning/CharacterPlan.cs[]
-** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L70[70] :question: Consider moving ToSnapshot into an extension method.
-** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L96[96] :poop: This is really clunky
+** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L73[73] :question: Consider moving ToSnapshot into an extension method.
+** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L99[99] :poop: This is really clunky
 * link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs[]
-** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L47[47] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
+** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L50[50] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
 * link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs[]
 ** link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs#L34[34] :bug: Cannot be deselected. Add Null Item?
 * link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs[]
-** link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs#L21[21] Figure out how I want to test multiple cases (snapshot at different levels, etc).
+** link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs#L22[22] Figure out how I want to test multiple cases (snapshot at different levels, etc).

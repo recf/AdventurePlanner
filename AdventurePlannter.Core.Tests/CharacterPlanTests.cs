@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
+using Polyhedral;
 
 namespace AdventurePlannter.Core.Tests
 {
@@ -22,17 +23,7 @@ namespace AdventurePlannter.Core.Tests
         [Test]
         public void TestToSnapshot()
         {
-            var fighter = new ClassPlan
-            {
-                ClassName = "Fighter",
-
-                ArmorProficiencies = new[] { "All Armor", "Shields" },
-                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                ToolProficiencies = new[] { "Fighter kit" },
-
-                SaveProficiencies = new[] { "Str", "Con" },
-                SkillProficiencies = new[] { "Athletics" },
-            };
+            var fighter = Fighter();
 
             var cleric = new ClassPlan
             {
@@ -74,15 +65,7 @@ namespace AdventurePlannter.Core.Tests
                         Level = 1,
                         ClassPlan = fighter,
 
-                        AbilityScoreImprovements = new Dictionary<string, int>()
-                        {
-                            { "Str", 10 },
-                            { "Dex", 12 },
-                            { "Con", 14 },
-                            { "Int", 8 },
-                            { "Wis", 15 },
-                            { "Cha", 11 },
-                        },
+                        AbilityScoreImprovements = AbilityScores(10, 12, 14, 8, 15, 11),
 
                         SetProficiencyBonus = 2,
 
@@ -209,6 +192,46 @@ namespace AdventurePlannter.Core.Tests
             AssertEqualSnapshots(actualSnapshot, expectedSnapshot);
         }
 
+        #region Construction Helpers
+
+        public ClassPlan Fighter()
+        {
+            return new ClassPlan
+            {
+                ClassName = "Fighter",
+
+                ArmorProficiencies = new[] { "All Armor", "Shields" },
+                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                ToolProficiencies = new[] { "Fighter kit" },
+
+                SaveProficiencies = new[] { "Str", "Con" },
+                SkillProficiencies = new[] { "Athletics" },
+            };
+        }
+
+        public IDictionary<string, int> AbilityScores(
+            int strScore = 10,
+            int dexScore = 10,
+            int conScore = 10,
+            int intScore = 10,
+            int wisScore = 10,
+            int chaScore = 10)
+        {
+            return new Dictionary<string, int>()
+            {
+                { "Str", strScore },
+                { "Dex", dexScore },
+                { "Con", conScore },
+                { "Int", intScore },
+                { "Wis", wisScore },
+                { "Cha", chaScore },
+            };
+        }
+
+        #endregion
+
+        #region Assertion Helpers
+
         private void AssertEqualSnapshots(CharacterSnapshot actualSnapshot, CharacterSnapshot expectedSnapshot)
         {
             Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
@@ -242,8 +265,8 @@ namespace AdventurePlannter.Core.Tests
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
 
-                AssertEquivalentLists(
-                    actual.Features, 
+                AssertionHelpers.AssertEquivalentLists(
+                    actual.Features,
                     expected.Features,
                     string.Format("Skills[{0}].Features", skillName));
             }
@@ -254,8 +277,8 @@ namespace AdventurePlannter.Core.Tests
                 var expected = expectedSnapshot.SavingThrows[savingThrowKey];
 
                 Assert.That(
-                    actual.IsProficient, 
-                    Is.EqualTo(expected.IsProficient), 
+                    actual.IsProficient,
+                    Is.EqualTo(expected.IsProficient),
                     "SavingThrows[{0}].IsProficient",
                     savingThrowKey);
             }
@@ -264,20 +287,11 @@ namespace AdventurePlannter.Core.Tests
             Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
             Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
 
-            AssertEquivalentLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
+            AssertionHelpers.AssertEquivalentLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
 
-            AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, "Armor");
+            AssertionHelpers.AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, "Armor");
         }
 
-        private void AssertEquivalentLists<T>(
-            IList<T> actualList,
-            IList<T> expectedList,
-            string context)
-        {
-            var actual = actualList.Select(x => JsonConvert.SerializeObject(x)).ToArray();
-            var expected = expectedList.Select(x => JsonConvert.SerializeObject(x)).ToArray();
-
-            Assert.That(actual, Is.EquivalentTo(expected), context);
-        }
+        #endregion
     }
 }

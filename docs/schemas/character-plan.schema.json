@@ -293,6 +293,90 @@
           }
         }
       }
+    },
+    "weapons": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "name": {
+            "required": true,
+            "type": "string"
+          },
+          "proficiency_group": {
+            "required": true,
+            "type": "string"
+          },
+          "has_ammo": {
+            "type": "boolean",
+            "default": false
+          },
+          "damage_dice": {
+            "required": true,
+            "type": "object",
+            "properties": {
+              "D4": {
+                "required": true,
+                "type": "integer"
+              },
+              "D6": {
+                "required": true,
+                "type": "integer"
+              },
+              "D8": {
+                "required": true,
+                "type": "integer"
+              },
+              "D10": {
+                "required": true,
+                "type": "integer"
+              },
+              "D12": {
+                "required": true,
+                "type": "integer"
+              },
+              "D20": {
+                "required": true,
+                "type": "integer"
+              },
+              "D100": {
+                "required": true,
+                "type": "integer"
+              },
+              "Modifier": {
+                "required": true,
+                "type": "integer"
+              },
+              "MaximumRoll": {
+                "required": true,
+                "type": "integer"
+              }
+            }
+          },
+          "damage_type": {
+            "required": true,
+            "type": "string"
+          },
+          "range": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "max_range": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
     }
   }
 }
