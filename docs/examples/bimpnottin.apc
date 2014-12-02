@@ -122,5 +122,13 @@
       "proficiency_group": "Light Armor",
       "ac": 11
     }
+  ],
+  "weapons": [
+    {
+      "name": "Scimitar",
+      "proficiency_group": "scimitars",
+      "damage_dice": "d6",
+      "damage_type": "slashing"
+    }
   ]
 }

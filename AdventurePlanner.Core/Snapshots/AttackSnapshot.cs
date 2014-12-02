@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Polyhedral;
 
 namespace AdventurePlanner.Core.Snapshots
 {
@@ -18,6 +19,10 @@ namespace AdventurePlanner.Core.Snapshots
         public string Name { get; set; }
 
         public AbilitySnapshot Ability { get; set; }
+
+        public DiceRoll DamageDice { get; set; }
+
+        public string DamageType { get; set; }
 
         public int? NormalRange { get; set; }
 

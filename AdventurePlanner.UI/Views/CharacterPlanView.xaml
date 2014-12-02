@@ -95,7 +95,39 @@
             <TabItem Header="Equipment">
                 <TabControl>
                     <TabItem Header="Weapons">
+                        <StackPanel>
+                            <Button Command="{Binding AddWeapon}">
+                                <TextBlock>
+                                    <Run Style="{StaticResource AddIcon}"/>
+                                    <Run Text="Add"/>
+                                </TextBlock>
+                            </Button>
+                            <ItemsControl ItemsSource="{Binding Weapons}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <GroupBox>
+                                            <GroupBox.HeaderTemplate>
+                                                <DataTemplate>
 
+                                                    <WrapPanel HorizontalAlignment="Right">
+                                                        <Button Command="{Binding Path=DataContext.RemoveWeapon, 
+                                                                                  RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                                CommandParameter="{Binding}">
+                                                            <TextBlock>
+                                                                <Run Style="{StaticResource RemoveIcon}"/>
+                                                                <Run Text="Remove"/>
+                                                            </TextBlock>
+                                                        </Button>
+                                                    </WrapPanel>
+
+                                                </DataTemplate>
+                                            </GroupBox.HeaderTemplate>
+                                            <views:WeaponView DataContext="{Binding}"/>
+                                        </GroupBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </TabItem>
                     <TabItem Header="Armor">
                         <StackPanel>
@@ -111,7 +143,7 @@
                                         <GroupBox>
                                             <GroupBox.HeaderTemplate>
                                                 <DataTemplate>
-                                                    
+
                                                     <WrapPanel HorizontalAlignment="Right">
                                                         <Button Command="{Binding DataContext.RemoveArmor, 
                                                                                   RelativeSource={RelativeSource AncestorType=ItemsControl}}" 

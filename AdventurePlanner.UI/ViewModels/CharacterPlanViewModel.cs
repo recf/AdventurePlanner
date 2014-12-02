@@ -31,7 +31,10 @@ namespace AdventurePlanner.UI.ViewModels
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
             AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorPlanImpl());
-            RemoveArmor = ReactiveCommand.CreateAsyncObservable(armorVm => RemoveArmorImpl((ArmorPlanViewModel)armorVm));
+            RemoveArmor = ReactiveCommand.CreateAsyncObservable(vm => RemoveArmorImpl((ArmorPlanViewModel)vm));
+
+            AddWeapon = ReactiveCommand.CreateAsyncObservable(_ => AddWeaponImpl());
+            RemoveWeapon = ReactiveCommand.CreateAsyncObservable(vm => RemoveWeaponImpl((WeaponViewModel)vm));
 
             ClassPlans = new ReactiveList<ClassPlanViewModel>();
             Monitor(ClassPlans);
@@ -41,6 +44,9 @@ namespace AdventurePlanner.UI.ViewModels
 
             ArmorPlans = new ReactiveList<ArmorPlanViewModel>();
             Monitor(ArmorPlans);
+
+            Weapons = new ReactiveList<WeaponViewModel>();
+            Monitor(Weapons);
 
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
@@ -66,6 +72,10 @@ namespace AdventurePlanner.UI.ViewModels
         public ReactiveCommand<ArmorPlanViewModel> AddArmor { get; set; }
 
         public ReactiveCommand<ArmorPlanViewModel> RemoveArmor { get; set; }
+        
+        public ReactiveCommand<WeaponViewModel> AddWeapon { get; set; }
+
+        public ReactiveCommand<WeaponViewModel> RemoveWeapon { get; set; }
 
         #region Bookkeeping Properties
 
@@ -192,7 +202,9 @@ namespace AdventurePlanner.UI.ViewModels
 
         public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
 
-        public IReactiveList<ArmorPlanViewModel> ArmorPlans { get; private set; } 
+        public IReactiveList<ArmorPlanViewModel> ArmorPlans { get; private set; }
+
+        public IReactiveList<WeaponViewModel> Weapons { get; private set; }
 
         #endregion
 
@@ -323,7 +335,8 @@ namespace AdventurePlanner.UI.ViewModels
 
             return Observable.Return(nextLevel);
         }
-        
+
+        // TODO: AddArmorPlanImpl, etc are small enough that they would probably better inline.
         private IObservable<ArmorPlanViewModel> AddArmorPlanImpl()
         {
             var armorVm = new ArmorPlanViewModel();
@@ -337,6 +350,21 @@ namespace AdventurePlanner.UI.ViewModels
             ArmorPlans.Remove(armorVm);
 
             return Observable.Return(armorVm);
+        }
+
+        private IObservable<WeaponViewModel> AddWeaponImpl()
+        {
+            var weaponVm = new WeaponViewModel();
+            Weapons.Add(weaponVm);
+
+            return Observable.Return(weaponVm);
+        }
+
+        private IObservable<WeaponViewModel> RemoveWeaponImpl(WeaponViewModel weaponVm)
+        {
+            Weapons.Remove(weaponVm);
+
+            return Observable.Return(weaponVm);
         }
 
         #endregion
@@ -411,6 +439,18 @@ namespace AdventurePlanner.UI.ViewModels
                 ArmorClass = view.ArmorClass,
                 ProficiencyGroup = view.ProficiencyGroup,
                 MaximumDexterityModifier = view.MaximumDexterityModifier
+            }).ToList();
+
+            plan.WeaponPlans = Weapons.Select(view => new WeaponPlan
+            {
+                Name = view.Name,
+                ProficiencyGroup = view.ProficiencyGroup,
+                DamageDice = view.DamageDice,
+                DamageType = view.DamageType,
+
+                NormalRange = view.NormalRange,
+                MaximumRange = view.MaximumRange,
+                HasAmmunition = view.HasAmmunition
             }).ToList();
 
             return plan;
@@ -511,6 +551,22 @@ namespace AdventurePlanner.UI.ViewModels
                     ArmorClass = armor.ArmorClass,
                     ProficiencyGroup = armor.ProficiencyGroup,
                     MaximumDexterityModifier = armor.MaximumDexterityModifier
+                });
+            }
+
+            Weapons.Clear();
+            foreach (var weapon in plan.WeaponPlans ?? new WeaponPlan[0])
+            {
+                Weapons.Add(new WeaponViewModel
+                {
+                    Name = weapon.Name,
+                    ProficiencyGroup = weapon.ProficiencyGroup,
+                    DamageDice = weapon.DamageDice,
+                    DamageType = weapon.DamageType,
+
+                    NormalRange = weapon.NormalRange,
+                    MaximumRange = weapon.MaximumRange,
+                    HasAmmunition = weapon.HasAmmunition
                 });
             }
 

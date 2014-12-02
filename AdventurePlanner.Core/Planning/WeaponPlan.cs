@@ -50,6 +50,8 @@ namespace AdventurePlanner.Core.Planning
             {
                 Name = Name,
                 Ability = ability,
+                DamageDice = DamageDice ?? new DiceRoll() + ability.Modifier,
+                DamageType = DamageType,
                 NormalRange = NormalRange,
                 MaximumRange = MaximumRange,
             };

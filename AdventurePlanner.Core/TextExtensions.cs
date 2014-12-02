@@ -192,6 +192,18 @@ namespace AdventurePlanner.Core
 
             builder.AppendAsciiDocHeader("Equipment", 2);
 
+            builder.AppendAsciiDocHeader("Weapons & Attacks", 3);
+
+            var attacks = snapshot.Attacks.Select(
+                a => new Dictionary<string, object>
+                {
+                    { "Attack", a.Name },
+                    { "Attack Bonus", a.AttackModifier },
+                    { "Damage", string.Format("{0}/{1}", a.DamageDice, a.DamageType) }
+                }).ToList();
+
+            builder.AppendAsciiDocTable(attacks);
+
             builder.AppendAsciiDocHeader("Armor", 3);
 
             var armor = snapshot.Armor.Select(

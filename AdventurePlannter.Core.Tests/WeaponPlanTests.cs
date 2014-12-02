@@ -51,6 +51,8 @@ namespace AdventurePlannter.Core.Tests
                 {
                     Name = "Flail",
                     Ability = strength,
+                    DamageDice = new DiceRoll(d8: 1, modifier: 1),
+                    DamageType = "blugeoning"
                 }
             };
 
@@ -75,14 +77,16 @@ namespace AdventurePlannter.Core.Tests
 
             var snapshot = new CharacterSnapshot();
             var dex = snapshot.Abilities["Dex"];
-            dex.Score = 10;
+            dex.Score = 14;
 
             var expectedAttacks = new List<AttackSnapshot>()
             {
                 new AttackSnapshot(snapshot)
                 {
                     Name = "Crossbow, light",
-                    Ability = dex, 
+                    DamageDice = new DiceRoll(d8: 1, modifier: 2),
+                    DamageType = "piercing",
+                    Ability = dex,
                     NormalRange = 80,
                     MaximumRange = 320
                 }

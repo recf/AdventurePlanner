@@ -39,8 +39,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Polyhedral">
-      <HintPath>..\packages\Polyhedral.0.1.0.5\lib\net45\Polyhedral.dll</HintPath>
+    <Reference Include="Polyhedral, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Polyhedral.0.1.8\lib\net45\Polyhedral.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
