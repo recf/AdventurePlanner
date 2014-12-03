@@ -105,7 +105,7 @@
                             <ItemsControl ItemsSource="{Binding Weapons}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <GroupBox>
+                                        <GroupBox Header="{Binding}">
                                             <GroupBox.HeaderTemplate>
                                                 <DataTemplate>
 
@@ -137,10 +137,10 @@
                                     <Run Text="Add"/>
                                 </TextBlock>
                             </Button>
-                            <ItemsControl x:Name="ArmorPlans" ItemsSource="{Binding ArmorPlans}">
+                            <ItemsControl ItemsSource="{Binding ArmorPlans}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <GroupBox>
+                                        <GroupBox Header="{Binding}">
                                             <GroupBox.HeaderTemplate>
                                                 <DataTemplate>
 
