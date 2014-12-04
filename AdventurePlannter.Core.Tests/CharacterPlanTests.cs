@@ -189,7 +189,7 @@ namespace AdventurePlannter.Core.Tests
 
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
-            AssertEqualSnapshots(actualSnapshot, expectedSnapshot);
+            AssertionHelpers.AssertEqualSnapshots(actualSnapshot, expectedSnapshot);
         }
 
         #region Construction Helpers
@@ -229,69 +229,6 @@ namespace AdventurePlannter.Core.Tests
         }
 
         #endregion
-
-        #region Assertion Helpers
-
-        private void AssertEqualSnapshots(CharacterSnapshot actualSnapshot, CharacterSnapshot expectedSnapshot)
-        {
-            Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
-            Assert.That(actualSnapshot.Race, Is.EqualTo(expectedSnapshot.Race));
-            Assert.That(actualSnapshot.Alignment, Is.EqualTo(expectedSnapshot.Alignment));
-            Assert.That(actualSnapshot.Background, Is.EqualTo(expectedSnapshot.Background));
-            Assert.That(actualSnapshot.Age, Is.EqualTo(expectedSnapshot.Age));
-            Assert.That(actualSnapshot.HeightFeet, Is.EqualTo(expectedSnapshot.HeightFeet));
-            Assert.That(actualSnapshot.HeightInches, Is.EqualTo(expectedSnapshot.HeightInches));
-            Assert.That(actualSnapshot.Weight, Is.EqualTo(expectedSnapshot.Weight));
-            Assert.That(actualSnapshot.EyeColor, Is.EqualTo(expectedSnapshot.EyeColor));
-            Assert.That(actualSnapshot.HairColor, Is.EqualTo(expectedSnapshot.HairColor));
-            Assert.That(actualSnapshot.SkinColor, Is.EqualTo(expectedSnapshot.SkinColor));
-
-            Assert.That(actualSnapshot.Classes, Is.EquivalentTo(expectedSnapshot.Classes));
-
-            foreach (var abbr in expectedSnapshot.Abilities.Keys)
-            {
-                var actual = actualSnapshot.Abilities[abbr];
-                var expected = expectedSnapshot.Abilities[abbr];
-
-                Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
-            }
-
-            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
-
-            foreach (var skillName in expectedSnapshot.Skills.Keys)
-            {
-                var actual = actualSnapshot.Skills[skillName];
-                var expected = expectedSnapshot.Skills[skillName];
-
-                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
-
-                AssertionHelpers.AssertEquivalentLists(
-                    actual.Features,
-                    expected.Features,
-                    string.Format("Skills[{0}].Features", skillName));
-            }
-
-            foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
-            {
-                var actual = actualSnapshot.SavingThrows[savingThrowKey];
-                var expected = expectedSnapshot.SavingThrows[savingThrowKey];
-
-                Assert.That(
-                    actual.IsProficient,
-                    Is.EqualTo(expected.IsProficient),
-                    "SavingThrows[{0}].IsProficient",
-                    savingThrowKey);
-            }
-
-            Assert.That(actualSnapshot.ArmorProficiencies, Is.EquivalentTo(expectedSnapshot.ArmorProficiencies));
-            Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
-            Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
-
-            AssertionHelpers.AssertEquivalentLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
-
-            AssertionHelpers.AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, "Armor");
-        }
-
-        #endregion
+        
     }
 }

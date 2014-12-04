@@ -58,9 +58,9 @@ namespace AdventurePlannter.Core.Tests
 
             var actualAttacks = weapon.GetAttacks(snapshot);
 
-            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, string.Empty);
+            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
         }
-
+        
         [Test]
         public void TestRangeAndAmmo()
         {
@@ -94,7 +94,7 @@ namespace AdventurePlannter.Core.Tests
 
             var actualAttacks = weapon.GetAttacks(snapshot);
 
-            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, string.Empty);
+            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
         }
     }
 }

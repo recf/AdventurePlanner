@@ -1,6 +1,6 @@
 = Bimpnottin "Filchbatter" Nackle
 :revnumber: 1
-:revdate: 2014-11-24
+:revdate: 2014-12-03
 :version-label: Level
 :nofooter:
 :icons: font
@@ -191,6 +191,17 @@ Speak with Small Beasts:: Communicate simple ideas with Small or smaller beasts,
 Tinker:: {empty}
 
 == Equipment
+
+=== Weapons & Attacks
+
+[cols="3*", options="header"]
+|===
+| Attack | Attack Bonus | Damage 
+
+| Scimitar
+| 3
+| d6/slashing
+|===
 
 === Armor
 
