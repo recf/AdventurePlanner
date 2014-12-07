@@ -28,5 +28,7 @@
 
         <CheckBox IsChecked="{Binding HasAmmunition}" Content="Has Ammunition?"/>
 
+        <CheckBox IsChecked="{Binding IsLight}" Content="Light"/>
+
     </StackPanel>
 </UserControl>

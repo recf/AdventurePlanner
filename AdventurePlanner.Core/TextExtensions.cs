@@ -194,9 +194,9 @@ namespace AdventurePlanner.Core
 
             builder.AppendAsciiDocHeader("Weapons & Attacks", 3);
 
-            var attacks = snapshot.Attacks.Select(
-                a => new Dictionary<string, object>
+            var attacks = snapshot.Weapons.SelectMany(w=> w.GetAttacks(snapshot), (w, a) => new Dictionary<string, object>
                 {
+                    { "Weapon", w.Name },
                     { "Attack", a.Name },
                     { "Attack Bonus", a.AttackModifier },
                     { "Damage", string.Format("{0}/{1}", a.DamageDice, a.DamageType) }

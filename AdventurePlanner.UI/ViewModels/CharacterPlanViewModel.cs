@@ -450,7 +450,9 @@ namespace AdventurePlanner.UI.ViewModels
 
                 NormalRange = view.NormalRange,
                 MaximumRange = view.MaximumRange,
-                HasAmmunition = view.HasAmmunition
+
+                HasAmmunition = view.HasAmmunition,
+                IsLight = view.IsLight
             }).ToList();
 
             return plan;
@@ -566,7 +568,9 @@ namespace AdventurePlanner.UI.ViewModels
 
                     NormalRange = weapon.NormalRange,
                     MaximumRange = weapon.MaximumRange,
-                    HasAmmunition = weapon.HasAmmunition
+
+                    HasAmmunition = weapon.HasAmmunition,
+                    IsLight = weapon.IsLight
                 });
             }
 

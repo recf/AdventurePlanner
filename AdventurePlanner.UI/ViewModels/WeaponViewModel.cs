@@ -34,6 +34,14 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _hasAmmunition, value); }
         }
 
+        private bool _isLight;
+
+        public bool IsLight
+        {
+            get { return _isLight; }
+            set { this.RaiseAndSetIfChanged(ref _isLight, value); }
+        }
+
         private DiceRoll _damageDice;
 
         public DiceRoll DamageDice

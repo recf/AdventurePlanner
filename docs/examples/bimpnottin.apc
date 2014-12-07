@@ -128,7 +128,8 @@
       "name": "Scimitar",
       "proficiency_group": "scimitars",
       "damage_dice": "d6",
-      "damage_type": "slashing"
+      "damage_type": "slashing",
+      "light": true
     }
   ]
 }

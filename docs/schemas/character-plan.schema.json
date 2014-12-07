@@ -374,6 +374,10 @@
               "integer",
               "null"
             ]
+          },
+          "light": {
+            "required": true,
+            "type": "boolean"
           }
         }
       }

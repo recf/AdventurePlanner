@@ -37,6 +37,9 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("max_range", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public int? MaximumRange { get; set; }
 
+        [JsonProperty("light")]
+        public bool IsLight { get; set; }
+
         public IList<AttackSnapshot> GetAttacks(CharacterSnapshot snapshot)
         {
             var attacks = new List<AttackSnapshot>();
@@ -46,17 +49,31 @@ namespace AdventurePlanner.Core.Planning
             var abilityKey = isRanged ? "Dex" : "Str";
             var ability = snapshot.Abilities[abilityKey];
 
-            var mainAttack = new AttackSnapshot(snapshot)
+            var attackType = isRanged ? "Ranged" : "Melee";
+            var attackName = attackType + " Attack";
+            
+            attacks.Add(new AttackSnapshot(snapshot)
             {
-                Name = Name,
-                Ability = ability,
+                Name = attackName,
+                AttackModifier = ability.Modifier + snapshot.ProficiencyBonus,
                 DamageDice = (DamageDice ?? new DiceRoll()) + ability.Modifier,
                 DamageType = DamageType,
                 NormalRange = NormalRange,
                 MaximumRange = MaximumRange,
-            };
-
-            attacks.Add(mainAttack);
+            });
+            
+            if (IsLight)
+            {
+                attacks.Add(new AttackSnapshot(snapshot)
+                {
+                    Name = attackName+ " (Bonus Action)",
+                    AttackModifier = ability.Modifier + snapshot.ProficiencyBonus,
+                    DamageDice = (DamageDice ?? new DiceRoll()),
+                    DamageType = DamageType,
+                    NormalRange = NormalRange,
+                    MaximumRange = MaximumRange,
+                });
+            }
 
             return attacks;
         }

@@ -14,87 +14,131 @@ namespace AdventurePlannter.Core.Tests
     [TestFixture]
     public class WeaponPlanTests
     {
-        [Test]
-        public void TestAttackModifier([Random(0, 18, 5)] int abilityScore)
+        public class AttackTestCaseData
         {
-            var snapshot = new CharacterSnapshot();
-            var strength = snapshot.Abilities["Str"];
-            strength.Score = abilityScore;
+            public string TestName { get; set; }
 
-            var attack = new AttackSnapshot(snapshot)
+            public CharacterSnapshot Snapshot { get; set; }
+
+            public WeaponPlan Weapon { get; set; }
+
+            public IList<AttackSnapshot> ExpectedAttacks { get; set; }
+
+            #region Overrides of Object
+
+            public override string ToString()
             {
-                Name = "Flail",
-                Ability = strength,
-            };
+                return TestName;
+            }
 
-            Assert.That(attack.AttackModifier, Is.EqualTo(attack.Ability.Modifier));
+            #endregion
+        }
+
+        public IEnumerable<AttackTestCaseData> AttackCases
+        {
+            get
+            {
+                var snapshot = new CharacterSnapshot();
+                snapshot.Abilities["Str"].Score = 16;
+                snapshot.Abilities["Dex"].Score = 12;
+
+                snapshot.ProficiencyBonus = 2;
+                snapshot.WeaponProficiencies.Add("Flails");
+                snapshot.WeaponProficiencies.Add("Crossbows");
+                snapshot.WeaponProficiencies.Add("Shortswords");
+
+                yield return new AttackTestCaseData()
+                {
+                    TestName = "Proficient Melee Weapon",
+                    Snapshot = snapshot,
+                    Weapon = new WeaponPlan
+                    {
+                        Name = "Flail",
+                        ProficiencyGroup = "Flails",
+                        DamageDice = new DiceRoll(d8: 1),
+                        DamageType = "blugeoning"
+                    },
+                    ExpectedAttacks = new List<AttackSnapshot>()
+                    {
+                        new AttackSnapshot(snapshot)
+                        {
+                            Name = "Melee Attack",
+                            AttackModifier = 5,
+                            DamageDice = new DiceRoll(d8: 1, modifier: 3),
+                            DamageType = "blugeoning"
+                        }
+                    }
+                };
+
+                yield return new AttackTestCaseData()
+                {
+                    TestName = "Proficient Ranged Weapon",
+                    Snapshot = snapshot,
+                    Weapon = new WeaponPlan
+                    {
+                        Name = "Crossbow, light",
+                        ProficiencyGroup = "Crossbows",
+                        NormalRange = 80,
+                        MaximumRange = 320,
+                        HasAmmunition = true,
+                        DamageDice = new DiceRoll(d8: 1),
+                        DamageType = "piercing"
+                    },
+                    ExpectedAttacks = new List<AttackSnapshot>()
+                    {
+                        new AttackSnapshot(snapshot)
+                        {
+                            Name = "Ranged Attack",
+                            AttackModifier = 3,
+                            DamageDice = new DiceRoll(d8: 1, modifier: 1),
+                            DamageType = "piercing",
+                            NormalRange = 80,
+                            MaximumRange = 320
+                        }
+                    }
+                };
+
+                yield return new AttackTestCaseData()
+                {
+                    TestName = "Proficient Light Melee Weapon",
+                    Snapshot = snapshot,
+                    Weapon = new WeaponPlan
+                    {
+                        Name = "Shortsword",
+                        ProficiencyGroup = "Shortswords",
+                        IsLight= true,
+                        DamageDice = new DiceRoll(d6: 1),
+                        DamageType = "piercing"
+                    },
+                    ExpectedAttacks = new List<AttackSnapshot>()
+                    {
+                        new AttackSnapshot(snapshot)
+                        {
+                            Name = "Melee Attack",
+                            AttackModifier = 5,
+                            DamageDice = new DiceRoll(d6: 1, modifier: 3),
+                            DamageType = "piercing"
+                        },
+                        
+                        new AttackSnapshot(snapshot)
+                        {
+                            Name = "Melee Attack (Bonus Action)",
+                            AttackModifier = 5,
+                            DamageDice = new DiceRoll(d6: 1),
+                            DamageType = "piercing"
+                        }
+                    }
+                };
+            }
         }
 
         [Test]
-        public void TestBasicMeleeAttack()
+        [TestCaseSource("AttackCases")]
+        public void TestGetAttacks(AttackTestCaseData caseData)
         {
-            var weapon = new WeaponPlan
-            {
-                Name = "Flail",
-                ProficiencyGroup = "Flails",
-                DamageDice = new DiceRoll(d8: 1),
-                DamageType = "blugeoning"
-            };
-            
-            var snapshot = new CharacterSnapshot();
-            var strength = snapshot.Abilities["Str"];
-            strength.Score = 12;
+            var actualAttacks = caseData.Weapon.GetAttacks(caseData.Snapshot);
 
-            var expectedAttacks = new List<AttackSnapshot>()
-            {
-                new AttackSnapshot(snapshot)
-                {
-                    Name = "Flail",
-                    Ability = strength,
-                    DamageDice = new DiceRoll(d8: 1, modifier: 1),
-                    DamageType = "blugeoning"
-                }
-            };
-
-            var actualAttacks = weapon.GetAttacks(snapshot);
-
-            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
-        }
-        
-        [Test]
-        public void TestRangeAndAmmo()
-        {
-            var weapon = new WeaponPlan
-            {
-                Name = "Crossbow, light",
-                ProficiencyGroup = "Crossbows",
-                NormalRange = 80,
-                MaximumRange = 320,
-                HasAmmunition = true,
-                DamageDice = new DiceRoll(d8: 1),
-                DamageType = "piercing"
-            };
-
-            var snapshot = new CharacterSnapshot();
-            var dex = snapshot.Abilities["Dex"];
-            dex.Score = 14;
-
-            var expectedAttacks = new List<AttackSnapshot>()
-            {
-                new AttackSnapshot(snapshot)
-                {
-                    Name = "Crossbow, light",
-                    DamageDice = new DiceRoll(d8: 1, modifier: 2),
-                    DamageType = "piercing",
-                    Ability = dex,
-                    NormalRange = 80,
-                    MaximumRange = 320
-                }
-            };
-
-            var actualAttacks = weapon.GetAttacks(snapshot);
-
-            AssertionHelpers.AssertEquivalentLists(actualAttacks, expectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
+            AssertionHelpers.AssertEquivalentLists(actualAttacks, caseData.ExpectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
         }
     }
 }

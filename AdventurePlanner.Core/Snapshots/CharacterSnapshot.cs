@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Planning;
 
 namespace AdventurePlanner.Core.Snapshots
 {
@@ -57,10 +58,10 @@ namespace AdventurePlanner.Core.Snapshots
         public ISet<string> ArmorProficiencies { get; private set; }
 
         public IList<ArmorSnapshot> Armor { get; private set; }
-
-        public IList<AttackSnapshot> Attacks { get; private set; }
-
+        
         public ISet<string> WeaponProficiencies { get; private set; }
+
+        public IList<WeaponPlan> Weapons { get; private set; }
 
         public ISet<string> ToolProficiencies { get; private set; }
 
@@ -91,8 +92,7 @@ namespace AdventurePlanner.Core.Snapshots
             ToolProficiencies = new SortedSet<string>();
 
             Armor = new List<ArmorSnapshot>();
-
-            Attacks = new List<AttackSnapshot>();
+            Weapons = new List<WeaponPlan>();
         }
     }
 }

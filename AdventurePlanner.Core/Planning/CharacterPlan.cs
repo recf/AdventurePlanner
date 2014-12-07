@@ -169,10 +169,7 @@ namespace AdventurePlanner.Core.Planning
 
             foreach (var weapon in WeaponPlans ?? new WeaponPlan[0])
             {
-                foreach (var attack in weapon.GetAttacks(snapshot))
-                {
-                    snapshot.Attacks.Add(attack);
-                }
+                snapshot.Weapons.Add(weapon);
             }
 
             return snapshot;

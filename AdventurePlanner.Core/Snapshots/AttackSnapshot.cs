@@ -18,8 +18,6 @@ namespace AdventurePlanner.Core.Snapshots
 
         public string Name { get; set; }
 
-        public AbilitySnapshot Ability { get; set; }
-
         public DiceRoll DamageDice { get; set; }
 
         public string DamageType { get; set; }
@@ -28,9 +26,6 @@ namespace AdventurePlanner.Core.Snapshots
 
         public int? MaximumRange { get; set; }
 
-        public int AttackModifier
-        {
-            get { return Ability.Modifier; }
-        }
+        public int AttackModifier { get; set; }
     }
 }
