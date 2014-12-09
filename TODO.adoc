@@ -25,13 +25,17 @@
 
 == Source TODOs
 
+* link:./AdventurePlanner.Core/Domain/AbilityScore.cs[]
+** link:./AdventurePlanner.Core/Domain/AbilityScore.cs#L9[9] :question: make these actual ability objects?
+* link:./AdventurePlanner.Core/Domain/SkillScore.cs[]
+** link:./AdventurePlanner.Core/Domain/SkillScore.cs#L13[13] :question: Make this an actual Skill object?
 * link:./AdventurePlanner.Core/Planning/CharacterPlan.cs[]
 ** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L72[72] :question: Consider moving ToSnapshot into an extension method.
 ** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L98[98] :poop: This is really clunky
 * link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs[]
-** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L57[57] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
-** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L340[340] AddArmorPlanImpl, etc are small enough that they would probably better inline.
+** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L56[56] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
+** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L339[339] AddArmorPlanImpl, etc are small enough that they would probably better inline.
 * link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs[]
 ** link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs#L34[34] :bug: Cannot be deselected. Add Null Item?
 * link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs[]
-** link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs#L22[22] Figure out how I want to test multiple cases (snapshot at different levels, etc).
+** link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs#L21[21] Figure out how I want to test multiple cases (snapshot at different levels, etc).

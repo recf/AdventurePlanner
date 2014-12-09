@@ -70,7 +70,7 @@ namespace AdventurePlanner.Core.Planning
         public IList<WeaponPlan> WeaponPlans { get; set; }
 
         // TODO: :question: Consider moving ToSnapshot into an extension method.
-        public CharacterSnapshot ToSnapshot(int level)
+        public PlayerCharacter ToSnapshot(int level)
         {
             var applicableLevels = LevelPlans.Where(l => l.Level <= level).ToList();
 
@@ -80,7 +80,7 @@ namespace AdventurePlanner.Core.Planning
                                          into c
                                          select new { c.Key, Value = c.Count() }).ToList();
 
-            var snapshot = new CharacterSnapshot
+            var snapshot = new PlayerCharacter
             {
                 Name = Name,
                 Race = Race,

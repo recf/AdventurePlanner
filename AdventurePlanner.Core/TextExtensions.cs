@@ -100,7 +100,7 @@ namespace AdventurePlanner.Core
             return string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
         }
 
-        public static string ToText(this CharacterSnapshot snapshot)
+        public static string ToText(this PlayerCharacter snapshot)
         {
             var builder = new StringBuilder();
 

@@ -17,7 +17,7 @@ namespace AdventurePlannter.Core.Tests
         {
             var prof = "light armor";
 
-            var character = new CharacterSnapshot();
+            var character = new PlayerCharacter();
 
             var armor = new Armor
             {
@@ -38,7 +38,7 @@ namespace AdventurePlannter.Core.Tests
         [TestCase(18, 0, 18)]
         public void TestArmorClass(int baseAc, int? maxDexMod, int expectedTotalAc)
         {
-            var character = new CharacterSnapshot();
+            var character = new PlayerCharacter();
             var dex = character.Abilities["Dex"];
             dex.Score = 16;
 

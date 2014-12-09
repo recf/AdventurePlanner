@@ -18,7 +18,7 @@ namespace AdventurePlannter.Core.Tests
         [TestCase(12, 1)]
         public void TestModifier(int score, int expectedModifier)
         {
-            var a = new AbilitySnapshot("Tes", "Test Ability") { Score = score };
+            var a = new AbilityScore("Tes", "Test Ability") { Score = score };
             Assert.That(a.Modifier, Is.EqualTo(expectedModifier));
         }
     }

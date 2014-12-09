@@ -2,14 +2,15 @@
 
 namespace AdventurePlanner.Core.Domain
 {
-    public class SkillSnapshot
+    public class SkillScore
     {
-        private readonly CharacterSnapshot _character;
+        private readonly PlayerCharacter _playerCharacter;
 
-        public SkillSnapshot(CharacterSnapshot character, string skillName, AbilitySnapshot ability)
+        public SkillScore(PlayerCharacter playerCharacter, string skillName, AbilityScore ability)
         {
-            _character = character;
+            _playerCharacter = playerCharacter;
 
+            // TODO: :question: Make this an actual Skill object?
             SkillName = skillName;
             Ability = ability;
 
@@ -18,7 +19,7 @@ namespace AdventurePlanner.Core.Domain
 
         public string SkillName { get; private set; }
 
-        public AbilitySnapshot Ability { get; private set; }
+        public AbilityScore Ability { get; private set; }
 
         public IList<FeatureSnapshot> Features { get; private set; }
 
@@ -26,7 +27,7 @@ namespace AdventurePlanner.Core.Domain
 
         public int Modifier
         {
-            get { return (IsProficient ? _character.ProficiencyBonus : 0) + Ability.Modifier; }
+            get { return (IsProficient ? _playerCharacter.ProficiencyBonus : 0) + Ability.Modifier; }
         }
     }
 }

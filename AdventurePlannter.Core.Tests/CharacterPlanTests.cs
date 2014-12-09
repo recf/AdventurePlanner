@@ -121,7 +121,7 @@ namespace AdventurePlannter.Core.Tests
 
             var snapshotLevel = 20;
 
-            var expectedSnapshot = new CharacterSnapshot
+            var expectedSnapshot = new PlayerCharacter
             {
                 Name = "Balin Thundershield",
                 Race = "Dwarf",

@@ -51,15 +51,15 @@
   <ItemGroup>
     <Compile Include="Conversion\DiceRollConverter.cs" />
     <Compile Include="Domain\Ability.cs" />
-    <Compile Include="Domain\AbilitySnapshot.cs" />
+    <Compile Include="Domain\AbilityScore.cs" />
     <Compile Include="Domain\Armor.cs" />
-    <Compile Include="Domain\AttackSnapshot.cs" />
-    <Compile Include="Domain\CharacterSnapshot.cs" />
+    <Compile Include="Domain\Attack.cs" />
+    <Compile Include="Domain\PlayerCharacter.cs" />
     <Compile Include="Domain\FeatureSnapshot.cs" />
     <Compile Include="Domain\InventoryArmor.cs" />
-    <Compile Include="Domain\SavingThrowSnapshot.cs" />
+    <Compile Include="Domain\SavingThrow.cs" />
     <Compile Include="Domain\Skill.cs" />
-    <Compile Include="Domain\SkillSnapshot.cs" />
+    <Compile Include="Domain\SkillScore.cs" />
     <Compile Include="Planning\CharacterPlan.cs" />
     <Compile Include="Planning\WeaponPlan.cs" />
     <Compile Include="TextExtensions.cs" />

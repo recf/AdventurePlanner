@@ -5,7 +5,7 @@ using AdventurePlanner.Core.Planning;
 
 namespace AdventurePlanner.Core.Domain
 {
-    public class CharacterSnapshot
+    public class PlayerCharacter
     {
         public string Name { get; set; }
 
@@ -42,13 +42,13 @@ namespace AdventurePlanner.Core.Domain
 
         public IDictionary<string, int> Classes { get; set; }
 
-        public IReadOnlyDictionary<string, AbilitySnapshot> Abilities { get; private set; }
+        public IReadOnlyDictionary<string, AbilityScore> Abilities { get; private set; }
 
-        public IReadOnlyDictionary<string, SavingThrowSnapshot> SavingThrows { get; private set; }
+        public IReadOnlyDictionary<string, SavingThrow> SavingThrows { get; private set; }
 
         public int ProficiencyBonus { get; set; }
 
-        public IReadOnlyDictionary<string, SkillSnapshot> Skills { get; private set; }
+        public IReadOnlyDictionary<string, SkillScore> Skills { get; private set; }
 
         public IList<FeatureSnapshot> Features { get; private set; }
 
@@ -62,25 +62,25 @@ namespace AdventurePlanner.Core.Domain
 
         public ISet<string> ToolProficiencies { get; private set; }
 
-        public CharacterSnapshot()
+        public PlayerCharacter()
         {
             var abilities =
-                Ability.All.Select(conf => new AbilitySnapshot(conf.Abbreviation, conf.AbilityName))
+                Ability.All.Select(conf => new AbilityScore(conf.Abbreviation, conf.AbilityName))
                     .ToDictionary(a => a.Abbreviation);
 
-            Abilities = new ReadOnlyDictionary<string, AbilitySnapshot>(abilities);
+            Abilities = new ReadOnlyDictionary<string, AbilityScore>(abilities);
 
             var skills =
-                Skill.All.Select(conf => new SkillSnapshot(this, conf.SkillName, Abilities[conf.Ability]))
+                Skill.All.Select(conf => new SkillScore(this, conf.SkillName, Abilities[conf.Ability]))
                     .ToDictionary(s => s.SkillName);
 
-            Skills = new ReadOnlyDictionary<string, SkillSnapshot>(skills);
+            Skills = new ReadOnlyDictionary<string, SkillScore>(skills);
 
             var savingThrows =
-                Abilities.Values.Select(a => new SavingThrowSnapshot(this, a))
+                Abilities.Values.Select(a => new SavingThrow(this, a))
                     .ToDictionary(s => s.Ability.Abbreviation);
 
-            SavingThrows = new ReadOnlyDictionary<string, SavingThrowSnapshot>(savingThrows);
+            SavingThrows = new ReadOnlyDictionary<string, SavingThrow>(savingThrows);
 
             Features = new List<FeatureSnapshot>();
 

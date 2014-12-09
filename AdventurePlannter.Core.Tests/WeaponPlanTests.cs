@@ -18,11 +18,11 @@ namespace AdventurePlannter.Core.Tests
         {
             public string TestName { get; set; }
 
-            public CharacterSnapshot Snapshot { get; set; }
+            public PlayerCharacter Snapshot { get; set; }
 
             public WeaponPlan Weapon { get; set; }
 
-            public IList<AttackSnapshot> ExpectedAttacks { get; set; }
+            public IList<Attack> ExpectedAttacks { get; set; }
 
             #region Overrides of Object
 
@@ -38,7 +38,7 @@ namespace AdventurePlannter.Core.Tests
         {
             get
             {
-                var snapshot = new CharacterSnapshot();
+                var snapshot = new PlayerCharacter();
                 snapshot.Abilities["Str"].Score = 16;
                 snapshot.Abilities["Dex"].Score = 12;
 
@@ -58,9 +58,9 @@ namespace AdventurePlannter.Core.Tests
                         DamageDice = new DiceRoll(d8: 1),
                         DamageType = "blugeoning"
                     },
-                    ExpectedAttacks = new List<AttackSnapshot>()
+                    ExpectedAttacks = new List<Attack>()
                     {
-                        new AttackSnapshot(snapshot)
+                        new Attack(snapshot)
                         {
                             Name = "Melee Attack",
                             AttackModifier = 5,
@@ -84,9 +84,9 @@ namespace AdventurePlannter.Core.Tests
                         DamageDice = new DiceRoll(d8: 1),
                         DamageType = "piercing"
                     },
-                    ExpectedAttacks = new List<AttackSnapshot>()
+                    ExpectedAttacks = new List<Attack>()
                     {
-                        new AttackSnapshot(snapshot)
+                        new Attack(snapshot)
                         {
                             Name = "Ranged Attack",
                             AttackModifier = 3,
@@ -110,9 +110,9 @@ namespace AdventurePlannter.Core.Tests
                         DamageDice = new DiceRoll(d6: 1),
                         DamageType = "piercing"
                     },
-                    ExpectedAttacks = new List<AttackSnapshot>()
+                    ExpectedAttacks = new List<Attack>()
                     {
-                        new AttackSnapshot(snapshot)
+                        new Attack(snapshot)
                         {
                             Name = "Melee Attack",
                             AttackModifier = 5,
@@ -120,7 +120,7 @@ namespace AdventurePlannter.Core.Tests
                             DamageType = "piercing"
                         },
                         
-                        new AttackSnapshot(snapshot)
+                        new Attack(snapshot)
                         {
                             Name = "Melee Attack (Bonus Action)",
                             AttackModifier = 5,

@@ -2,10 +2,11 @@
 
 namespace AdventurePlanner.Core.Domain
 {
-    public class AbilitySnapshot
+    public class AbilityScore
     {
-        public AbilitySnapshot(string abbreviation, string name)
+        public AbilityScore(string abbreviation, string name)
         {
+            // TODO: :question: make these actual ability objects?
             Abbreviation = abbreviation;
             AbilityName = name;
         }

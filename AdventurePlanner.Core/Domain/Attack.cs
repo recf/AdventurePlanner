@@ -2,13 +2,13 @@
 
 namespace AdventurePlanner.Core.Domain
 {
-    public class AttackSnapshot
+    public class Attack
     {
-        private CharacterSnapshot _character;
+        private PlayerCharacter _playerCharacter;
 
-        public AttackSnapshot(CharacterSnapshot character)
+        public Attack(PlayerCharacter playerCharacter)
         {
-            _character = character;
+            _playerCharacter = playerCharacter;
         }
 
         public string Name { get; set; }

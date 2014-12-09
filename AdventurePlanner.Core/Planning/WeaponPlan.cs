@@ -40,9 +40,9 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("light")]
         public bool IsLight { get; set; }
 
-        public IList<AttackSnapshot> GetAttacks(CharacterSnapshot snapshot)
+        public IList<Attack> GetAttacks(PlayerCharacter snapshot)
         {
-            var attacks = new List<AttackSnapshot>();
+            var attacks = new List<Attack>();
 
             var isRanged = NormalRange.HasValue;
 
@@ -52,7 +52,7 @@ namespace AdventurePlanner.Core.Planning
             var attackType = isRanged ? "Ranged" : "Melee";
             var attackName = attackType + " Attack";
             
-            attacks.Add(new AttackSnapshot(snapshot)
+            attacks.Add(new Attack(snapshot)
             {
                 Name = attackName,
                 AttackModifier = ability.Modifier + snapshot.ProficiencyBonus,
@@ -64,7 +64,7 @@ namespace AdventurePlanner.Core.Planning
             
             if (IsLight)
             {
-                attacks.Add(new AttackSnapshot(snapshot)
+                attacks.Add(new Attack(snapshot)
                 {
                     Name = attackName+ " (Bonus Action)",
                     AttackModifier = ability.Modifier + snapshot.ProficiencyBonus,

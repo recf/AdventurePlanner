@@ -27,36 +27,36 @@ namespace AdventurePlannter.Core.Tests
             }
         }
 
-        public static void AssertEqualSnapshots(CharacterSnapshot actualSnapshot, CharacterSnapshot expectedSnapshot)
+        public static void AssertEqualSnapshots(PlayerCharacter actualChar, PlayerCharacter expectedChar)
         {
-            Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
-            Assert.That(actualSnapshot.Race, Is.EqualTo(expectedSnapshot.Race));
-            Assert.That(actualSnapshot.Alignment, Is.EqualTo(expectedSnapshot.Alignment));
-            Assert.That(actualSnapshot.Background, Is.EqualTo(expectedSnapshot.Background));
-            Assert.That(actualSnapshot.Age, Is.EqualTo(expectedSnapshot.Age));
-            Assert.That(actualSnapshot.HeightFeet, Is.EqualTo(expectedSnapshot.HeightFeet));
-            Assert.That(actualSnapshot.HeightInches, Is.EqualTo(expectedSnapshot.HeightInches));
-            Assert.That(actualSnapshot.Weight, Is.EqualTo(expectedSnapshot.Weight));
-            Assert.That(actualSnapshot.EyeColor, Is.EqualTo(expectedSnapshot.EyeColor));
-            Assert.That(actualSnapshot.HairColor, Is.EqualTo(expectedSnapshot.HairColor));
-            Assert.That(actualSnapshot.SkinColor, Is.EqualTo(expectedSnapshot.SkinColor));
+            Assert.That(actualChar.Name, Is.EqualTo(expectedChar.Name));
+            Assert.That(actualChar.Race, Is.EqualTo(expectedChar.Race));
+            Assert.That(actualChar.Alignment, Is.EqualTo(expectedChar.Alignment));
+            Assert.That(actualChar.Background, Is.EqualTo(expectedChar.Background));
+            Assert.That(actualChar.Age, Is.EqualTo(expectedChar.Age));
+            Assert.That(actualChar.HeightFeet, Is.EqualTo(expectedChar.HeightFeet));
+            Assert.That(actualChar.HeightInches, Is.EqualTo(expectedChar.HeightInches));
+            Assert.That(actualChar.Weight, Is.EqualTo(expectedChar.Weight));
+            Assert.That(actualChar.EyeColor, Is.EqualTo(expectedChar.EyeColor));
+            Assert.That(actualChar.HairColor, Is.EqualTo(expectedChar.HairColor));
+            Assert.That(actualChar.SkinColor, Is.EqualTo(expectedChar.SkinColor));
 
-            Assert.That(actualSnapshot.Classes, Is.EquivalentTo(expectedSnapshot.Classes));
+            Assert.That(actualChar.Classes, Is.EquivalentTo(expectedChar.Classes));
 
-            foreach (var abbr in expectedSnapshot.Abilities.Keys)
+            foreach (var abbr in expectedChar.Abilities.Keys)
             {
-                var actual = actualSnapshot.Abilities[abbr];
-                var expected = expectedSnapshot.Abilities[abbr];
+                var actual = actualChar.Abilities[abbr];
+                var expected = expectedChar.Abilities[abbr];
 
                 Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
             }
 
-            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
+            Assert.That(actualChar.ProficiencyBonus, Is.EqualTo(expectedChar.ProficiencyBonus));
 
-            foreach (var skillName in expectedSnapshot.Skills.Keys)
+            foreach (var skillName in expectedChar.Skills.Keys)
             {
-                var actual = actualSnapshot.Skills[skillName];
-                var expected = expectedSnapshot.Skills[skillName];
+                var actual = actualChar.Skills[skillName];
+                var expected = expectedChar.Skills[skillName];
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
 
@@ -68,10 +68,10 @@ namespace AdventurePlannter.Core.Tests
                     string.Format("Skills[{0}].Features", skillName));
             }
 
-            foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
+            foreach (var savingThrowKey in expectedChar.SavingThrows.Keys)
             {
-                var actual = actualSnapshot.SavingThrows[savingThrowKey];
-                var expected = expectedSnapshot.SavingThrows[savingThrowKey];
+                var actual = actualChar.SavingThrows[savingThrowKey];
+                var expected = expectedChar.SavingThrows[savingThrowKey];
 
                 Assert.That(
                     actual.IsProficient,
@@ -80,18 +80,18 @@ namespace AdventurePlannter.Core.Tests
                     savingThrowKey);
             }
 
-            Assert.That(actualSnapshot.ArmorProficiencies, Is.EquivalentTo(expectedSnapshot.ArmorProficiencies));
-            Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
-            Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
+            Assert.That(actualChar.ArmorProficiencies, Is.EquivalentTo(expectedChar.ArmorProficiencies));
+            Assert.That(actualChar.WeaponProficiencies, Is.EquivalentTo(expectedChar.WeaponProficiencies));
+            Assert.That(actualChar.ToolProficiencies, Is.EquivalentTo(expectedChar.ToolProficiencies));
 
             AssertEquivalentLists(
-                actualSnapshot.Features,
-                expectedSnapshot.Features,
+                actualChar.Features,
+                expectedChar.Features,
                 f => f.Name,
                 AssertEqualFeatures,
                 "Features");
 
-            AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, a => a.Armor.Name, AssertEqualArmor, "Armor");
+            AssertEquivalentLists(actualChar.Armor, expectedChar.Armor, a => a.Armor.Name, AssertEqualArmor, "Armor");
         }
 
         public static void AssertEqualArmor(InventoryArmor actual, InventoryArmor expected, string context)
@@ -108,7 +108,7 @@ namespace AdventurePlannter.Core.Tests
             Assert.That(actual.Description, Is.EqualTo(expected.Description), "{0}.Description", context);
         }
 
-        public static void AssertEqualAttacks(AttackSnapshot actual, AttackSnapshot expected, string context)
+        public static void AssertEqualAttacks(Attack actual, Attack expected, string context)
         {
             Assert.That(actual.Name, Is.EqualTo(expected.Name), "{0}.Name", context);
             Assert.That(actual.AttackModifier, Is.EqualTo(expected.AttackModifier), "{0}.AttackModifier", context);
