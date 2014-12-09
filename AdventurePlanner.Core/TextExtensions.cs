@@ -12,7 +12,7 @@ namespace AdventurePlanner.Core
     {
         public static string ToAsciiDocCheckbox(this bool check)
         {
-            return check ? "icon:check-square-o[] " : "icon:square-o[] ";
+            return check ? "icon:check-square-o[]" : "icon:square-o[]";
         }
 
         public static StringBuilder AppendAsciiDocHeader(this StringBuilder builder, string headerText, int level = 1)
@@ -76,16 +76,17 @@ namespace AdventurePlanner.Core
                 builder.Append(string.Format("| {0} ", key));
             }
             builder.AppendLine();
+            builder.AppendLine();
 
             foreach (var item in items)
             {
-                builder.AppendLine();
                 foreach (var key in item.Keys)
                 {
                     var value = item[key].OrEmpty();
                     
-                    builder.AppendLine(string.Format("| {0}", value));
+                    builder.Append(string.Format("| {0} ", value));
                 }
+                builder.AppendLine();
             }
 
             builder.AppendLine(TableDelim);
