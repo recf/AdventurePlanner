@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using NUnit.Framework;
 
 namespace AdventurePlannter.Core.Tests

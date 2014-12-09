@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using AdventurePlanner.Core.Planning;
-using AdventurePlanner.Core.Snapshots;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -108,11 +107,11 @@ namespace AdventurePlannter.Core.Tests
                     }
                 },
 
-                ArmorPlans = new List<ArmorPlan>
+                ArmorPlans = new List<Armor>
                 {
-                    new ArmorPlan
+                    new Armor
                     {
-                        ArmorName = "Padded",
+                        Name = "Padded",
                         ArmorClass = 11,
                         MaximumDexterityModifier = null,
                         ProficiencyGroup = "light armor"
@@ -179,13 +178,14 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Features.Add(
                 new FeatureSnapshot { Name = "Quick Wits" });
 
-            expectedSnapshot.Armor.Add(new ArmorSnapshot(expectedSnapshot)
+            var armor = new Armor
             {
-                ArmorName = "Padded",
-                BaseArmorClass = 11,
+                Name = "Padded",
+                ArmorClass = 11,
                 MaximumDexterityModifier = null,
                 ProficiencyGroup = "light armor"
-            });
+            };
+            expectedSnapshot.Armor.Add(new InventoryArmor(expectedSnapshot, armor));
 
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 

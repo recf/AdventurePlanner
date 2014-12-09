@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using AdventurePlanner.Core;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using AdventurePlanner.Core.Planning;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -433,9 +433,9 @@ namespace AdventurePlanner.UI.ViewModels
                     }).ToArray(),
             }).ToList();
 
-            plan.ArmorPlans = ArmorPlans.Select(view => new ArmorPlan
+            plan.ArmorPlans = ArmorPlans.Select(view => new Armor
             {
-                ArmorName = view.ArmorName,
+                Name = view.ArmorName,
                 ArmorClass = view.ArmorClass,
                 ProficiencyGroup = view.ProficiencyGroup,
                 MaximumDexterityModifier = view.MaximumDexterityModifier
@@ -549,7 +549,7 @@ namespace AdventurePlanner.UI.ViewModels
             {
                 ArmorPlans.Add(new ArmorPlanViewModel()
                 {
-                    ArmorName = armor.ArmorName,
+                    ArmorName = armor.Name,
                     ArmorClass = armor.ArmorClass,
                     ProficiencyGroup = armor.ProficiencyGroup,
                     MaximumDexterityModifier = armor.MaximumDexterityModifier

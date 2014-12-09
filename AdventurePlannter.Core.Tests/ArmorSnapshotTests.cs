@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
+using AdventurePlanner.Core.Planning;
 using NUnit.Framework;
 
 namespace AdventurePlannter.Core.Tests
@@ -17,16 +18,19 @@ namespace AdventurePlannter.Core.Tests
             var prof = "light armor";
 
             var character = new CharacterSnapshot();
-            var armor = new ArmorSnapshot(character)
+
+            var armor = new Armor
             {
                 ProficiencyGroup = prof
             };
 
-            Assert.That(armor.IsProficient, Is.False);
+            var inventoryArmor = new InventoryArmor(character, armor);
+
+            Assert.That(inventoryArmor.IsProficient, Is.False);
 
             character.ArmorProficiencies.Add(prof);
 
-            Assert.That(armor.IsProficient, Is.True);
+            Assert.That(inventoryArmor.IsProficient, Is.True);
         }
 
         [TestCase(11, null, 14)]
@@ -40,13 +44,15 @@ namespace AdventurePlannter.Core.Tests
 
             Assert.That(dex.Modifier, Is.EqualTo(3));
 
-            var armor = new ArmorSnapshot(character)
+            var armor = new Armor
             {
-                BaseArmorClass = baseAc,
+                ArmorClass = baseAc,
                 MaximumDexterityModifier = maxDexMod
             };
 
-            Assert.That(armor.TotalArmorClass, Is.EqualTo(expectedTotalAc));
+            var inventoryArmor = new InventoryArmor(character, armor);
+
+            Assert.That(inventoryArmor.ArmorClass, Is.EqualTo(expectedTotalAc));
         }
     }
 }

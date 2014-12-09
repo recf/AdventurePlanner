@@ -273,7 +273,7 @@
           "null"
         ],
         "properties": {
-          "armor_name": {
+          "name": {
             "required": true,
             "type": "string"
           },

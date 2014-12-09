@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Cryptography;
-using AdventurePlanner.Core.Meta;
 using AdventurePlanner.Core.Planning;
 
-namespace AdventurePlanner.Core.Snapshots
+namespace AdventurePlanner.Core.Domain
 {
     public class CharacterSnapshot
     {
@@ -57,7 +54,7 @@ namespace AdventurePlanner.Core.Snapshots
 
         public ISet<string> ArmorProficiencies { get; private set; }
 
-        public IList<ArmorSnapshot> Armor { get; private set; }
+        public IList<InventoryArmor> Armor { get; private set; }
         
         public ISet<string> WeaponProficiencies { get; private set; }
 
@@ -91,7 +88,7 @@ namespace AdventurePlanner.Core.Snapshots
             WeaponProficiencies = new SortedSet<string>();
             ToolProficiencies = new SortedSet<string>();
 
-            Armor = new List<ArmorSnapshot>();
+            Armor = new List<InventoryArmor>();
             Weapons = new List<WeaponPlan>();
         }
     }

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Linq;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using Newtonsoft.Json;
 
 namespace AdventurePlanner.Core.Planning
@@ -65,7 +64,7 @@ namespace AdventurePlanner.Core.Planning
         public IList<LevelPlan> LevelPlans { get; set; }
 
         [JsonProperty("armor", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public IList<ArmorPlan> ArmorPlans { get; set; }
+        public IList<Armor> ArmorPlans { get; set; }
 
         [JsonProperty("weapons", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<WeaponPlan> WeaponPlans { get; set; }
@@ -156,15 +155,9 @@ namespace AdventurePlanner.Core.Planning
                 }
             }
 
-            foreach (var armor in ArmorPlans ?? new ArmorPlan[0])
+            foreach (var armor in ArmorPlans ?? new Armor[0])
             {
-                snapshot.Armor.Add(new ArmorSnapshot(snapshot)
-                {
-                    ArmorName = armor.ArmorName,
-                    ProficiencyGroup = armor.ProficiencyGroup,
-                    BaseArmorClass = armor.ArmorClass,
-                    MaximumDexterityModifier = armor.MaximumDexterityModifier
-                });
+                snapshot.Armor.Add(new InventoryArmor(snapshot, armor));
             }
 
             foreach (var weapon in WeaponPlans ?? new WeaponPlan[0])

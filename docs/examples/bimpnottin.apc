@@ -118,7 +118,7 @@
   ],
   "armor": [
     {
-      "armor_name": "Leather Armor",
+      "name": "Leather Armor",
       "proficiency_group": "Light Armor",
       "ac": 11
     }

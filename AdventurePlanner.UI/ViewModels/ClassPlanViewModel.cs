@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels

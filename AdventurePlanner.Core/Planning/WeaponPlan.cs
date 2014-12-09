@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core.Conversion;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using Newtonsoft.Json;
 using Polyhedral;
 

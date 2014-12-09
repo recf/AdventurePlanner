@@ -1,6 +1,4 @@
-using AdventurePlanner.Core.Meta;
-
-namespace AdventurePlanner.Core.Snapshots
+namespace AdventurePlanner.Core.Domain
 {
     public class SavingThrowSnapshot
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 
 namespace AdventurePlanner.Core
 {
@@ -210,9 +210,9 @@ namespace AdventurePlanner.Core
             var armor = snapshot.Armor.Select(
                 a => new Dictionary<string, object>
                 {
-                    { "AC", a.TotalArmorClass },
-                    { "Name", a.ArmorName },
-                    { "Proficiency Group", string.Format("{0} {1}", a.IsProficient.ToAsciiDocCheckbox(), a.ProficiencyGroup) },
+                    { "AC", a.ArmorClass },
+                    { "Name", a.Armor.Name },
+                    { "Proficiency Group", string.Format("{0} {1}", a.IsProficient.ToAsciiDocCheckbox(), a.Armor.ProficiencyGroup) },
                 }).ToList();
 
             builder.AppendAsciiDocTable(armor);

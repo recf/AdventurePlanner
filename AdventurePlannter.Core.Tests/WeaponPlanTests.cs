@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using AdventurePlanner.Core.Domain;
 using AdventurePlanner.Core.Planning;
-using AdventurePlanner.Core.Snapshots;
 using NUnit.Framework;
 using Polyhedral;
 

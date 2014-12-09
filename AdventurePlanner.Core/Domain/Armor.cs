@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace AdventurePlanner.Core.Planning
+namespace AdventurePlanner.Core.Domain
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class ArmorPlan
+    public class Armor
     {
-        [JsonProperty("armor_name", Required = Required.Always)]
-        public string ArmorName { get; set; }
+        [JsonProperty("name", Required = Required.Always)]
+        public string Name { get; set; }
 
         [JsonProperty("proficiency_group", Required = Required.Always)]
         public string ProficiencyGroup { get; set; }

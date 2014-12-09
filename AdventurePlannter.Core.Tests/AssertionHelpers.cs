@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -91,15 +91,15 @@ namespace AdventurePlannter.Core.Tests
                 AssertEqualFeatures,
                 "Features");
 
-            AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, a => a.ArmorName, AssertEqualArmor, "Armor");
+            AssertEquivalentLists(actualSnapshot.Armor, expectedSnapshot.Armor, a => a.Armor.Name, AssertEqualArmor, "Armor");
         }
 
-        public static void AssertEqualArmor(ArmorSnapshot actual, ArmorSnapshot expected, string context)
+        public static void AssertEqualArmor(InventoryArmor actual, InventoryArmor expected, string context)
         {
-            Assert.That(actual.ArmorName, Is.EqualTo(expected.ArmorName), "{0}.ArmorName", context);
-            Assert.That(actual.BaseArmorClass, Is.EqualTo(expected.BaseArmorClass), "{0}.BaseArmorClass", context);
-            Assert.That(actual.ProficiencyGroup, Is.EqualTo(expected.ProficiencyGroup), "{0}.ProficiencyGroup", context);
-            Assert.That(actual.MaximumDexterityModifier, Is.EqualTo(expected.MaximumDexterityModifier), "{0}.MaximumDexterityModifier", context);
+            Assert.That(actual.Armor.Name, Is.EqualTo(expected.Armor.Name), "{0}.Name", context);
+            Assert.That(actual.Armor.ArmorClass, Is.EqualTo(expected.Armor.ArmorClass), "{0}.BaseArmorClass", context);
+            Assert.That(actual.Armor.ProficiencyGroup, Is.EqualTo(expected.Armor.ProficiencyGroup), "{0}.ProficiencyGroup", context);
+            Assert.That(actual.Armor.MaximumDexterityModifier, Is.EqualTo(expected.Armor.MaximumDexterityModifier), "{0}.MaximumDexterityModifier", context);
         }
 
         public static void AssertEqualFeatures(FeatureSnapshot actual, FeatureSnapshot expected, string context)

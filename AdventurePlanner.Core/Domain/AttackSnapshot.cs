@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Polyhedral;
+﻿using Polyhedral;
 
-namespace AdventurePlanner.Core.Snapshots
+namespace AdventurePlanner.Core.Domain
 {
     public class AttackSnapshot
     {
