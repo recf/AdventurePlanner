@@ -34,7 +34,7 @@
 ** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L98[98] :poop: This is really clunky
 * link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs[]
 ** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L56[56] Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
-** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L339[339] AddArmorPlanImpl, etc are small enough that they would probably better inline.
+** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L339[339] AddArmorImpl, etc are small enough that they would probably better inline.
 * link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs[]
 ** link:./AdventurePlanner.UI/ViewModels/FeaturePlanViewModel.cs#L34[34] :bug: Cannot be deselected. Add Null Item?
 * link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs[]

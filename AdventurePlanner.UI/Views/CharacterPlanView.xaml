@@ -137,7 +137,7 @@
                                     <Run Text="Add"/>
                                 </TextBlock>
                             </Button>
-                            <ItemsControl ItemsSource="{Binding ArmorPlans}">
+                            <ItemsControl ItemsSource="{Binding Armor}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <GroupBox Header="{Binding}">
@@ -157,7 +157,7 @@
 
                                                 </DataTemplate>
                                             </GroupBox.HeaderTemplate>
-                                            <views:ArmorPlanView DataContext="{Binding}"/>
+                                            <views:ArmorView DataContext="{Binding}"/>
                                         </GroupBox>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

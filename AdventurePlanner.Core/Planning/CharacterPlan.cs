@@ -64,7 +64,7 @@ namespace AdventurePlanner.Core.Planning
         public IList<LevelPlan> LevelPlans { get; set; }
 
         [JsonProperty("armor", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public IList<Armor> ArmorPlans { get; set; }
+        public IList<Armor> Armor { get; set; }
 
         [JsonProperty("weapons", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<Weapon> Weapons { get; set; }
@@ -155,7 +155,7 @@ namespace AdventurePlanner.Core.Planning
                 }
             }
 
-            foreach (var armor in ArmorPlans ?? new Armor[0])
+            foreach (var armor in Armor ?? new Armor[0])
             {
                 snapshot.Armor.Add(new InventoryArmor(snapshot, armor));
             }

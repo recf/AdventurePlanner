@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
 {
-    public class ArmorPlanViewModel : DirtifiableObject
+    public class ArmorViewModel : DirtifiableObject
     {
         private int _armorClass  = 0;
 

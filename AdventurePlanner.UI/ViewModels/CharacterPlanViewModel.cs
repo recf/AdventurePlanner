@@ -30,8 +30,8 @@ namespace AdventurePlanner.UI.ViewModels
             AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
             AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
 
-            AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorPlanImpl());
-            RemoveArmor = ReactiveCommand.CreateAsyncObservable(vm => RemoveArmorImpl((ArmorPlanViewModel)vm));
+            AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorImpl());
+            RemoveArmor = ReactiveCommand.CreateAsyncObservable(vm => RemoveArmorImpl((ArmorViewModel)vm));
 
             AddWeapon = ReactiveCommand.CreateAsyncObservable(_ => AddWeaponImpl());
             RemoveWeapon = ReactiveCommand.CreateAsyncObservable(vm => RemoveWeaponImpl((WeaponViewModel)vm));
@@ -42,8 +42,8 @@ namespace AdventurePlanner.UI.ViewModels
             LevelPlans = new ReactiveList<LevelPlanViewModel>();
             Monitor(LevelPlans);
 
-            ArmorPlans = new ReactiveList<ArmorPlanViewModel>();
-            Monitor(ArmorPlans);
+            Armor = new ReactiveList<ArmorViewModel>();
+            Monitor(Armor);
 
             Weapons = new ReactiveList<WeaponViewModel>();
             Monitor(Weapons);
@@ -69,9 +69,9 @@ namespace AdventurePlanner.UI.ViewModels
 
         public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
 
-        public ReactiveCommand<ArmorPlanViewModel> AddArmor { get; set; }
+        public ReactiveCommand<ArmorViewModel> AddArmor { get; set; }
 
-        public ReactiveCommand<ArmorPlanViewModel> RemoveArmor { get; set; }
+        public ReactiveCommand<ArmorViewModel> RemoveArmor { get; set; }
         
         public ReactiveCommand<WeaponViewModel> AddWeapon { get; set; }
 
@@ -202,7 +202,7 @@ namespace AdventurePlanner.UI.ViewModels
 
         public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
 
-        public IReactiveList<ArmorPlanViewModel> ArmorPlans { get; private set; }
+        public IReactiveList<ArmorViewModel> Armor { get; private set; }
 
         public IReactiveList<WeaponViewModel> Weapons { get; private set; }
 
@@ -336,18 +336,18 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(nextLevel);
         }
 
-        // TODO: AddArmorPlanImpl, etc are small enough that they would probably better inline.
-        private IObservable<ArmorPlanViewModel> AddArmorPlanImpl()
+        // TODO: AddArmorImpl, etc are small enough that they would probably better inline.
+        private IObservable<ArmorViewModel> AddArmorImpl()
         {
-            var armorVm = new ArmorPlanViewModel();
-            ArmorPlans.Add(armorVm);
+            var armorVm = new ArmorViewModel();
+            Armor.Add(armorVm);
 
             return Observable.Return(armorVm);
         }
 
-        private IObservable<ArmorPlanViewModel> RemoveArmorImpl(ArmorPlanViewModel armorVm)
+        private IObservable<ArmorViewModel> RemoveArmorImpl(ArmorViewModel armorVm)
         {
-            ArmorPlans.Remove(armorVm);
+            Armor.Remove(armorVm);
 
             return Observable.Return(armorVm);
         }
@@ -433,7 +433,7 @@ namespace AdventurePlanner.UI.ViewModels
                     }).ToArray(),
             }).ToList();
 
-            plan.ArmorPlans = ArmorPlans.Select(view => new Armor
+            plan.Armor = Armor.Select(view => new Armor
             {
                 Name = view.ArmorName,
                 ArmorClass = view.ArmorClass,
@@ -544,10 +544,10 @@ namespace AdventurePlanner.UI.ViewModels
                 LevelPlans.Add(levelPlanVm);
             }
 
-            ArmorPlans.Clear();
-            foreach (var armor in plan.ArmorPlans)
+            Armor.Clear();
+            foreach (var armor in plan.Armor)
             {
-                ArmorPlans.Add(new ArmorPlanViewModel()
+                Armor.Add(new ArmorViewModel()
                 {
                     ArmorName = armor.Name,
                     ArmorClass = armor.ArmorClass,

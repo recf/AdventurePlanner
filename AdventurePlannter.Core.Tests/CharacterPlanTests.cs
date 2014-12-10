@@ -107,7 +107,7 @@ namespace AdventurePlannter.Core.Tests
                     }
                 },
 
-                ArmorPlans = new List<Armor>
+                Armor = new List<Armor>
                 {
                     new Armor
                     {

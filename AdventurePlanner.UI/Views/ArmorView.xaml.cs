@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AdventurePlanner.UI.Views
 {
     /// <summary>
-    /// Interaction logic for ArmorPlanView.xaml
+    /// Interaction logic for ArmorView.xaml
     /// </summary>
-    public partial class ArmorPlanView : UserControl
+    public partial class ArmorView : UserControl
     {
-        public ArmorPlanView()
+        public ArmorView()
         {
             InitializeComponent();
         }
