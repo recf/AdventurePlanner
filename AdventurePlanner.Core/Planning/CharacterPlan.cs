@@ -67,7 +67,7 @@ namespace AdventurePlanner.Core.Planning
         public IList<Armor> ArmorPlans { get; set; }
 
         [JsonProperty("weapons", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public IList<WeaponPlan> WeaponPlans { get; set; }
+        public IList<Weapon> Weapons { get; set; }
 
         // TODO: :question: Consider moving ToSnapshot into an extension method.
         public PlayerCharacter ToSnapshot(int level)
@@ -160,9 +160,9 @@ namespace AdventurePlanner.Core.Planning
                 snapshot.Armor.Add(new InventoryArmor(snapshot, armor));
             }
 
-            foreach (var weapon in WeaponPlans ?? new WeaponPlan[0])
+            foreach (var weapon in Weapons ?? new Weapon[0])
             {
-                snapshot.Weapons.Add(weapon);
+                snapshot.Weapons.Add(new InventoryWeapon(snapshot, weapon));
             }
 
             return snapshot;

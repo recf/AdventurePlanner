@@ -53,11 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilitySnapshotTests.cs" />
-    <Compile Include="ArmorSnapshotTests.cs" />
+    <Compile Include="InventoryArmorTests.cs" />
     <Compile Include="AssertionHelpers.cs" />
     <Compile Include="CharacterPlanTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WeaponPlanTests.cs" />
+    <Compile Include="InventoryWeaponTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

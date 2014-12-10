@@ -12,7 +12,7 @@ using Polyhedral;
 namespace AdventurePlannter.Core.Tests
 {
     [TestFixture]
-    public class WeaponPlanTests
+    public class InventoryWeaponTests
     {
         public class AttackTestCaseData
         {
@@ -20,7 +20,7 @@ namespace AdventurePlannter.Core.Tests
 
             public PlayerCharacter Snapshot { get; set; }
 
-            public WeaponPlan Weapon { get; set; }
+            public Weapon Weapon { get; set; }
 
             public IList<Attack> ExpectedAttacks { get; set; }
 
@@ -51,7 +51,7 @@ namespace AdventurePlannter.Core.Tests
                 {
                     TestName = "Proficient Melee Weapon",
                     Snapshot = snapshot,
-                    Weapon = new WeaponPlan
+                    Weapon = new Weapon
                     {
                         Name = "Flail",
                         ProficiencyGroup = "Flails",
@@ -74,7 +74,7 @@ namespace AdventurePlannter.Core.Tests
                 {
                     TestName = "Proficient Ranged Weapon",
                     Snapshot = snapshot,
-                    Weapon = new WeaponPlan
+                    Weapon = new Weapon
                     {
                         Name = "Crossbow, light",
                         ProficiencyGroup = "Crossbows",
@@ -102,7 +102,7 @@ namespace AdventurePlannter.Core.Tests
                 {
                     TestName = "Proficient Light Melee Weapon",
                     Snapshot = snapshot,
-                    Weapon = new WeaponPlan
+                    Weapon = new Weapon
                     {
                         Name = "Shortsword",
                         ProficiencyGroup = "Shortswords",
@@ -136,7 +136,8 @@ namespace AdventurePlannter.Core.Tests
         [TestCaseSource("AttackCases")]
         public void TestGetAttacks(AttackTestCaseData caseData)
         {
-            var actualAttacks = caseData.Weapon.GetAttacks(caseData.Snapshot);
+            var invWeapon = new InventoryWeapon(caseData.Snapshot, caseData.Weapon);
+            var actualAttacks = invWeapon.GetAttacks();
 
             AssertionHelpers.AssertEquivalentLists(actualAttacks, caseData.ExpectedAttacks, a => a.Name, AssertionHelpers.AssertEqualAttacks, string.Empty);
         }

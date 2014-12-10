@@ -58,7 +58,7 @@ namespace AdventurePlanner.Core.Domain
         
         public ISet<string> WeaponProficiencies { get; private set; }
 
-        public IList<WeaponPlan> Weapons { get; private set; }
+        public IList<InventoryWeapon> Weapons { get; private set; }
 
         public ISet<string> ToolProficiencies { get; private set; }
 
@@ -89,7 +89,7 @@ namespace AdventurePlanner.Core.Domain
             ToolProficiencies = new SortedSet<string>();
 
             Armor = new List<InventoryArmor>();
-            Weapons = new List<WeaponPlan>();
+            Weapons = new List<InventoryWeapon>();
         }
     }
 }

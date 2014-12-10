@@ -441,7 +441,7 @@ namespace AdventurePlanner.UI.ViewModels
                 MaximumDexterityModifier = view.MaximumDexterityModifier
             }).ToList();
 
-            plan.WeaponPlans = Weapons.Select(view => new WeaponPlan
+            plan.Weapons = Weapons.Select(view => new Weapon
             {
                 Name = view.Name,
                 ProficiencyGroup = view.ProficiencyGroup,
@@ -557,7 +557,7 @@ namespace AdventurePlanner.UI.ViewModels
             }
 
             Weapons.Clear();
-            foreach (var weapon in plan.WeaponPlans ?? new WeaponPlan[0])
+            foreach (var weapon in plan.Weapons ?? new Weapon[0])
             {
                 Weapons.Add(new WeaponViewModel
                 {

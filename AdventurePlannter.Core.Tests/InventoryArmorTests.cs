@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace AdventurePlannter.Core.Tests
 {
     [TestFixture]
-    public class ArmorSnapshotTests
+    public class InventoryArmorTests
     {
         [Test]
         public void TestIsProficient()

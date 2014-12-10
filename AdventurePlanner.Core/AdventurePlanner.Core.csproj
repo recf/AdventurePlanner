@@ -54,14 +54,15 @@
     <Compile Include="Domain\AbilityScore.cs" />
     <Compile Include="Domain\Armor.cs" />
     <Compile Include="Domain\Attack.cs" />
+    <Compile Include="Domain\InventoryWeapon.cs" />
     <Compile Include="Domain\PlayerCharacter.cs" />
     <Compile Include="Domain\FeatureSnapshot.cs" />
     <Compile Include="Domain\InventoryArmor.cs" />
     <Compile Include="Domain\SavingThrow.cs" />
     <Compile Include="Domain\Skill.cs" />
     <Compile Include="Domain\SkillScore.cs" />
+    <Compile Include="Domain\Weapon.cs" />
     <Compile Include="Planning\CharacterPlan.cs" />
-    <Compile Include="Planning\WeaponPlan.cs" />
     <Compile Include="TextExtensions.cs" />
     <Compile Include="Planning\ClassPlan.cs" />
     <Compile Include="Planning\FeaturePlan.cs" />
