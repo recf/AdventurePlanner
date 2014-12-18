@@ -51,18 +51,13 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                ClassPlans = new List<ClassPlan>
-                {
-                    fighter,
-                    cleric
-                },
+                ClassPlan = fighter,
 
                 LevelPlans = new List<LevelPlan>
                 {
                     new LevelPlan
                     {
                         Level = 1,
-                        ClassPlan = fighter,
 
                         AbilityScoreImprovements = AbilityScores(10, 12, 14, 8, 15, 11),
 
@@ -82,17 +77,14 @@ namespace AdventurePlannter.Core.Tests
                     new LevelPlan
                     {
                         Level = 2,
-                        ClassPlan = cleric,
                     },
                     new LevelPlan
                     {
                         Level = 3,
-                        ClassPlan = cleric,
                     },
                     new LevelPlan
                     {
                         Level = 4,
-                        ClassPlan = cleric,
 
                         AbilityScoreImprovements = new Dictionary<string, int>()
                         {
@@ -102,7 +94,6 @@ namespace AdventurePlannter.Core.Tests
                     new LevelPlan
                     {
                         Level = 4,
-                        ClassPlan = cleric,
                         SetProficiencyBonus = 3
                     }
                 },
@@ -136,7 +127,7 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
+                ClassName = "Fighter",
 
                 ProficiencyBonus = 3,
             };

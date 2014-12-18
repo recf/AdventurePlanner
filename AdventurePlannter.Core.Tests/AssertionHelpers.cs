@@ -41,7 +41,7 @@ namespace AdventurePlannter.Core.Tests
             Assert.That(actualChar.HairColor, Is.EqualTo(expectedChar.HairColor));
             Assert.That(actualChar.SkinColor, Is.EqualTo(expectedChar.SkinColor));
 
-            Assert.That(actualChar.Classes, Is.EquivalentTo(expectedChar.Classes));
+            Assert.That(actualChar.ClassName, Is.EqualTo(expectedChar.ClassName));
 
             foreach (var abbr in expectedChar.Abilities.Keys)
             {

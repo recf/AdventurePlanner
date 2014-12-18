@@ -11,17 +11,6 @@
         <StackPanel>
 
             <UniformGrid Columns="2">
-                
-                <Label Content="Class"/>
-                <ComboBox ItemsSource="{Binding AvailableClassPlans}" SelectedItem="{Binding ClassPlan}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <Run Text="{Binding ClassName}"></Run>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
 
                 <Label Content="Set Proficiency Bonus to"/>
                 <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>

@@ -113,13 +113,11 @@ namespace AdventurePlanner.Core
             builder.AppendAsciiDocAttribute("nofooter");
             builder.AppendAsciiDocAttribute("icons", "font");
             builder.AppendLine();
-
-            var classes = snapshot.Classes.Select(kvp => string.Format("{0} {1}", kvp.Key, kvp.Value));
-
+            
             builder.AppendLine("[horizontal]");
             builder.AppendAsciiDocLabeledList(new Dictionary<string, object>
             {
-                { "Class levels", string.Join(", ", classes) }, 
+                { "Class", snapshot.ClassName }, 
                 { "Race", snapshot.Race }, 
                 { "Speed", snapshot.Speed },
                 { "Alignment", snapshot.Alignment }, 

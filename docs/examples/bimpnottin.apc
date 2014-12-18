@@ -12,9 +12,8 @@
   "hair": "Moss Green",
   "skin": "Tan",
   "background": "Hermit",
-  "class_plans": [
+  "class_plan": 
     {
-      "$id": "1",
       "class_name": "Druid",
       "armor_proficiencies": [
         "light armor",
@@ -47,13 +46,10 @@
         "Religion"
       ]
     }
-  ],
+  ,
   "level_plans": [
     {
       "level": 1,
-      "class": {
-        "$ref": "1"
-      },
       "ability_score_improvements": {
         "Str": 16,
         "Dex": 12,
@@ -88,18 +84,12 @@
     },
     {
       "level": 2,
-      "class": {
-        "$ref": "1"
-      },
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
       "features": []
     },
     {
       "level": 3,
-      "class": {
-        "$ref": "1"
-      },
       "ability_score_improvements": {},
       "set_prof_bonus": 2,
       "features": []

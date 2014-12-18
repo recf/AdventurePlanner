@@ -10,9 +10,6 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("level", Required = Required.Always)]
         public int Level { get; set; }
 
-        [JsonProperty("class", Required = Required.Always, IsReference = true)]
-        public ClassPlan ClassPlan { get; set; }
-
         [JsonProperty("ability_score_improvements", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IDictionary<string, int> AbilityScoreImprovements { get; set; }
 

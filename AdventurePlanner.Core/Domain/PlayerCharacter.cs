@@ -35,12 +35,9 @@ namespace AdventurePlanner.Core.Domain
 
         #endregion
 
-        public int CharacterLevel
-        {
-            get { return Classes.Sum(kvp => kvp.Value); }
-        }
+        public int CharacterLevel { get; set; }
 
-        public IDictionary<string, int> Classes { get; set; }
+        public string ClassName { get; set; }
 
         public IReadOnlyDictionary<string, AbilityScore> Abilities { get; private set; }
 

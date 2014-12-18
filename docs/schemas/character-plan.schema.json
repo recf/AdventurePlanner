@@ -57,78 +57,72 @@
       "required": true,
       "type": "string"
     },
-    "class_plans": {
+    "class_plan": {
       "required": true,
-      "type": "array",
-      "items": {
-        "type": [
-          "object",
-          "null"
-        ],
-        "properties": {
-          "class_name": {
-            "required": true,
-            "type": "string"
-          },
-          "armor_proficiencies": {
+      "type": "object",
+      "properties": {
+        "class_name": {
+          "required": true,
+          "type": "string"
+        },
+        "armor_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "weapon_proficiencies": {
+            ]
+          }
+        },
+        "weapon_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "tool_proficiencies": {
+            ]
+          }
+        },
+        "tool_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "save_proficiencies": {
+            ]
+          }
+        },
+        "save_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "skill_proficiencies": {
+            ]
+          }
+        },
+        "skill_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
+            ]
           }
         }
       }
@@ -145,76 +139,6 @@
           "level": {
             "required": true,
             "type": "integer"
-          },
-          "class": {
-            "required": true,
-            "type": "object",
-            "properties": {
-              "class_name": {
-                "required": true,
-                "type": "string"
-              },
-              "armor_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "weapon_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "tool_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "save_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "skill_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              }
-            }
           },
           "ability_score_improvements": {
             "type": [

@@ -62,17 +62,7 @@ namespace AdventurePlanner.UI.ViewModels
             get { return _level; }
             set { this.RaiseAndSetIfChanged(ref _level, value); }
         }
-
-        private ClassPlanViewModel _classPlan;
-
-        public ClassPlanViewModel ClassPlan
-        {
-            get { return _classPlan; }
-            set { this.RaiseAndSetIfChanged(ref _classPlan, value); }
-        }
-
-        public IReactiveList<ClassPlanViewModel> AvailableClassPlans { get; set; }
-
+        
         private int _setProficiencyBonus;
 
         public int SetProficiencyBonus

@@ -15,7 +15,6 @@
         <controls:WindowCommands>
             <Label Content="*" Visibility="{Binding Path=IsDirty, Converter={StaticResource BooleanToVisibility}}"/>
             <Button Content="Load" Command="{Binding Load}"/>
-            <Button Content="Add Class" Command="{Binding AddClass}"/>
             <Button Content="Add Level" Command="{Binding AddLevel}"/>
             <Button Content="Save" Command="{Binding Save}"/>
             <Button Content="Save Current Snapshot" Command="{Binding SaveSnapshot}"/>
@@ -70,22 +69,8 @@
 
         <TabControl Grid.Row="1" Grid.Column="0">
 
-            <TabItem Header="Classes">
-                <TabControl x:Name="ClassPlans" >
-                    <TabControl.Resources>
-                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
-                            <Setter Property="HeaderTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding ClassName, 
-                                            Converter={StaticResource DefaultValueConverter}, 
-                                            ConverterParameter=Not Set}"/>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TabControl.Resources>
-                </TabControl>
+            <TabItem Header="Class Info">
+                <views:ClassPlanView DataContext="{Binding ClassPlan}"/>
             </TabItem>
 
             <TabItem Header="Level Planning">
