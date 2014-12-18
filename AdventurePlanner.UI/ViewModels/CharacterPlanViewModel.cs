@@ -26,9 +26,7 @@ namespace AdventurePlanner.UI.ViewModels
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
 
             SaveSnapshot = ReactiveCommand.CreateAsyncObservable(_ => SaveSnapshotImpl());
-
-            AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
-
+            
             AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorImpl());
             RemoveArmor = ReactiveCommand.CreateAsyncObservable(vm => RemoveArmorImpl((ArmorViewModel)vm));
 
@@ -52,8 +50,10 @@ namespace AdventurePlanner.UI.ViewModels
 
             Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsText, out _snapShotAsText);
 
-            // TODO: Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
-            AddLevel.Execute(null);
+            SetFromPlan(new CharacterPlan
+            {
+                ClassPlan = new ClassPlan()
+            });
             MarkClean();
         }
 
@@ -279,45 +279,6 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(Unit.Default);
         }
 
-        private IObservable<LevelPlanViewModel> AddLevelImpl()
-        {
-            var maxLevel = LevelPlans.LastOrDefault();
-
-            LevelPlanViewModel nextLevel;
-
-            if (maxLevel == null)
-            {
-                nextLevel = new LevelPlanViewModel
-                {
-                    Level = 1,
-                    SetProficiencyBonus = 2
-                };
-
-                foreach (var ability in Ability.All)
-                {
-                    var abilityVm = new AbilityScoreImprovementViewModel { Ability = ability, Improvement = 10 };
-                    abilityVm.AvailableOptions.AddRange(Ability.All);
-
-                    nextLevel.AbilityScoreImprovements.Add(abilityVm);
-                }
-            }
-            else
-            {
-                nextLevel = new LevelPlanViewModel
-                {
-                    Level = maxLevel.Level + 1,
-
-                    SetProficiencyBonus = maxLevel.SetProficiencyBonus
-                };
-            }
-
-            LevelPlans.Add(nextLevel);
-
-            SnapshotLevel = nextLevel.Level;
-
-            return Observable.Return(nextLevel);
-        }
-
         // TODO: AddArmorImpl, etc are small enough that they would probably better inline.
         private IObservable<ArmorViewModel> AddArmorImpl()
         {
@@ -440,6 +401,8 @@ namespace AdventurePlanner.UI.ViewModels
 
         private void SetFromPlan(CharacterPlan plan)
         {
+            EnsureTwentyLevels(plan);
+
             CharacterName = plan.Name;
             Race = plan.Race;
             Speed = plan.Speed;
@@ -466,7 +429,7 @@ namespace AdventurePlanner.UI.ViewModels
                 saveProfVm.IsProficient = saveProfs.Contains(saveProfVm.Ability.Abbreviation);
             }
 
-            var skillProfs = plan.ClassPlan.SkillProficiencies;
+            var skillProfs = plan.ClassPlan.SkillProficiencies ?? new string[0]; 
             foreach (var skillProfVm in ClassPlan.SkillProficiencies)
             {
                 skillProfVm.IsProficient = skillProfs.Contains(skillProfVm.Skill.SkillName);
@@ -492,7 +455,7 @@ namespace AdventurePlanner.UI.ViewModels
                     levelPlanVm.AbilityScoreImprovements.Add(asiVm);
                 }
 
-                foreach (var feature in lp.FeaturePlans)
+                foreach (var feature in lp.FeaturePlans ?? new FeaturePlan[0])
                 {
                     var featureVm = new FeaturePlanViewModel()
                     {
@@ -514,7 +477,7 @@ namespace AdventurePlanner.UI.ViewModels
             }
 
             Armor.Clear();
-            foreach (var armor in plan.Armor)
+            foreach (var armor in plan.Armor ?? new Armor[0])
             {
                 Armor.Add(new ArmorViewModel()
                 {
@@ -547,6 +510,24 @@ namespace AdventurePlanner.UI.ViewModels
             // set correctly. Otherwise it will try to render at a level that 
             // isn't in the list yet.
             SnapshotLevel = plan.SnapshotLevel;
+        }
+
+        private void EnsureTwentyLevels(CharacterPlan plan)
+        {
+            if (plan.LevelPlans == null)
+            {
+                plan.LevelPlans = new List<LevelPlan>();
+            }
+
+            for (var i = 1; i <= 20; i++)
+            {
+                if (plan.LevelPlans.Any(lp => lp.Level == i))
+                {
+                    continue;
+                }
+
+                plan.LevelPlans.Add(new LevelPlan { Level = i });
+            }
         }
 
         #endregion

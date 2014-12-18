@@ -24,18 +24,6 @@ namespace AdventurePlannter.Core.Tests
         {
             var fighter = Fighter();
 
-            var cleric = new ClassPlan
-            {
-                ClassName = "Cleric",
-
-                ArmorProficiencies = new[] { "Light Armor", "Medium Armor", "Shields" },
-                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                ToolProficiencies = new[] { "Cleric kit" },
-
-                SaveProficiencies = new[] { "Wis", "Cha" },
-                SkillProficiencies = new[] { "Perception", "Insight" },
-            };
-
             var plan = new CharacterPlan
             {
                 Name = "Balin Thundershield",
@@ -135,16 +123,12 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Abilities["Dex"].Score = 12;
             expectedSnapshot.Abilities["Con"].Score = 14;
             expectedSnapshot.Abilities["Int"].Score = 8;
-            expectedSnapshot.Abilities["Wis"].Score = 16;
             expectedSnapshot.Abilities["Cha"].Score = 11;
+            expectedSnapshot.Abilities["Wis"].Score = 16;
 
             expectedSnapshot.SavingThrows["Str"].IsProficient = true;
             expectedSnapshot.SavingThrows["Con"].IsProficient = true;
-            expectedSnapshot.SavingThrows["Wis"].IsProficient = true;
-            expectedSnapshot.SavingThrows["Cha"].IsProficient = true;
 
-            expectedSnapshot.Skills["Perception"].IsProficient = true;
-            expectedSnapshot.Skills["Insight"].IsProficient = true;
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
 
             expectedSnapshot.Skills["Acrobatics"].Features.Add(new FeatureSnapshot()
@@ -153,7 +137,7 @@ namespace AdventurePlannter.Core.Tests
                 Description = "Half penalty on rough terrain"
             });
 
-            foreach (var prof in new[] { "All Armor", "Light Armor", "Medium Armor", "Shields" })
+            foreach (var prof in new[] { "All Armor", "Shields" })
             {
                 expectedSnapshot.ArmorProficiencies.Add(prof);
             }
@@ -161,7 +145,7 @@ namespace AdventurePlannter.Core.Tests
             {
                 expectedSnapshot.WeaponProficiencies.Add(prof);
             }
-            foreach (var prof in new[] { "Fighter kit", "Cleric kit" })
+            foreach (var prof in new[] { "Fighter kit" })
             {
                 expectedSnapshot.ToolProficiencies.Add(prof);
             }
