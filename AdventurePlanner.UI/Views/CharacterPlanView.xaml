@@ -15,7 +15,6 @@
         <controls:WindowCommands>
             <Label Content="*" Visibility="{Binding Path=IsDirty, Converter={StaticResource BooleanToVisibility}}"/>
             <Button Content="Load" Command="{Binding Load}"/>
-            <Button Content="Add Level" Command="{Binding AddLevel}"/>
             <Button Content="Save" Command="{Binding Save}"/>
             <Button Content="Save Current Snapshot" Command="{Binding SaveSnapshot}"/>
         </controls:WindowCommands>
@@ -32,49 +31,52 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <UniformGrid Columns="4">
-            <Label Content="Name"/>
-            <TextBox x:Name="CharacterName"/>
-
-            <Label Content="Race"/>
-            <TextBox x:Name="Race"/>
-
-            <Label Content="Speed"/>
-            <controls:NumericUpDown Value="{Binding Speed}" />
-
-            <Label Content="Age"/>
-            <controls:NumericUpDown Value="{Binding Age}" />
-
-            <Label Content="Height (feet,inches)"/>
-            <UniformGrid Columns="2">
-                <controls:NumericUpDown Value="{Binding HeightFeet}" />
-                <controls:NumericUpDown Value="{Binding HeightInches}" />
-            </UniformGrid>
-
-            <Label Content="Weight"/>
-            <controls:NumericUpDown Value="{Binding Weight}" />
-
-            <Label Content="Eye Color"/>
-            <TextBox x:Name="EyeColor"/>
-
-            <Label Content="Hair Color"/>
-            <TextBox x:Name="HairColor"/>
-
-            <Label Content="Skin Color"/>
-            <TextBox x:Name="SkinColor"/>
-
-            <Label Content="Background"/>
-            <TextBox x:Name="CharacterBackground"/>
-        </UniformGrid>
 
         <TabControl Grid.Row="1" Grid.Column="0">
+
+            <TabItem Header="Basic Info">
+                <StackPanel>
+                    <Label Content="Name"/>
+                    <TextBox x:Name="CharacterName"/>
+
+                    <Label Content="Race"/>
+                    <TextBox x:Name="Race"/>
+
+                    <Label Content="Speed"/>
+                    <controls:NumericUpDown Value="{Binding Speed}" />
+
+                    <Label Content="Age"/>
+                    <controls:NumericUpDown Value="{Binding Age}" />
+
+                    <Label Content="Height (feet, inches)"/>
+                    <UniformGrid Columns="2">
+                        <controls:NumericUpDown Value="{Binding HeightFeet}" Minimum="0" />
+                        <controls:NumericUpDown Value="{Binding HeightInches}" Minimum="0" Maximum="11"/>
+                    </UniformGrid>
+
+                    <Label Content="Weight"/>
+                    <controls:NumericUpDown Value="{Binding Weight}" />
+
+                    <Label Content="Eye Color"/>
+                    <TextBox x:Name="EyeColor"/>
+
+                    <Label Content="Hair Color"/>
+                    <TextBox x:Name="HairColor"/>
+
+                    <Label Content="Skin Color"/>
+                    <TextBox x:Name="SkinColor"/>
+
+                    <Label Content="Background"/>
+                    <TextBox x:Name="CharacterBackground"/>
+                </StackPanel>
+            </TabItem>
 
             <TabItem Header="Class Info">
                 <views:ClassPlanView DataContext="{Binding ClassPlan}"/>
             </TabItem>
 
             <TabItem Header="Level Planning">
-                <TabControl x:Name="LevelPlans" DisplayMemberPath="Level"/>
+                <TabControl x:Name="LevelPlans" DisplayMemberPath="Level" TabStripPlacement="Left"/>
             </TabItem>
 
             <TabItem Header="Equipment">
@@ -171,7 +173,7 @@
             <TextBox Grid.Row="1" Grid.Column="0" x:Name="SnapshotAsText" IsReadOnly="true" FontFamily="Courier New" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="Snapshot Level"/>
-            <Slider Grid.Row="3" Grid.Column="0" x:Name="SnapshotLevel" Minimum="1" Maximum="{Binding LevelPlans.Count}"/>
+            <Slider Grid.Row="3" Grid.Column="0" x:Name="SnapshotLevel" Minimum="1" Maximum="{Binding LevelPlans.Count}" TickPlacement="BottomRight" Ticks="1,5,10,15,20" />
         </Grid>
 
     </Grid>

@@ -76,6 +76,8 @@ namespace AdventurePlanner.Core.Planning
 
             var snapshot = new PlayerCharacter
             {
+                CharacterLevel = level,
+
                 Name = Name,
                 Race = Race,
                 Speed = Speed,
