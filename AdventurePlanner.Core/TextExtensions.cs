@@ -167,7 +167,6 @@ namespace AdventurePlanner.Core
                     { "Prof", s.IsProficient.ToAsciiDocCheckbox() },
                     { "Mod", s.Modifier },
                     { "Skill", string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation) },
-                    { "Notes", string.Join(Environment.NewLine, s.Features.Select(formatFeature)) },
                 }).ToList();
 
             builder.AppendAsciiDocTable(skills, "a,2*,a");

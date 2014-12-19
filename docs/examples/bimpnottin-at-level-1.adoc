@@ -1,12 +1,12 @@
 = Bimpnottin "Filchbatter" Nackle
 :revnumber: 1
-:revdate: 2014-12-08
+:revdate: 2014-12-18
 :version-label: Level
 :nofooter:
 :icons: font
 
 [horizontal]
-Class levels:: Druid 1
+Class:: Druid
 Race:: Rock Gnome
 Speed:: 25
 Alignment:: TN

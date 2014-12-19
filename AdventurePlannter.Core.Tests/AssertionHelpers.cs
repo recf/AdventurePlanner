@@ -59,13 +59,6 @@ namespace AdventurePlannter.Core.Tests
                 var expected = expectedChar.Skills[skillName];
 
                 Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
-
-                AssertEquivalentLists(
-                    actual.Features,
-                    expected.Features,
-                    f => f.Name,
-                    AssertEqualFeatures,
-                    string.Format("Skills[{0}].Features", skillName));
             }
 
             foreach (var savingThrowKey in expectedChar.SavingThrows.Keys)

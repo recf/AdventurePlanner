@@ -369,8 +369,7 @@ namespace AdventurePlanner.UI.ViewModels
                     .Select(f => new FeaturePlan
                     {
                         Name = f.FeatureName,
-                        Description = f.Description,
-                        SkillName = f.Skill == null ? null : f.Skill.SkillName
+                        Description = f.Description
                     }).ToArray(),
             }).ToList();
 
@@ -462,13 +461,6 @@ namespace AdventurePlanner.UI.ViewModels
                         FeatureName = feature.Name,
                         Description = feature.Description,
                     };
-
-                    featureVm.AvailableSkills.AddRange(Skill.All);
-
-                    if (!string.IsNullOrWhiteSpace(feature.SkillName))
-                    {
-                        featureVm.Skill = featureVm.AvailableSkills.First(s => s.SkillName == feature.SkillName);
-                    }
 
                     levelPlanVm.NewFeatures.Add(featureVm);
                 }

@@ -133,13 +133,7 @@ namespace AdventurePlanner.Core.Planning
 
                 foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])
                 {
-                    var target = snapshot.Features;
-                    if (!string.IsNullOrWhiteSpace(feature.SkillName))
-                    {
-                        target = snapshot.Skills[feature.SkillName].Features;
-                    }
-
-                    target.Add(new FeatureSnapshot()
+                    snapshot.Features.Add(new FeatureSnapshot()
                     {
                         Name = feature.Name,
                         Description = feature.Description

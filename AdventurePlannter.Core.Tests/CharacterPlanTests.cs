@@ -58,7 +58,6 @@ namespace AdventurePlannter.Core.Tests
                             {
                                 Name = "Nimble",
                                 Description = "Half penalty on rough terrain",
-                                SkillName = "Acrobatics"
                             }
                         },
                     },
@@ -131,7 +130,7 @@ namespace AdventurePlannter.Core.Tests
 
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
 
-            expectedSnapshot.Skills["Acrobatics"].Features.Add(new FeatureSnapshot()
+            expectedSnapshot.Features.Add(new FeatureSnapshot()
             {
                 Name = "Nimble",
                 Description = "Half penalty on rough terrain"

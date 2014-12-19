@@ -13,15 +13,11 @@ namespace AdventurePlanner.Core.Domain
             // TODO: :question: Make this an actual Skill object?
             SkillName = skillName;
             Ability = ability;
-
-            Features = new List<FeatureSnapshot>();
         }
 
         public string SkillName { get; private set; }
 
         public AbilityScore Ability { get; private set; }
-
-        public IList<FeatureSnapshot> Features { get; private set; }
 
         public bool IsProficient { get; set; }
 

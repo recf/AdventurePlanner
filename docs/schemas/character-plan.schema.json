@@ -167,12 +167,6 @@
                   "required": true,
                   "type": "string"
                 },
-                "skill": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
                 "description": {
                   "type": [
                     "string",
