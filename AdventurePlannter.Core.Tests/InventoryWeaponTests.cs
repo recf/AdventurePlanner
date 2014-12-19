@@ -39,10 +39,10 @@ namespace AdventurePlannter.Core.Tests
             get
             {
                 var snapshot = new PlayerCharacter();
+                snapshot.CharacterLevel = 1;
                 snapshot.Abilities["Str"].Score = 16;
                 snapshot.Abilities["Dex"].Score = 12;
 
-                snapshot.ProficiencyBonus = 2;
                 snapshot.WeaponProficiencies.Add("Flails");
                 snapshot.WeaponProficiencies.Add("Crossbows");
                 snapshot.WeaponProficiencies.Add("Shortswords");

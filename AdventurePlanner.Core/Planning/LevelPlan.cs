@@ -12,9 +12,6 @@ namespace AdventurePlanner.Core.Planning
 
         [JsonProperty("ability_score_improvements", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IDictionary<string, int> AbilityScoreImprovements { get; set; }
-
-        [JsonProperty("set_prof_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public int SetProficiencyBonus { get; set; }
         
         [JsonProperty("features", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public IList<FeaturePlan> FeaturePlans { get; set; }

@@ -149,9 +149,6 @@
               "type": "integer"
             }
           },
-          "set_prof_bonus": {
-            "type": "integer"
-          },
           "features": {
             "type": [
               "array",

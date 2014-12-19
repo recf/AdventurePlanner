@@ -51,7 +51,8 @@ namespace AdventurePlannter.Core.Tests
                 Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
             }
 
-            Assert.That(actualChar.ProficiencyBonus, Is.EqualTo(expectedChar.ProficiencyBonus));
+            Assert.That(actualChar.CharacterLevel, Is.EqualTo(expectedChar.CharacterLevel), "CharacterLevel");
+            Assert.That(actualChar.ProficiencyBonus, Is.EqualTo(expectedChar.ProficiencyBonus), "ProficiencyBonus");
 
             foreach (var skillName in expectedChar.Skills.Keys)
             {

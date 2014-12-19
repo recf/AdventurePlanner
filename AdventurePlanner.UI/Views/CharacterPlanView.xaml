@@ -41,6 +41,9 @@
 
                     <Label Content="Race"/>
                     <TextBox x:Name="Race"/>
+                    
+                    <Label Content="Alignment"/>
+                    <TextBox Text="{Binding Alignment}"/>
 
                     <Label Content="Speed"/>
                     <controls:NumericUpDown Value="{Binding Speed}" />

@@ -1,5 +1,5 @@
 = Bimpnottin "Filchbatter" Nackle
-:revnumber: 1
+:revnumber: 5
 :revdate: 2014-12-18
 :version-label: Level
 :nofooter:
@@ -16,7 +16,7 @@ Height:: 3'7"
 Eyes:: Gold
 Skin:: Tan
 Hair:: Moss Green
-Proficiency Bonus:: 2
+Proficiency Bonus:: 3
 
 == Ability Scores
 
@@ -26,7 +26,7 @@ Proficiency Bonus:: 2
 
 | Str | 16 | 3 
 | Dex | 12 | 1 
-| Con | 15 | 2 
+| Con | 16 | 3 
 | Int | 12 | 1 
 | Wis | 15 | 2 
 | Cha | 14 | 2 
@@ -40,9 +40,9 @@ Proficiency Bonus:: 2
 
 | icon:square-o[] | 3 | Strength 
 | icon:square-o[] | 1 | Dexterity 
-| icon:square-o[] | 2 | Constitution 
-| icon:check-square-o[] | 3 | Intelligence 
-| icon:check-square-o[] | 4 | Wisdom 
+| icon:square-o[] | 3 | Constitution 
+| icon:check-square-o[] | 4 | Intelligence 
+| icon:check-square-o[] | 5 | Wisdom 
 | icon:square-o[] | 2 | Charisma 
 |===
 
@@ -50,26 +50,26 @@ Proficiency Bonus:: 2
 
 [cols="a,2*,a", options="header"]
 |===
-| Prof | Mod | Skill | Notes 
+| Prof | Mod | Skill 
 
-| icon:square-o[] | 1 | Acrobatics (Dex) | {empty} 
-| icon:square-o[] | 2 | Animal Handling (Wis) | {empty} 
-| icon:square-o[] | 1 | Arcana (Int) | {empty} 
-| icon:square-o[] | 3 | Athletics (Str) | {empty} 
-| icon:square-o[] | 2 | Deception (Cha) | {empty} 
-| icon:square-o[] | 1 | History (Int) | Artificer's Lore:: Double proficiency on checks related to magic items, alchemical objects, or technological devices. 
-| icon:check-square-o[] | 4 | Insight (Wis) | {empty} 
-| icon:square-o[] | 2 | Intimidation (Cha) | {empty} 
-| icon:square-o[] | 1 | Investigation (Int) | {empty} 
-| icon:check-square-o[] | 4 | Medicine (Wis) | {empty} 
-| icon:check-square-o[] | 3 | Nature (Int) | {empty} 
-| icon:square-o[] | 2 | Perception (Wis) | {empty} 
-| icon:square-o[] | 1 | Performance (Dex) | {empty} 
-| icon:square-o[] | 2 | Persuasion (Cha) | {empty} 
-| icon:check-square-o[] | 3 | Religion (Int) | {empty} 
-| icon:square-o[] | 1 | Sleight of Hand (Dex) | {empty} 
-| icon:square-o[] | 1 | Stealth (Dex) | {empty} 
-| icon:square-o[] | 2 | Survival (Wis) | {empty} 
+| icon:square-o[] | 1 | Acrobatics (Dex) 
+| icon:square-o[] | 2 | Animal Handling (Wis) 
+| icon:square-o[] | 1 | Arcana (Int) 
+| icon:square-o[] | 3 | Athletics (Str) 
+| icon:square-o[] | 2 | Deception (Cha) 
+| icon:square-o[] | 1 | History (Int) 
+| icon:check-square-o[] | 5 | Insight (Wis) 
+| icon:square-o[] | 2 | Intimidation (Cha) 
+| icon:square-o[] | 1 | Investigation (Int) 
+| icon:check-square-o[] | 5 | Medicine (Wis) 
+| icon:check-square-o[] | 4 | Nature (Int) 
+| icon:square-o[] | 2 | Perception (Wis) 
+| icon:square-o[] | 1 | Performance (Dex) 
+| icon:square-o[] | 2 | Persuasion (Cha) 
+| icon:check-square-o[] | 4 | Religion (Int) 
+| icon:square-o[] | 1 | Sleight of Hand (Dex) 
+| icon:square-o[] | 1 | Stealth (Dex) 
+| icon:square-o[] | 2 | Survival (Wis) 
 |===
 
 == Proficiencies
@@ -80,6 +80,7 @@ Tools:: herbalism kit
 
 == Other Features & Traits
 
+Artificer's Lore:: Double proficiency on checks related to magic items, alchemical objects, or technological devices.
 Darkvision 60':: {empty}
 Gnome Cunning:: Advantage on all mental saves against magic.
 Speak with Small Beasts:: Communicate simple ideas with Small or smaller beasts, using sounds and gestures.
@@ -93,8 +94,8 @@ Tinker:: {empty}
 |===
 | Weapon | Attack | Attack Bonus | Damage 
 
-| Scimitar | Melee Attack | 5 | d6+3/slashing 
-| Scimitar | Melee Attack (Bonus Action) | 5 | d6/slashing 
+| Scimitar | Melee Attack | 6 | d6+3/slashing 
+| Scimitar | Melee Attack (Bonus Action) | 6 | d6/slashing 
 |===
 
 === Armor

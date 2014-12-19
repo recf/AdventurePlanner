@@ -48,9 +48,7 @@ namespace AdventurePlannter.Core.Tests
                         Level = 1,
 
                         AbilityScoreImprovements = AbilityScores(10, 12, 14, 8, 15, 11),
-
-                        SetProficiencyBonus = 2,
-
+                        
                         FeaturePlans = new List<FeaturePlan>()
                         {
                             new FeaturePlan() { Name = "Quick Wits" },
@@ -81,7 +79,6 @@ namespace AdventurePlannter.Core.Tests
                     new LevelPlan
                     {
                         Level = 4,
-                        SetProficiencyBonus = 3
                     }
                 },
 
@@ -101,6 +98,8 @@ namespace AdventurePlannter.Core.Tests
 
             var expectedSnapshot = new PlayerCharacter
             {
+                CharacterLevel = snapshotLevel,
+
                 Name = "Balin Thundershield",
                 Race = "Dwarf",
                 Speed = 25,
@@ -114,9 +113,7 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                ClassName = "Fighter",
-
-                ProficiencyBonus = 3,
+                ClassName = "Fighter"
             };
             expectedSnapshot.Abilities["Str"].Score = 10;
             expectedSnapshot.Abilities["Dex"].Score = 12;

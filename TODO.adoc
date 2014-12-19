@@ -32,6 +32,6 @@
 * link:./AdventurePlanner.Core/Planning/CharacterPlan.cs[]
 ** link:./AdventurePlanner.Core/Planning/CharacterPlan.cs#L72[72] :question: Consider moving ToSnapshot into an extension method.
 * link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs[]
-** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L282[282] AddArmorImpl, etc are small enough that they would probably better inline.
+** link:./AdventurePlanner.UI/ViewModels/CharacterPlanViewModel.cs#L290[290] AddArmorImpl, etc are small enough that they would probably better inline.
 * link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs[]
 ** link:./AdventurePlannter.Core.Tests/CharacterPlanTests.cs#L21[21] Figure out how I want to test multiple cases (snapshot at different levels, etc).

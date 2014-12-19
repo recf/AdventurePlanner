@@ -62,14 +62,6 @@ namespace AdventurePlanner.UI.ViewModels
             get { return _level; }
             set { this.RaiseAndSetIfChanged(ref _level, value); }
         }
-        
-        private int _setProficiencyBonus;
-
-        public int SetProficiencyBonus
-        {
-            get { return _setProficiencyBonus; }
-            set { this.RaiseAndSetIfChanged(ref _setProficiencyBonus, value); }
-        }
 
         public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 

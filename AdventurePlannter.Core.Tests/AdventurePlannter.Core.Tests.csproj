@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilitySnapshotTests.cs" />
+    <Compile Include="PlayerCharacterTests.cs" />
     <Compile Include="InventoryArmorTests.cs" />
     <Compile Include="AssertionHelpers.cs" />
     <Compile Include="CharacterPlanTests.cs" />

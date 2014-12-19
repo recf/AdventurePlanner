@@ -9,13 +9,6 @@
              d:DesignWidth="300">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-
-            <UniformGrid Columns="2">
-
-                <Label Content="Set Proficiency Bonus to"/>
-                <controls:NumericUpDown Value="{Binding SetProficiencyBonus}"/>
-                
-            </UniformGrid>
             
             <Expander Header="Ability Score Improvements" 
                   IsExpanded="{Binding AbilityScoreImprovements, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">

@@ -126,11 +126,6 @@ namespace AdventurePlanner.Core.Planning
                     snapshot.Abilities[kvp.Key].Score += kvp.Value;
                 }
 
-                if (plan.SetProficiencyBonus > 0)
-                {
-                    snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
-                }
-
                 foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])
                 {
                     snapshot.Features.Add(new FeatureSnapshot()

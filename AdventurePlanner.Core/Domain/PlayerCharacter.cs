@@ -43,7 +43,10 @@ namespace AdventurePlanner.Core.Domain
 
         public IReadOnlyDictionary<string, SavingThrow> SavingThrows { get; private set; }
 
-        public int ProficiencyBonus { get; set; }
+        public int ProficiencyBonus
+        {
+            get { return ((CharacterLevel - 1)/4) + 2; }
+        }
 
         public IReadOnlyDictionary<string, SkillScore> Skills { get; private set; }
 

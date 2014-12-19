@@ -122,6 +122,14 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _race, value); }
         }
 
+        private string _alignment;
+
+        public string Alignment
+        {
+            get { return _alignment; }
+            set { this.RaiseAndSetIfChanged(ref _alignment, value); }
+        }
+
         private int _speed;
 
         public int Speed
@@ -323,7 +331,7 @@ namespace AdventurePlanner.UI.ViewModels
                 Name = CharacterName,
                 Race = Race,
                 Speed = Speed,
-                Alignment = "TN",
+                Alignment = Alignment,
 
                 Age = Age,
                 HeightFeet = HeightFeet,
@@ -361,8 +369,6 @@ namespace AdventurePlanner.UI.ViewModels
                 AbilityScoreImprovements = view.AbilityScoreImprovements
                     .Where(asi => asi.Ability != null)
                     .ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
-
-                SetProficiencyBonus = view.SetProficiencyBonus,
 
                 FeaturePlans = view.NewFeatures
                     .Where(f => !string.IsNullOrWhiteSpace(f.FeatureName))
@@ -403,6 +409,8 @@ namespace AdventurePlanner.UI.ViewModels
             EnsureTwentyLevels(plan);
 
             CharacterName = plan.Name;
+            Alignment = plan.Alignment;
+
             Race = plan.Race;
             Speed = plan.Speed;
 
@@ -440,8 +448,6 @@ namespace AdventurePlanner.UI.ViewModels
                 var levelPlanVm = new LevelPlanViewModel
                 {
                     Level = lp.Level,
-
-                    SetProficiencyBonus = lp.SetProficiencyBonus,
                 };
 
                 foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())

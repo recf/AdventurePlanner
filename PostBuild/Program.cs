@@ -41,7 +41,7 @@ namespace Build
                 {
                     var fileName = Path.Combine(
                         examplesDirectory,
-                        string.Format("{0}-at-level-{1}.adoc", planFileBaseName, levelNum));
+                        string.Format("{0}-at-level-{1:D2}.adoc", planFileBaseName, levelNum));
 
                     if (File.GetLastWriteTimeUtc(planFile) > File.GetLastWriteTimeUtc(fileName))
                     {
