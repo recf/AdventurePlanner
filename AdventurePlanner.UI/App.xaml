@@ -19,6 +19,7 @@
                     
                     <localconv:EnumerableToBoolConverter x:Key="EnumerableToBoolConverter"/>
                     <localconv:DefaultValueConverter x:Key="DefaultValueConverter"/>
+                    <localconv:DiceRollConverter x:Key="DiceRollConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

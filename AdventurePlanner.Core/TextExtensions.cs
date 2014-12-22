@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 
 namespace AdventurePlanner.Core
 {
@@ -12,7 +12,7 @@ namespace AdventurePlanner.Core
     {
         public static string ToAsciiDocCheckbox(this bool check)
         {
-            return check ? "icon:check-square-o[] " : "icon:square-o[] ";
+            return check ? "icon:check-square-o[]" : "icon:square-o[]";
         }
 
         public static StringBuilder AppendAsciiDocHeader(this StringBuilder builder, string headerText, int level = 1)
@@ -40,7 +40,7 @@ namespace AdventurePlanner.Core
         {
             foreach (var kvp in items)
             {
-                builder.AppendLine(string.Format("*{0}*:: {1}", kvp.Key, kvp.Value));
+                builder.AppendLine(string.Format("{0}:: {1}", kvp.Key, kvp.Value.OrEmpty()));
             }
 
             builder.AppendLine();
@@ -55,6 +55,11 @@ namespace AdventurePlanner.Core
             IList<Dictionary<string, object>> items,
             string columnSpec = null)
         {
+            if (!items.Any())
+            {
+                return builder;
+            }
+
             var firstItem = items.First();
 
             if (string.IsNullOrWhiteSpace(columnSpec))
@@ -68,20 +73,20 @@ namespace AdventurePlanner.Core
 
             foreach (var key in firstItem.Keys)
             {
-                builder.AppendLine(string.Format("| {0} ", key));
+                builder.Append(string.Format("| {0} ", key));
             }
+            builder.AppendLine();
+            builder.AppendLine();
 
             foreach (var item in items)
             {
-                builder.AppendLine();
                 foreach (var key in item.Keys)
                 {
-                    var value = item[key];
-
-                    value = string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
+                    var value = item[key].OrEmpty();
                     
-                    builder.AppendLine(string.Format("| {0}", value));
+                    builder.Append(string.Format("| {0} ", value));
                 }
+                builder.AppendLine();
             }
 
             builder.AppendLine(TableDelim);
@@ -90,7 +95,12 @@ namespace AdventurePlanner.Core
             return builder;
         }
 
-        public static string ToText(this CharacterSnapshot snapshot)
+        public static object OrEmpty(this object value)
+        {
+            return string.IsNullOrWhiteSpace(Convert.ToString(value)) ? "{empty}" : value;
+        }
+
+        public static string ToText(this PlayerCharacter snapshot)
         {
             var builder = new StringBuilder();
 
@@ -103,13 +113,11 @@ namespace AdventurePlanner.Core
             builder.AppendAsciiDocAttribute("nofooter");
             builder.AppendAsciiDocAttribute("icons", "font");
             builder.AppendLine();
-
-            var classes = snapshot.Classes.Select(kvp => string.Format("{0} {1}", kvp.Key, kvp.Value));
-
+            
             builder.AppendLine("[horizontal]");
             builder.AppendAsciiDocLabeledList(new Dictionary<string, object>
             {
-                { "Class levels", string.Join(", ", classes) }, 
+                { "Class", snapshot.ClassName }, 
                 { "Race", snapshot.Race }, 
                 { "Speed", snapshot.Speed },
                 { "Alignment", snapshot.Alignment }, 
@@ -159,7 +167,6 @@ namespace AdventurePlanner.Core
                     { "Prof", s.IsProficient.ToAsciiDocCheckbox() },
                     { "Mod", s.Modifier },
                     { "Skill", string.Format("{0} ({1})", s.SkillName, s.Ability.Abbreviation) },
-                    { "Notes", string.Join(Environment.NewLine, s.Features.Select(formatFeature)) },
                 }).ToList();
 
             builder.AppendAsciiDocTable(skills, "a,2*,a");
@@ -180,6 +187,32 @@ namespace AdventurePlanner.Core
             var features = snapshot.Features.OrderBy(f => f.Name).ToDictionary(f => f.Name, f => f.Description);
 
             builder.AppendAsciiDocLabeledList(features);
+
+            builder.AppendAsciiDocHeader("Equipment", 2);
+
+            builder.AppendAsciiDocHeader("Weapons & Attacks", 3);
+
+            var attacks = snapshot.Weapons.SelectMany(w => w.GetAttacks(), (w, a) => new Dictionary<string, object>
+                {
+                    { "Weapon", w.Weapon.Name },
+                    { "Attack", a.Name },
+                    { "Attack Bonus", a.AttackModifier },
+                    { "Damage", string.Format("{0}/{1}", a.DamageDice, a.DamageType) }
+                }).ToList();
+
+            builder.AppendAsciiDocTable(attacks);
+
+            builder.AppendAsciiDocHeader("Armor", 3);
+
+            var armor = snapshot.Armor.Select(
+                a => new Dictionary<string, object>
+                {
+                    { "AC", a.ArmorClass },
+                    { "Name", a.Armor.Name },
+                    { "Proficiency Group", string.Format("{0} {1}", a.IsProficient.ToAsciiDocCheckbox(), a.Armor.ProficiencyGroup) },
+                }).ToList();
+
+            builder.AppendAsciiDocTable(armor);
 
             return builder.ToString();
         }

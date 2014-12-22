@@ -3,44 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:AdventurePlanner.UI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0"  Content="Class Name"/>
-                <TextBox Grid.Row="0" Grid.Column="1"  x:Name="ClassName"/>
+            <Label Content="Class Name"/>
+            <TextBox Text="{Binding ClassName}"/>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Armor Proficiencies"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="ArmorProficiencies"/>
+            <Label Content="Armor Proficiencies"/>
+            <TextBox Text="{Binding ArmorProficiencies}"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Weapon Proficiencies"/>
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="WeaponProficiencies"/>
+            <Label Content="Weapon Proficiencies"/>
+            <TextBox Text="{Binding WeaponProficiencies}"/>
 
-                <Label Grid.Row="3" Grid.Column="0" Content="Tool Proficiencies"/>
-                <TextBox Grid.Row="3" Grid.Column="1" x:Name="ToolProficiencies"/>
-            </Grid>
+            <Label Content="Tool Proficiencies"/>
+            <TextBox Text="{Binding ToolProficiencies}"/>
 
             <GroupBox Header="Save Proficiencies">
                 <StackPanel>
-                    <ItemsControl x:Name="SaveProficiencies"/>
+                    <ItemsControl ItemsSource="{Binding SaveProficiencies}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <views:SaveProficiencyView DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </GroupBox>
 
             <GroupBox Header="Skill Proficiencies">
                 <StackPanel>
-                    <ItemsControl x:Name="SkillProficiencies"/>
+                    <ItemsControl ItemsSource="{Binding SkillProficiencies}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <views:SkillProficiencyView DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels

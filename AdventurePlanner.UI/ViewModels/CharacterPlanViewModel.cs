@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using AdventurePlanner.Core;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using AdventurePlanner.Core.Planning;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -26,24 +26,34 @@ namespace AdventurePlanner.UI.ViewModels
             Save = ReactiveCommand.CreateAsyncObservable(canSave, _ => SaveImpl());
 
             SaveSnapshot = ReactiveCommand.CreateAsyncObservable(_ => SaveSnapshotImpl());
+            
+            AddArmor = ReactiveCommand.CreateAsyncObservable(_ => AddArmorImpl());
+            RemoveArmor = ReactiveCommand.CreateAsyncObservable(vm => RemoveArmorImpl((ArmorViewModel)vm));
 
-            AddClass = ReactiveCommand.CreateAsyncObservable(_ => AddClassImpl());
-            AddLevel = ReactiveCommand.CreateAsyncObservable(_ => AddLevelImpl());
+            AddWeapon = ReactiveCommand.CreateAsyncObservable(_ => AddWeaponImpl());
+            RemoveWeapon = ReactiveCommand.CreateAsyncObservable(vm => RemoveWeaponImpl((WeaponViewModel)vm));
 
-            ClassPlans = new ReactiveList<ClassPlanViewModel> { ChangeTrackingEnabled = true };
-            Monitor(ClassPlans);
+            ClassPlan = new ClassPlanViewModel();
+            Monitor(ClassPlan);
 
-            LevelPlans = new ReactiveList<LevelPlanViewModel> { ChangeTrackingEnabled = true };
+            LevelPlans = new ReactiveList<LevelPlanViewModel>();
             Monitor(LevelPlans);
+
+            Armor = new ReactiveList<ArmorViewModel>();
+            Monitor(Armor);
+
+            Weapons = new ReactiveList<WeaponViewModel>();
+            Monitor(Weapons);
 
             var saveLoad = Observable.Merge(Load, Save);
             saveLoad.Subscribe(_ => MarkClean());
 
             Dirtied.Select(_ => GetMarkdownString()).ToProperty(this, x => x.SnapshotAsText, out _snapShotAsText);
 
-            // TODO: Consider: Instead of calling AddLevel on create, instead call SetFromPlan() with initial state.
-            AddClass.Execute(null);
-            AddLevel.Execute(null);
+            SetFromPlan(new CharacterPlan
+            {
+                ClassPlan = new ClassPlan()
+            });
             MarkClean();
         }
 
@@ -53,9 +63,15 @@ namespace AdventurePlanner.UI.ViewModels
 
         public ReactiveCommand<Unit> SaveSnapshot { get; private set; }
 
-        public ReactiveCommand<ClassPlanViewModel> AddClass { get; private set; }
-
         public ReactiveCommand<LevelPlanViewModel> AddLevel { get; private set; }
+
+        public ReactiveCommand<ArmorViewModel> AddArmor { get; set; }
+
+        public ReactiveCommand<ArmorViewModel> RemoveArmor { get; set; }
+
+        public ReactiveCommand<WeaponViewModel> AddWeapon { get; set; }
+
+        public ReactiveCommand<WeaponViewModel> RemoveWeapon { get; set; }
 
         #region Bookkeeping Properties
 
@@ -104,6 +120,14 @@ namespace AdventurePlanner.UI.ViewModels
         {
             get { return _race; }
             set { this.RaiseAndSetIfChanged(ref _race, value); }
+        }
+
+        private string _alignment;
+
+        public string Alignment
+        {
+            get { return _alignment; }
+            set { this.RaiseAndSetIfChanged(ref _alignment, value); }
         }
 
         private int _speed;
@@ -178,9 +202,13 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _characterBackground, value); }
         }
 
-        public IReactiveList<ClassPlanViewModel> ClassPlans { get; private set; }
+        public ClassPlanViewModel ClassPlan { get; private set; }
 
         public IReactiveList<LevelPlanViewModel> LevelPlans { get; private set; }
+
+        public IReactiveList<ArmorViewModel> Armor { get; private set; }
+
+        public IReactiveList<WeaponViewModel> Weapons { get; private set; }
 
         #endregion
 
@@ -259,57 +287,35 @@ namespace AdventurePlanner.UI.ViewModels
             return Observable.Return(Unit.Default);
         }
 
-        private IObservable<ClassPlanViewModel> AddClassImpl()
+        // TODO: AddArmorImpl, etc are small enough that they would probably better inline.
+        private IObservable<ArmorViewModel> AddArmorImpl()
         {
-            var classPlanVm = new ClassPlanViewModel();
+            var armorVm = new ArmorViewModel();
+            Armor.Add(armorVm);
 
-            ClassPlans.Add(classPlanVm);
-
-            return Observable.Return(classPlanVm);
+            return Observable.Return(armorVm);
         }
 
-        private IObservable<LevelPlanViewModel> AddLevelImpl()
+        private IObservable<ArmorViewModel> RemoveArmorImpl(ArmorViewModel armorVm)
         {
-            var maxLevel = LevelPlans.LastOrDefault();
+            Armor.Remove(armorVm);
 
-            LevelPlanViewModel nextLevel;
+            return Observable.Return(armorVm);
+        }
 
-            if (maxLevel == null)
-            {
-                nextLevel = new LevelPlanViewModel
-                {
-                    Level = 1,
-                    ClassPlan = ClassPlans.First(),
-                    SetProficiencyBonus = 2
-                };
+        private IObservable<WeaponViewModel> AddWeaponImpl()
+        {
+            var weaponVm = new WeaponViewModel();
+            Weapons.Add(weaponVm);
 
-                foreach (var ability in Ability.All)
-                {
-                    var abilityVm = new AbilityScoreImprovementViewModel { Ability = ability, Improvement = 10 };
-                    abilityVm.AvailableOptions.AddRange(Ability.All);
+            return Observable.Return(weaponVm);
+        }
 
-                    nextLevel.AbilityScoreImprovements.Add(abilityVm);
-                }
-            }
-            else
-            {
-                nextLevel = new LevelPlanViewModel
-                {
-                    Level = maxLevel.Level + 1,
+        private IObservable<WeaponViewModel> RemoveWeaponImpl(WeaponViewModel weaponVm)
+        {
+            Weapons.Remove(weaponVm);
 
-                    ClassPlan = maxLevel.ClassPlan,
-
-                    SetProficiencyBonus = maxLevel.SetProficiencyBonus
-                };
-            }
-
-            nextLevel.AvailableClassPlans = ClassPlans;
-
-            LevelPlans.Add(nextLevel);
-
-            SnapshotLevel = nextLevel.Level;
-
-            return Observable.Return(nextLevel);
+            return Observable.Return(weaponVm);
         }
 
         #endregion
@@ -325,7 +331,7 @@ namespace AdventurePlanner.UI.ViewModels
                 Name = CharacterName,
                 Race = Race,
                 Speed = Speed,
-                Alignment = "TN",
+                Alignment = Alignment,
 
                 Age = Age,
                 HeightFeet = HeightFeet,
@@ -338,44 +344,61 @@ namespace AdventurePlanner.UI.ViewModels
 
                 Background = CharacterBackground,
 
-                ClassPlans = ClassPlans.Select(view => new ClassPlan
+                ClassPlan = new ClassPlan
                 {
-                    ClassName = view.ClassName,
+                    ClassName = ClassPlan.ClassName,
 
-                    ArmorProficiencies = view.ArmorProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
-                    WeaponProficiencies = view.WeaponProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
-                    ToolProficiencies = view.ToolProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+                    ArmorProficiencies = ClassPlan.ArmorProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+                    WeaponProficiencies = ClassPlan.WeaponProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
+                    ToolProficiencies = ClassPlan.ToolProficiencies.Split(',').Select(s => s.Trim()).ToArray(),
 
-                    SaveProficiencies = view.SaveProficiencies
+                    SaveProficiencies = ClassPlan.SaveProficiencies
                         .Where(s => s.IsProficient)
                         .Select(s => s.Ability.Abbreviation).ToArray(),
 
-                    SkillProficiencies = view.SkillProficiencies
+                    SkillProficiencies = ClassPlan.SkillProficiencies
                         .Where(s => s.IsProficient)
                         .Select(s => s.Skill.SkillName).ToArray(),
-                }).ToList(),
+                },
             };
 
             plan.LevelPlans = LevelPlans.Select(view => new LevelPlan
             {
                 Level = view.Level,
 
-                ClassPlan = plan.ClassPlans.FirstOrDefault(cp => cp.ClassName == view.ClassPlan.ClassName),
-
                 AbilityScoreImprovements = view.AbilityScoreImprovements
                     .Where(asi => asi.Ability != null)
                     .ToDictionary(asi => asi.Ability.Abbreviation, asi => asi.Improvement),
-
-                SetProficiencyBonus = view.SetProficiencyBonus,
 
                 FeaturePlans = view.NewFeatures
                     .Where(f => !string.IsNullOrWhiteSpace(f.FeatureName))
                     .Select(f => new FeaturePlan
                     {
                         Name = f.FeatureName,
-                        Description = f.Description,
-                        SkillName = f.Skill == null ? null : f.Skill.SkillName
+                        Description = f.Description
                     }).ToArray(),
+            }).ToList();
+
+            plan.Armor = Armor.Select(view => new Armor
+            {
+                Name = view.ArmorName,
+                ArmorClass = view.ArmorClass,
+                ProficiencyGroup = view.ProficiencyGroup,
+                MaximumDexterityModifier = view.MaximumDexterityModifier
+            }).ToList();
+
+            plan.Weapons = Weapons.Select(view => new Weapon
+            {
+                Name = view.Name,
+                ProficiencyGroup = view.ProficiencyGroup,
+                DamageDice = view.DamageDice,
+                DamageType = view.DamageType,
+
+                NormalRange = view.NormalRange,
+                MaximumRange = view.MaximumRange,
+
+                HasAmmunition = view.HasAmmunition,
+                IsLight = view.IsLight
             }).ToList();
 
             return plan;
@@ -383,7 +406,11 @@ namespace AdventurePlanner.UI.ViewModels
 
         private void SetFromPlan(CharacterPlan plan)
         {
+            EnsureTwentyLevels(plan);
+
             CharacterName = plan.Name;
+            Alignment = plan.Alignment;
+
             Race = plan.Race;
             Speed = plan.Speed;
 
@@ -397,31 +424,22 @@ namespace AdventurePlanner.UI.ViewModels
 
             CharacterBackground = plan.Background;
 
-            ClassPlans.Clear();
-            foreach (var lp in plan.ClassPlans)
+            ClassPlan.ClassName = plan.ClassPlan.ClassName;
+
+            ClassPlan.ArmorProficiencies = string.Join(", ", plan.ClassPlan.ArmorProficiencies ?? new string[0]);
+            ClassPlan.WeaponProficiencies = string.Join(", ", plan.ClassPlan.WeaponProficiencies ?? new string[0]);
+            ClassPlan.ToolProficiencies = string.Join(", ", plan.ClassPlan.ToolProficiencies ?? new string[0]);
+
+            var saveProfs = plan.ClassPlan.SaveProficiencies ?? new string[0];
+            foreach (var saveProfVm in ClassPlan.SaveProficiencies)
             {
-                var classPlanVm = new ClassPlanViewModel
-                {
-                    ClassName = lp.ClassName,
+                saveProfVm.IsProficient = saveProfs.Contains(saveProfVm.Ability.Abbreviation);
+            }
 
-                    ArmorProficiencies = string.Join(", ", lp.ArmorProficiencies ?? new string[0]),
-                    WeaponProficiencies = string.Join(", ", lp.WeaponProficiencies ?? new string[0]),
-                    ToolProficiencies = string.Join(", ", lp.ToolProficiencies ?? new string[0]),
-                };
-
-                foreach (var abilityAbbr in lp.SaveProficiencies ?? new string[0])
-                {
-                    var saveProfVm = classPlanVm.SaveProficiencies.First(spvm => spvm.Ability.Abbreviation == abilityAbbr);
-                    saveProfVm.IsProficient = true;
-                }
-
-                foreach (var skillProf in lp.SkillProficiencies)
-                {
-                    var skillProfVm = classPlanVm.SkillProficiencies.First(spvm => spvm.Skill.SkillName == skillProf);
-                    skillProfVm.IsProficient = true;
-                }
-
-                ClassPlans.Add(classPlanVm);
+            var skillProfs = plan.ClassPlan.SkillProficiencies ?? new string[0]; 
+            foreach (var skillProfVm in ClassPlan.SkillProficiencies)
+            {
+                skillProfVm.IsProficient = skillProfs.Contains(skillProfVm.Skill.SkillName);
             }
 
             LevelPlans.Clear();
@@ -430,10 +448,6 @@ namespace AdventurePlanner.UI.ViewModels
                 var levelPlanVm = new LevelPlanViewModel
                 {
                     Level = lp.Level,
-
-                    ClassPlan = ClassPlans.FirstOrDefault(cp => cp.ClassName == lp.ClassPlan.ClassName),
-
-                    SetProficiencyBonus = lp.SetProficiencyBonus,
                 };
 
                 foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())
@@ -446,7 +460,7 @@ namespace AdventurePlanner.UI.ViewModels
                     levelPlanVm.AbilityScoreImprovements.Add(asiVm);
                 }
 
-                foreach (var feature in lp.FeaturePlans)
+                foreach (var feature in lp.FeaturePlans ?? new FeaturePlan[0])
                 {
                     var featureVm = new FeaturePlanViewModel()
                     {
@@ -454,23 +468,64 @@ namespace AdventurePlanner.UI.ViewModels
                         Description = feature.Description,
                     };
 
-                    featureVm.AvailableSkills.AddRange(Skill.All);
-
-                    if (!string.IsNullOrWhiteSpace(feature.SkillName))
-                    {
-                        featureVm.Skill = featureVm.AvailableSkills.First(s => s.SkillName == feature.SkillName);
-                    }
-
                     levelPlanVm.NewFeatures.Add(featureVm);
                 }
 
                 LevelPlans.Add(levelPlanVm);
             }
 
+            Armor.Clear();
+            foreach (var armor in plan.Armor ?? new Armor[0])
+            {
+                Armor.Add(new ArmorViewModel()
+                {
+                    ArmorName = armor.Name,
+                    ArmorClass = armor.ArmorClass,
+                    ProficiencyGroup = armor.ProficiencyGroup,
+                    MaximumDexterityModifier = armor.MaximumDexterityModifier
+                });
+            }
+
+            Weapons.Clear();
+            foreach (var weapon in plan.Weapons ?? new Weapon[0])
+            {
+                Weapons.Add(new WeaponViewModel
+                {
+                    Name = weapon.Name,
+                    ProficiencyGroup = weapon.ProficiencyGroup,
+                    DamageDice = weapon.DamageDice,
+                    DamageType = weapon.DamageType,
+
+                    NormalRange = weapon.NormalRange,
+                    MaximumRange = weapon.MaximumRange,
+
+                    HasAmmunition = weapon.HasAmmunition,
+                    IsLight = weapon.IsLight
+                });
+            }
+
             // Set snapshot level last so that the SnapshotMarkdown property is 
             // set correctly. Otherwise it will try to render at a level that 
             // isn't in the list yet.
             SnapshotLevel = plan.SnapshotLevel;
+        }
+
+        private void EnsureTwentyLevels(CharacterPlan plan)
+        {
+            if (plan.LevelPlans == null)
+            {
+                plan.LevelPlans = new List<LevelPlan>();
+            }
+
+            for (var i = 1; i <= 20; i++)
+            {
+                if (plan.LevelPlans.Any(lp => lp.Level == i))
+                {
+                    continue;
+                }
+
+                plan.LevelPlans.Add(new LevelPlan { Level = i });
+            }
         }
 
         #endregion

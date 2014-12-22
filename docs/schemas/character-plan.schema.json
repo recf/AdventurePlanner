@@ -57,78 +57,72 @@
       "required": true,
       "type": "string"
     },
-    "class_plans": {
+    "class_plan": {
       "required": true,
-      "type": "array",
-      "items": {
-        "type": [
-          "object",
-          "null"
-        ],
-        "properties": {
-          "class_name": {
-            "required": true,
-            "type": "string"
-          },
-          "armor_proficiencies": {
+      "type": "object",
+      "properties": {
+        "class_name": {
+          "required": true,
+          "type": "string"
+        },
+        "armor_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "weapon_proficiencies": {
+            ]
+          }
+        },
+        "weapon_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "tool_proficiencies": {
+            ]
+          }
+        },
+        "tool_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "save_proficiencies": {
+            ]
+          }
+        },
+        "save_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "skill_proficiencies": {
+            ]
+          }
+        },
+        "skill_proficiencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
             "type": [
-              "array",
+              "string",
               "null"
-            ],
-            "items": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
+            ]
           }
         }
       }
@@ -146,76 +140,6 @@
             "required": true,
             "type": "integer"
           },
-          "class": {
-            "required": true,
-            "type": "object",
-            "properties": {
-              "class_name": {
-                "required": true,
-                "type": "string"
-              },
-              "armor_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "weapon_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "tool_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "save_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "skill_proficiencies": {
-                "type": [
-                  "array",
-                  "null"
-                ],
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              }
-            }
-          },
           "ability_score_improvements": {
             "type": [
               "object",
@@ -224,9 +148,6 @@
             "additionalProperties": {
               "type": "integer"
             }
-          },
-          "set_prof_bonus": {
-            "type": "integer"
           },
           "features": {
             "type": [
@@ -243,12 +164,6 @@
                   "required": true,
                   "type": "string"
                 },
-                "skill": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
                 "description": {
                   "type": [
                     "string",
@@ -258,6 +173,126 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "armor": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "name": {
+            "required": true,
+            "type": "string"
+          },
+          "proficiency_group": {
+            "required": true,
+            "type": "string"
+          },
+          "ac": {
+            "required": true,
+            "type": "integer"
+          },
+          "max_dex": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "weapons": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "name": {
+            "required": true,
+            "type": "string"
+          },
+          "proficiency_group": {
+            "required": true,
+            "type": "string"
+          },
+          "has_ammo": {
+            "type": "boolean",
+            "default": false
+          },
+          "damage_dice": {
+            "required": true,
+            "type": "object",
+            "properties": {
+              "D4": {
+                "required": true,
+                "type": "integer"
+              },
+              "D6": {
+                "required": true,
+                "type": "integer"
+              },
+              "D8": {
+                "required": true,
+                "type": "integer"
+              },
+              "D10": {
+                "required": true,
+                "type": "integer"
+              },
+              "D12": {
+                "required": true,
+                "type": "integer"
+              },
+              "D20": {
+                "required": true,
+                "type": "integer"
+              },
+              "D100": {
+                "required": true,
+                "type": "integer"
+              },
+              "Modifier": {
+                "required": true,
+                "type": "integer"
+              },
+              "MaximumRoll": {
+                "required": true,
+                "type": "integer"
+              }
+            }
+          },
+          "damage_type": {
+            "required": true,
+            "type": "string"
+          },
+          "range": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "max_range": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "light": {
+            "required": true,
+            "type": "boolean"
           }
         }
       }

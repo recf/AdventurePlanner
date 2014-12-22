@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using NUnit.Framework;
 
 namespace AdventurePlannter.Core.Tests
@@ -18,7 +18,7 @@ namespace AdventurePlannter.Core.Tests
         [TestCase(12, 1)]
         public void TestModifier(int score, int expectedModifier)
         {
-            var a = new AbilitySnapshot("Tes", "Test Ability") { Score = score };
+            var a = new AbilityScore("Tes", "Test Ability") { Score = score };
             Assert.That(a.Modifier, Is.EqualTo(expectedModifier));
         }
     }

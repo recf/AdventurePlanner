@@ -6,7 +6,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using ReactiveUI;
 
 namespace AdventurePlanner.UI.ViewModels
@@ -63,24 +63,6 @@ namespace AdventurePlanner.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _level, value); }
         }
 
-        private ClassPlanViewModel _classPlan;
-
-        public ClassPlanViewModel ClassPlan
-        {
-            get { return _classPlan; }
-            set { this.RaiseAndSetIfChanged(ref _classPlan, value); }
-        }
-
-        public IReactiveList<ClassPlanViewModel> AvailableClassPlans { get; set; }
-
-        private int _setProficiencyBonus;
-
-        public int SetProficiencyBonus
-        {
-            get { return _setProficiencyBonus; }
-            set { this.RaiseAndSetIfChanged(ref _setProficiencyBonus, value); }
-        }
-
         public ReactiveList<AbilityScoreImprovementViewModel> AbilityScoreImprovements { get; private set; }
 
         public ReactiveList<FeaturePlanViewModel> NewFeatures { get; private set; }
@@ -114,7 +96,6 @@ namespace AdventurePlanner.UI.ViewModels
         private IObservable<FeaturePlanViewModel> AddFeatureImpl()
         {
             var featureVm = new FeaturePlanViewModel();
-            featureVm.AvailableSkills.AddRange(Skill.All);
 
             NewFeatures.Add(featureVm);
 

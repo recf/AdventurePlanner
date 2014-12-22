@@ -13,9 +13,6 @@ namespace AdventurePlanner.Core.Planning
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
 
-        [JsonProperty("skill", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string SkillName { get; set; }
-
         [JsonProperty("description", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue("")]
         public string Description { get; set; }

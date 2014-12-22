@@ -39,13 +39,16 @@ namespace Build
 
                 foreach (var levelNum in levelsToSnapshot)
                 {
-                    var snapshot = plan.ToSnapshot(levelNum);
-
                     var fileName = Path.Combine(
                         examplesDirectory,
-                        string.Format("{0}-at-level-{1}.adoc", planFileBaseName, levelNum));
+                        string.Format("{0}-at-level-{1:D2}.adoc", planFileBaseName, levelNum));
 
-                    File.WriteAllText(fileName, snapshot.ToText());
+                    if (File.GetLastWriteTimeUtc(planFile) > File.GetLastWriteTimeUtc(fileName))
+                    {
+                        var snapshot = plan.ToSnapshot(levelNum);
+
+                        File.WriteAllText(fileName, snapshot.ToText());
+                    }
                 }
             }
         }

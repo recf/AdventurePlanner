@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace AdventurePlanner.Core.Meta
+namespace AdventurePlanner.Core.Domain
 {
     public class Skill
     {

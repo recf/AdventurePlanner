@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Linq;
-using AdventurePlanner.Core.Snapshots;
+using AdventurePlanner.Core.Domain;
 using Newtonsoft.Json;
 
 namespace AdventurePlanner.Core.Planning
@@ -58,25 +57,27 @@ namespace AdventurePlanner.Core.Planning
 
         #endregion
 
-        [JsonProperty("class_plans", Required = Required.Always)]
-        public IList<ClassPlan> ClassPlans { get; set; }
+        [JsonProperty("class_plan", Required = Required.Always)]
+        public ClassPlan ClassPlan { get; set; }
 
         [JsonProperty("level_plans", Required = Required.Always)]
         public IList<LevelPlan> LevelPlans { get; set; }
 
+        [JsonProperty("armor", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IList<Armor> Armor { get; set; }
+
+        [JsonProperty("weapons", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public IList<Weapon> Weapons { get; set; }
+
         // TODO: :question: Consider moving ToSnapshot into an extension method.
-        public CharacterSnapshot ToSnapshot(int level)
+        public PlayerCharacter ToSnapshot(int level)
         {
             var applicableLevels = LevelPlans.Where(l => l.Level <= level).ToList();
 
-            var applicableClasses = (from l in applicableLevels
-                                     where l.ClassPlan != null
-                                     group l by l.ClassPlan
-                                         into c
-                                         select new { c.Key, Value = c.Count() }).ToList();
-
-            var snapshot = new CharacterSnapshot
+            var snapshot = new PlayerCharacter
             {
+                CharacterLevel = level,
+
                 Name = Name,
                 Race = Race,
                 Speed = Speed,
@@ -90,36 +91,32 @@ namespace AdventurePlanner.Core.Planning
                 HairColor = HairColor,
                 SkinColor = SkinColor,
 
-                // TODO: :poop: This is really clunky
-                Classes = applicableClasses.ToDictionary(l => l.Key != null ? l.Key.ClassName ?? "<not set>" : "<not set>", l => l.Value)
+                ClassName = ClassPlan.ClassName
             };
 
-            foreach (var plan in applicableClasses.Select(ac => ac.Key))
+            foreach (var prof in ClassPlan.ArmorProficiencies ?? new string[0])
             {
-                foreach (var prof in plan.ArmorProficiencies ?? new string[0])
-                {
-                    snapshot.ArmorProficiencies.Add(prof);
-                }
+                snapshot.ArmorProficiencies.Add(prof);
+            }
 
-                foreach (var prof in plan.WeaponProficiencies ?? new string[0])
-                {
-                    snapshot.WeaponProficiencies.Add(prof);
-                }
+            foreach (var prof in ClassPlan.WeaponProficiencies ?? new string[0])
+            {
+                snapshot.WeaponProficiencies.Add(prof);
+            }
 
-                foreach (var prof in plan.ToolProficiencies ?? new string[0])
-                {
-                    snapshot.ToolProficiencies.Add(prof);
-                }
+            foreach (var prof in ClassPlan.ToolProficiencies ?? new string[0])
+            {
+                snapshot.ToolProficiencies.Add(prof);
+            }
 
-                foreach (var savingThrowKey in plan.SaveProficiencies ?? new string[0])
-                {
-                    snapshot.SavingThrows[savingThrowKey].IsProficient = true;
-                }
+            foreach (var savingThrowKey in ClassPlan.SaveProficiencies ?? new string[0])
+            {
+                snapshot.SavingThrows[savingThrowKey].IsProficient = true;
+            }
 
-                foreach (var skillName in plan.SkillProficiencies ?? new string[0])
-                {
-                    snapshot.Skills[skillName].IsProficient = true;
-                }
+            foreach (var skillName in ClassPlan.SkillProficiencies ?? new string[0])
+            {
+                snapshot.Skills[skillName].IsProficient = true;
             }
 
             foreach (var plan in applicableLevels)
@@ -129,25 +126,24 @@ namespace AdventurePlanner.Core.Planning
                     snapshot.Abilities[kvp.Key].Score += kvp.Value;
                 }
 
-                if (plan.SetProficiencyBonus > 0)
-                {
-                    snapshot.ProficiencyBonus = plan.SetProficiencyBonus;
-                }
-
                 foreach (var feature in plan.FeaturePlans ?? new FeaturePlan[0])
                 {
-                    var target = snapshot.Features;
-                    if (!string.IsNullOrWhiteSpace(feature.SkillName))
-                    {
-                        target = snapshot.Skills[feature.SkillName].Features;
-                    }
-
-                    target.Add(new FeatureSnapshot()
+                    snapshot.Features.Add(new FeatureSnapshot()
                     {
                         Name = feature.Name,
                         Description = feature.Description
                     });
                 }
+            }
+
+            foreach (var armor in Armor ?? new Armor[0])
+            {
+                snapshot.Armor.Add(new InventoryArmor(snapshot, armor));
+            }
+
+            foreach (var weapon in Weapons ?? new Weapon[0])
+            {
+                snapshot.Weapons.Add(new InventoryWeapon(snapshot, weapon));
             }
 
             return snapshot;

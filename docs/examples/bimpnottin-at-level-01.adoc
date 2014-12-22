@@ -1,0 +1,109 @@
+= Bimpnottin "Filchbatter" Nackle
+:revnumber: 1
+:revdate: 2014-12-18
+:version-label: Level
+:nofooter:
+:icons: font
+
+[horizontal]
+Class:: Druid
+Race:: Rock Gnome
+Speed:: 25
+Alignment:: TN
+Age:: 114
+Weight:: 45 lbs.
+Height:: 3'7"
+Eyes:: Gold
+Skin:: Tan
+Hair:: Moss Green
+Proficiency Bonus:: 2
+
+== Ability Scores
+
+[cols="3*", options="header"]
+|===
+| Ability | Score | Mod 
+
+| Str | 16 | 3 
+| Dex | 12 | 1 
+| Con | 15 | 2 
+| Int | 12 | 1 
+| Wis | 15 | 2 
+| Cha | 14 | 2 
+|===
+
+== Saving Throws
+
+[cols="1*,a,1*", options="header"]
+|===
+| Prof | Mod | Saving Throw 
+
+| icon:square-o[] | 3 | Strength 
+| icon:square-o[] | 1 | Dexterity 
+| icon:square-o[] | 2 | Constitution 
+| icon:check-square-o[] | 3 | Intelligence 
+| icon:check-square-o[] | 4 | Wisdom 
+| icon:square-o[] | 2 | Charisma 
+|===
+
+== Skills
+
+[cols="a,2*,a", options="header"]
+|===
+| Prof | Mod | Skill 
+
+| icon:square-o[] | 1 | Acrobatics (Dex) 
+| icon:square-o[] | 2 | Animal Handling (Wis) 
+| icon:square-o[] | 1 | Arcana (Int) 
+| icon:square-o[] | 3 | Athletics (Str) 
+| icon:square-o[] | 2 | Deception (Cha) 
+| icon:square-o[] | 1 | History (Int) 
+| icon:check-square-o[] | 4 | Insight (Wis) 
+| icon:square-o[] | 2 | Intimidation (Cha) 
+| icon:square-o[] | 1 | Investigation (Int) 
+| icon:check-square-o[] | 4 | Medicine (Wis) 
+| icon:check-square-o[] | 3 | Nature (Int) 
+| icon:square-o[] | 2 | Perception (Wis) 
+| icon:square-o[] | 1 | Performance (Dex) 
+| icon:square-o[] | 2 | Persuasion (Cha) 
+| icon:check-square-o[] | 3 | Religion (Int) 
+| icon:square-o[] | 1 | Sleight of Hand (Dex) 
+| icon:square-o[] | 1 | Stealth (Dex) 
+| icon:square-o[] | 2 | Survival (Wis) 
+|===
+
+== Proficiencies
+
+Armor:: light armor, medium armor, shields
+Weapons:: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
+Tools:: herbalism kit
+
+== Other Features & Traits
+
+Artificer's Lore:: Double proficiency on checks related to magic items, alchemical objects, or technological devices.
+Darkvision 60':: {empty}
+Gnome Cunning:: Advantage on all mental saves against magic.
+Speak with Small Beasts:: Communicate simple ideas with Small or smaller beasts, using sounds and gestures.
+Tinker:: {empty}
+
+== Equipment
+
+=== Weapons & Attacks
+
+[cols="4*", options="header"]
+|===
+| Weapon | Attack | Attack Bonus | Damage 
+
+| Scimitar | Melee Attack | 5 | d6+3/slashing 
+| Scimitar | Melee Attack (Bonus Action) | 5 | d6/slashing 
+|===
+
+=== Armor
+
+[cols="3*", options="header"]
+|===
+| AC | Name | Proficiency Group 
+
+| 12 | Leather Armor | icon:check-square-o[] Light Armor 
+|===
+

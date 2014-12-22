@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AdventurePlanner.Core.Snapshots
+namespace AdventurePlanner.Core.Domain
 {
-    public class AbilitySnapshot
+    public class AbilityScore
     {
-        public AbilitySnapshot(string abbreviation, string name)
+        public AbilityScore(string abbreviation, string name)
         {
+            // TODO: :question: make these actual ability objects?
             Abbreviation = abbreviation;
             AbilityName = name;
         }

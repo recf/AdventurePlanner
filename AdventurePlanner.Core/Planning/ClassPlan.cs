@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace AdventurePlanner.Core.Planning
 {
-    [JsonObject(MemberSerialization.OptIn, IsReference = true)]
+    [JsonObject(MemberSerialization.OptIn)]
     public class ClassPlan
     {
         [JsonProperty("class_name", Required = Required.Always)]

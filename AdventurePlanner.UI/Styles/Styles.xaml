@@ -7,4 +7,15 @@
     <Style TargetType="{x:Type GridSplitter}">
         <Setter Property="Margin" Value="10"/>
     </Style>
+
+
+    <Style TargetType="{x:Type Run}" x:Key="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+    </Style>
+    <Style TargetType="{x:Type Run}" x:Key="AddIcon" BasedOn="{StaticResource FontIcon}">
+        <Setter Property="Text" Value="" />
+    </Style>
+    <Style TargetType="{x:Type Run}" x:Key="RemoveIcon" BasedOn="{StaticResource FontIcon}">
+        <Setter Property="Text" Value="" />
+    </Style>
 </ResourceDictionary>

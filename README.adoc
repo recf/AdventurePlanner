@@ -9,3 +9,9 @@ image::{ci-img}[alt=Build Status, link={ci-link}]
 
 Adventure Planner is a Windows Desktop application for planning how to level a
 character in D&D 5e.
+
+== Keep it simple
+
+The scope is one character class for 20 levels, with basic progression.
+
+This means no multiclassing, no feats, and no epic levels. That stuff can be added later if it makes sense.

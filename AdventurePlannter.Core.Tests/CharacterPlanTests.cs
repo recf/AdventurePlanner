@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdventurePlanner.Core;
-using AdventurePlanner.Core.Meta;
+using AdventurePlanner.Core.Domain;
 using AdventurePlanner.Core.Planning;
-using AdventurePlanner.Core.Snapshots;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
+using Polyhedral;
 
 namespace AdventurePlannter.Core.Tests
 {
@@ -22,29 +22,7 @@ namespace AdventurePlannter.Core.Tests
         [Test]
         public void TestToSnapshot()
         {
-            var fighter = new ClassPlan
-            {
-                ClassName = "Fighter",
-
-                ArmorProficiencies = new[] { "All Armor", "Shields" },
-                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                ToolProficiencies = new[] { "Fighter kit" },
-
-                SaveProficiencies = new[] { "Str", "Con" },
-                SkillProficiencies = new[] { "Athletics" },
-            };
-
-            var cleric = new ClassPlan
-            {
-                ClassName = "Cleric",
-
-                ArmorProficiencies = new[] { "Light Armor", "Medium Armor", "Shields" },
-                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
-                ToolProficiencies = new[] { "Cleric kit" },
-
-                SaveProficiencies = new[] { "Wis", "Cha" },
-                SkillProficiencies = new[] { "Perception", "Insight" },
-            };
+            var fighter = Fighter();
 
             var plan = new CharacterPlan
             {
@@ -61,31 +39,16 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                ClassPlans = new List<ClassPlan>
-                {
-                    fighter,
-                    cleric
-                },
+                ClassPlan = fighter,
 
                 LevelPlans = new List<LevelPlan>
                 {
                     new LevelPlan
                     {
                         Level = 1,
-                        ClassPlan = fighter,
 
-                        AbilityScoreImprovements = new Dictionary<string, int>()
-                        {
-                            { "Str", 10 },
-                            { "Dex", 12 },
-                            { "Con", 14 },
-                            { "Int", 8 },
-                            { "Wis", 15 },
-                            { "Cha", 11 },
-                        },
-
-                        SetProficiencyBonus = 2,
-
+                        AbilityScoreImprovements = AbilityScores(10, 12, 14, 8, 15, 11),
+                        
                         FeaturePlans = new List<FeaturePlan>()
                         {
                             new FeaturePlan() { Name = "Quick Wits" },
@@ -93,24 +56,20 @@ namespace AdventurePlannter.Core.Tests
                             {
                                 Name = "Nimble",
                                 Description = "Half penalty on rough terrain",
-                                SkillName = "Acrobatics"
                             }
                         },
                     },
                     new LevelPlan
                     {
                         Level = 2,
-                        ClassPlan = cleric,
                     },
                     new LevelPlan
                     {
                         Level = 3,
-                        ClassPlan = cleric,
                     },
                     new LevelPlan
                     {
                         Level = 4,
-                        ClassPlan = cleric,
 
                         AbilityScoreImprovements = new Dictionary<string, int>()
                         {
@@ -120,16 +79,27 @@ namespace AdventurePlannter.Core.Tests
                     new LevelPlan
                     {
                         Level = 4,
-                        ClassPlan = cleric,
-                        SetProficiencyBonus = 3
+                    }
+                },
+
+                Armor = new List<Armor>
+                {
+                    new Armor
+                    {
+                        Name = "Padded",
+                        ArmorClass = 11,
+                        MaximumDexterityModifier = null,
+                        ProficiencyGroup = "light armor"
                     }
                 }
             };
 
             var snapshotLevel = 20;
 
-            var expectedSnapshot = new CharacterSnapshot
+            var expectedSnapshot = new PlayerCharacter
             {
+                CharacterLevel = snapshotLevel,
+
                 Name = "Balin Thundershield",
                 Race = "Dwarf",
                 Speed = 25,
@@ -143,33 +113,27 @@ namespace AdventurePlannter.Core.Tests
                 HairColor = "Rust",
                 SkinColor = "Tan",
 
-                Classes = new Dictionary<string, int> { { "Cleric", 4 }, { "Fighter", 1 } },
-
-                ProficiencyBonus = 3,
+                ClassName = "Fighter"
             };
             expectedSnapshot.Abilities["Str"].Score = 10;
             expectedSnapshot.Abilities["Dex"].Score = 12;
             expectedSnapshot.Abilities["Con"].Score = 14;
             expectedSnapshot.Abilities["Int"].Score = 8;
-            expectedSnapshot.Abilities["Wis"].Score = 16;
             expectedSnapshot.Abilities["Cha"].Score = 11;
+            expectedSnapshot.Abilities["Wis"].Score = 16;
 
             expectedSnapshot.SavingThrows["Str"].IsProficient = true;
             expectedSnapshot.SavingThrows["Con"].IsProficient = true;
-            expectedSnapshot.SavingThrows["Wis"].IsProficient = true;
-            expectedSnapshot.SavingThrows["Cha"].IsProficient = true;
 
-            expectedSnapshot.Skills["Perception"].IsProficient = true;
-            expectedSnapshot.Skills["Insight"].IsProficient = true;
             expectedSnapshot.Skills["Athletics"].IsProficient = true;
 
-            expectedSnapshot.Skills["Acrobatics"].Features.Add(new FeatureSnapshot()
+            expectedSnapshot.Features.Add(new FeatureSnapshot()
             {
                 Name = "Nimble",
                 Description = "Half penalty on rough terrain"
             });
 
-            foreach (var prof in new[] { "All Armor", "Light Armor", "Medium Armor", "Shields" })
+            foreach (var prof in new[] { "All Armor", "Shields" })
             {
                 expectedSnapshot.ArmorProficiencies.Add(prof);
             }
@@ -177,7 +141,7 @@ namespace AdventurePlannter.Core.Tests
             {
                 expectedSnapshot.WeaponProficiencies.Add(prof);
             }
-            foreach (var prof in new[] { "Fighter kit", "Cleric kit" })
+            foreach (var prof in new[] { "Fighter kit" })
             {
                 expectedSnapshot.ToolProficiencies.Add(prof);
             }
@@ -185,66 +149,57 @@ namespace AdventurePlannter.Core.Tests
             expectedSnapshot.Features.Add(
                 new FeatureSnapshot { Name = "Quick Wits" });
 
+            var armor = new Armor
+            {
+                Name = "Padded",
+                ArmorClass = 11,
+                MaximumDexterityModifier = null,
+                ProficiencyGroup = "light armor"
+            };
+            expectedSnapshot.Armor.Add(new InventoryArmor(expectedSnapshot, armor));
+
             var actualSnapshot = plan.ToSnapshot(snapshotLevel);
 
-            Assert.That(actualSnapshot.Name, Is.EqualTo(expectedSnapshot.Name));
-            Assert.That(actualSnapshot.Race, Is.EqualTo(expectedSnapshot.Race));
-            Assert.That(actualSnapshot.Alignment, Is.EqualTo(expectedSnapshot.Alignment));
-            Assert.That(actualSnapshot.Background, Is.EqualTo(expectedSnapshot.Background));
-            Assert.That(actualSnapshot.Age, Is.EqualTo(expectedSnapshot.Age));
-            Assert.That(actualSnapshot.HeightFeet, Is.EqualTo(expectedSnapshot.HeightFeet));
-            Assert.That(actualSnapshot.HeightInches, Is.EqualTo(expectedSnapshot.HeightInches));
-            Assert.That(actualSnapshot.Weight, Is.EqualTo(expectedSnapshot.Weight));
-            Assert.That(actualSnapshot.EyeColor, Is.EqualTo(expectedSnapshot.EyeColor));
-            Assert.That(actualSnapshot.HairColor, Is.EqualTo(expectedSnapshot.HairColor));
-            Assert.That(actualSnapshot.SkinColor, Is.EqualTo(expectedSnapshot.SkinColor));
-
-            Assert.That(actualSnapshot.Classes, Is.EquivalentTo(expectedSnapshot.Classes));
-
-            foreach (var abbr in expectedSnapshot.Abilities.Keys)
-            {
-                var actual = actualSnapshot.Abilities[abbr];
-                var expected = expectedSnapshot.Abilities[abbr];
-
-                Assert.That(actual.Score, Is.EqualTo(expected.Score), "Abilities[{0}].Score", abbr);
-            }
-
-            Assert.That(actualSnapshot.ProficiencyBonus, Is.EqualTo(expectedSnapshot.ProficiencyBonus));
-
-            foreach (var skillName in expectedSnapshot.Skills.Keys)
-            {
-                var actual = actualSnapshot.Skills[skillName];
-                var expected = expectedSnapshot.Skills[skillName];
-
-                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "Skills[{0}].IsProficient", skillName);
-
-                AssertEquivalentFeatureLists(actual.Features, expected.Features, string.Format("Skills[{0}].Features", skillName));
-            }
-
-            foreach (var savingThrowKey in expectedSnapshot.SavingThrows.Keys)
-            {
-                var actual = actualSnapshot.SavingThrows[savingThrowKey];
-                var expected = expectedSnapshot.SavingThrows[savingThrowKey];
-
-                Assert.That(actual.IsProficient, Is.EqualTo(expected.IsProficient), "SavingThrows[{0}].IsProficient", savingThrowKey);
-            }
-
-            Assert.That(actualSnapshot.ArmorProficiencies, Is.EquivalentTo(expectedSnapshot.ArmorProficiencies));
-            Assert.That(actualSnapshot.WeaponProficiencies, Is.EquivalentTo(expectedSnapshot.WeaponProficiencies));
-            Assert.That(actualSnapshot.ToolProficiencies, Is.EquivalentTo(expectedSnapshot.ToolProficiencies));
-
-            AssertEquivalentFeatureLists(actualSnapshot.Features, expectedSnapshot.Features, "Features");
+            AssertionHelpers.AssertEqualSnapshots(actualSnapshot, expectedSnapshot);
         }
 
-        private void AssertEquivalentFeatureLists(
-            IList<FeatureSnapshot> actualFeatures,
-            IList<FeatureSnapshot> expectedFeatures,
-            string context)
+        #region Construction Helpers
+
+        public ClassPlan Fighter()
         {
-            var actual = actualFeatures.Select(JsonConvert.SerializeObject).ToArray();
-            var expected = expectedFeatures.Select(JsonConvert.SerializeObject).ToArray();
+            return new ClassPlan
+            {
+                ClassName = "Fighter",
 
-            Assert.That(actual, Is.EquivalentTo(expected), context);
+                ArmorProficiencies = new[] { "All Armor", "Shields" },
+                WeaponProficiencies = new[] { "Simple Weapons", "Martial Weapons" },
+                ToolProficiencies = new[] { "Fighter kit" },
+
+                SaveProficiencies = new[] { "Str", "Con" },
+                SkillProficiencies = new[] { "Athletics" },
+            };
         }
+
+        public IDictionary<string, int> AbilityScores(
+            int strScore = 10,
+            int dexScore = 10,
+            int conScore = 10,
+            int intScore = 10,
+            int wisScore = 10,
+            int chaScore = 10)
+        {
+            return new Dictionary<string, int>()
+            {
+                { "Str", strScore },
+                { "Dex", dexScore },
+                { "Con", conScore },
+                { "Int", intScore },
+                { "Wis", wisScore },
+                { "Cha", chaScore },
+            };
+        }
+
+        #endregion
+        
     }
 }

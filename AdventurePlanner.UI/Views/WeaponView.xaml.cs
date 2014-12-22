@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AdventurePlanner.UI.ViewModels;
 
 namespace AdventurePlanner.UI.Views
 {
     /// <summary>
-    /// Interaction logic for LevelPlanView.xaml
+    /// Interaction logic for WeaponView.xaml
     /// </summary>
-    public partial class LevelPlanView
+    public partial class WeaponView : UserControl
     {
-        public LevelPlanView()
+        public WeaponView()
         {
             InitializeComponent();
         }
