@@ -1,5 +1,5 @@
 {
-  "snapshot_level": 1,
+  "snapshot_level": 3,
   "name": "Bimpnottin \"Filchbatter\" Nackle",
   "race": "Rock Gnome",
   "speed": 25,
@@ -190,6 +190,16 @@
       "damage_dice": "d6",
       "damage_type": "slashing",
       "light": true
+    },
+    {
+      "name": "Darts",
+      "proficiency_group": "darts",
+      "has_ammo": true,
+      "damage_dice": "d4",
+      "damage_type": "piercing",
+      "range": 20,
+      "max_range": 60,
+      "light": false
     }
   ]
 }

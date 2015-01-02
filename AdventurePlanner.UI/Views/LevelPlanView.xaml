@@ -13,20 +13,6 @@
             <Expander Header="Ability Score Improvements" 
                   IsExpanded="{Binding AbilityScoreImprovements, Mode=OneTime, Converter={StaticResource EnumerableToBoolConverter}}">
                 <StackPanel>
-                    <WrapPanel HorizontalAlignment="Right">
-                        <Button Command="{Binding AddAbilityScoreImprovement}">
-                            <TextBlock>
-                        <Run Text="" FontFamily="Segoe UI Symbol"/>
-                        <Run Text="Add"/>
-                            </TextBlock>
-                        </Button>
-                        <Button Command="{Binding RemoveSelectedAbilityScoreImprovements}">
-                            <TextBlock>
-                        <Run Text="" FontFamily="Segoe UI Symbol"/>
-                        <Run Text="Remove Selected"/>
-                            </TextBlock>
-                        </Button>
-                    </WrapPanel>
 
                     <ItemsControl x:Name="AbilityScoreImprovements"/>
 

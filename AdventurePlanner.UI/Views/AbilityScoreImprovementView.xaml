@@ -6,15 +6,8 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-
-        <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" />
-        <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding Ability}" DisplayMemberPath="AbilityName"/>
-        <controls:NumericUpDown Grid.Column="2" Value="{Binding Improvement}"/>
-    </Grid>
+    <StackPanel>
+        <Label Content="{Binding Ability.Name}"/>
+        <controls:NumericUpDown Value="{Binding Improvement}"/>
+    </StackPanel>
 </UserControl>

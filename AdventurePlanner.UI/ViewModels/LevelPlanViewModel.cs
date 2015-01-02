@@ -25,20 +25,8 @@ namespace AdventurePlanner.UI.ViewModels
             Monitor(NewFeatures);
 
             // Connect commands
-            AddAbilityScoreImprovement = ReactiveCommand.CreateAsyncObservable(_ => AddAbilityScoreImprovementImpl());
-            RemoveSelectedAbilityScoreImprovements =
-                ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedAbilityScoreImprovementsImpl());
-            
             AddFeature = ReactiveCommand.CreateAsyncObservable(_ => AddFeatureImpl());
             RemoveSelectedFeatures = ReactiveCommand.CreateAsyncObservable(_ => RemoveSelectedAddFeatureImpl());
-        }
-
-        public ReactiveCommand<AbilityScoreImprovementViewModel> AddAbilityScoreImprovement { get; private set; }
-
-        public ReactiveCommand<IList<AbilityScoreImprovementViewModel>> RemoveSelectedAbilityScoreImprovements
-        {
-            get;
-            private set;
         }
 
         public ReactiveCommand<FeaturePlanViewModel> AddFeature { get; private set; }
@@ -70,28 +58,6 @@ namespace AdventurePlanner.UI.ViewModels
         #endregion
 
         #region Command Implementations
-        
-        private IObservable<AbilityScoreImprovementViewModel> AddAbilityScoreImprovementImpl()
-        {
-            var asiVm = new AbilityScoreImprovementViewModel();
-            asiVm.AvailableOptions.AddRange(Ability.All);
-
-            AbilityScoreImprovements.Add(asiVm);
-
-            return Observable.Return(asiVm);
-        }
-
-        private IObservable<IList<AbilityScoreImprovementViewModel>> RemoveSelectedAbilityScoreImprovementsImpl()
-        {
-            var selected = AbilityScoreImprovements.Where(asi => asi.IsSelected).ToList();
-
-            foreach (var asi in selected)
-            {
-                AbilityScoreImprovements.Remove(asi);
-            }
-
-            return Observable.Return(selected);
-        }
 
         private IObservable<FeaturePlanViewModel> AddFeatureImpl()
         {

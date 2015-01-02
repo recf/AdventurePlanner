@@ -7,7 +7,7 @@ namespace AdventurePlanner.Core.Domain
     {
         public static IReadOnlyCollection<Ability> All { get; private set; }
 
-        public string AbilityName { get; set; }
+        public string Name { get; set; }
 
         public string Abbreviation { get; set; }
 
@@ -15,12 +15,12 @@ namespace AdventurePlanner.Core.Domain
         {
             var abilities = new List<Ability>
             {
-                new Ability { Abbreviation = "Str", AbilityName = "Strength" },
-                new Ability { Abbreviation = "Dex", AbilityName = "Dexterity" },
-                new Ability { Abbreviation = "Con", AbilityName = "Constitution" },
-                new Ability { Abbreviation = "Int", AbilityName = "Intelligence" },
-                new Ability { Abbreviation = "Wis", AbilityName = "Wisdom" },
-                new Ability { Abbreviation = "Cha", AbilityName = "Charisma" },
+                new Ability { Abbreviation = "Str", Name = "Strength" },
+                new Ability { Abbreviation = "Dex", Name = "Dexterity" },
+                new Ability { Abbreviation = "Con", Name = "Constitution" },
+                new Ability { Abbreviation = "Int", Name = "Intelligence" },
+                new Ability { Abbreviation = "Wis", Name = "Wisdom" },
+                new Ability { Abbreviation = "Cha", Name = "Charisma" },
             };
 
             All = new ReadOnlyCollection<Ability>(abilities);

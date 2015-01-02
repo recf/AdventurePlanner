@@ -65,7 +65,7 @@ namespace AdventurePlanner.Core.Domain
         public PlayerCharacter()
         {
             var abilities =
-                Ability.All.Select(conf => new AbilityScore(conf.Abbreviation, conf.AbilityName))
+                Ability.All.Select(conf => new AbilityScore(conf.Abbreviation, conf.Name))
                     .ToDictionary(a => a.Abbreviation);
 
             Abilities = new ReadOnlyDictionary<string, AbilityScore>(abilities);

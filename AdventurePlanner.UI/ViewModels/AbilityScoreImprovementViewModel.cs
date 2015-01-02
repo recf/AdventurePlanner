@@ -12,7 +12,6 @@ namespace AdventurePlanner.UI.ViewModels
     {
         public AbilityScoreImprovementViewModel()
         {
-            AvailableOptions = new ReactiveList<Ability>();
         }
 
         private Ability _ability;
@@ -30,15 +29,5 @@ namespace AdventurePlanner.UI.ViewModels
             get { return _improvement; }
             set { this.RaiseAndSetIfChanged(ref _improvement, value); }
         }
-
-        private bool _selected;
-
-        public bool IsSelected
-        {
-            get { return _selected; }
-            set { this.RaiseAndSetIfChanged(ref _selected, value); }
-        }
-
-        public ReactiveList<Ability> AvailableOptions { get; private set; }
     }
 }

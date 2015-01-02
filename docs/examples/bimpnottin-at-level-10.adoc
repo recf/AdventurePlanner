@@ -1,6 +1,6 @@
 = Bimpnottin "Filchbatter" Nackle
 :revnumber: 10
-:revdate: 2014-12-18
+:revdate: 2015-01-02
 :version-label: Level
 :nofooter:
 :icons: font
@@ -96,6 +96,7 @@ Tinker:: {empty}
 
 | Scimitar | Melee Attack | 7 | d6+3/slashing 
 | Scimitar | Melee Attack (Bonus Action) | 7 | d6/slashing 
+| Darts | Ranged Attack | 5 | d4+1/piercing 
 |===
 
 === Armor

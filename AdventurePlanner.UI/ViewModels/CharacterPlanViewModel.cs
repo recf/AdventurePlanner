@@ -447,17 +447,19 @@ namespace AdventurePlanner.UI.ViewModels
             {
                 var levelPlanVm = new LevelPlanViewModel
                 {
-                    Level = lp.Level,
+                    Level = lp.Level
                 };
+                levelPlanVm.AbilityScoreImprovements.AddRange(
+                    Ability.All.Select(a => new AbilityScoreImprovementViewModel
+                    {
+                        Ability = a,
+                    }));
+
 
                 foreach (var kvp in lp.AbilityScoreImprovements ?? new Dictionary<string, int>())
                 {
-                    var asiVm = new AbilityScoreImprovementViewModel();
-                    asiVm.AvailableOptions.AddRange(Ability.All);
-                    asiVm.Ability = asiVm.AvailableOptions.First(a => a.Abbreviation == kvp.Key);
+                    var asiVm = levelPlanVm.AbilityScoreImprovements.First(asivm => asivm.Ability.Abbreviation == kvp.Key);
                     asiVm.Improvement = kvp.Value;
-
-                    levelPlanVm.AbilityScoreImprovements.Add(asiVm);
                 }
 
                 foreach (var feature in lp.FeaturePlans ?? new FeaturePlan[0])
