@@ -1,20 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventurePlanner.Core", "AdventurePlanner.Core\AdventurePlanner.Core.csproj", "{3B9F55B1-459A-44B6-8058-7E3A35560DD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventurePlanner.Domain", "AdventurePlanner.Domain\AdventurePlanner.Domain.csproj", "{3B9F55B1-459A-44B6-8058-7E3A35560DD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventurePlannter.Core.Tests", "AdventurePlannter.Core.Tests\AdventurePlannter.Core.Tests.csproj", "{B0C17E5B-679D-4281-9349-DA2BA977C4F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventurePlanner.UI", "AdventurePlanner.UI\AdventurePlanner.UI.csproj", "{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBuild", "PostBuild\PostBuild.csproj", "{E9B02567-CCEF-4B1B-959D-CE8E31271D21}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610} = {E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}
-		{B0C17E5B-679D-4281-9349-DA2BA977C4F8} = {B0C17E5B-679D-4281-9349-DA2BA977C4F8}
-		{3B9F55B1-459A-44B6-8058-7E3A35560DD7} = {3B9F55B1-459A-44B6-8058-7E3A35560DD7}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventurePlannter.Domain.Tests", "AdventurePlanner.Domain.Tests\AdventurePlanner.Domain.Tests.csproj", "{B0C17E5B-679D-4281-9349-DA2BA977C4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,14 +21,6 @@ Global
 		{B0C17E5B-679D-4281-9349-DA2BA977C4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C17E5B-679D-4281-9349-DA2BA977C4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C17E5B-679D-4281-9349-DA2BA977C4F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0847F42-31F7-4F5D-9F4D-C8D7AECC5610}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9B02567-CCEF-4B1B-959D-CE8E31271D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9B02567-CCEF-4B1B-959D-CE8E31271D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9B02567-CCEF-4B1B-959D-CE8E31271D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9B02567-CCEF-4B1B-959D-CE8E31271D21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
