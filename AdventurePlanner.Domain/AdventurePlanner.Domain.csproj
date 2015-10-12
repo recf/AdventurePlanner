@@ -60,6 +60,7 @@
     <Compile Include="SavingThrow.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="SkillScore.cs" />
+    <Compile Include="SourceBook.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="CharacterPlan.cs" />
     <Compile Include="ClassPlan.cs" />

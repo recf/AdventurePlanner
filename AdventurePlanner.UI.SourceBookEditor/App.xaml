@@ -1,0 +1,8 @@
+﻿<Application x:Class="AdventurePlanner.UI.SourceBookEditor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AdventurePlanner.UI.SourceBookEditor">
+    <Application.Resources>
+         <ResourceDictionary Source="DataTemplates.xaml"/>
+    </Application.Resources>
+</Application>
