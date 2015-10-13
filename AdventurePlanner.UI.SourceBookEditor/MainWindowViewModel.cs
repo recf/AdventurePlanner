@@ -1,15 +1,20 @@
-﻿using System.Security.RightsManagement;
-using AdventurePlanner.UI.SourceBookEditor.SourceBooks;
+﻿using AdventurePlanner.UI.SourceBookEditor.SourceBooks;
+using Microsoft.Practices.Unity;
 
 namespace AdventurePlanner.UI.SourceBookEditor
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : BindableBase
     {
-        public MainWindowViewModel()
+        public MainWindowViewModel(IUnityContainer container)
         {
-            CurrentViewModel = new SourceBookDetailViewModel();
+            CurrentViewModel = container.Resolve<SourceBookDetailViewModel>();
         }
 
-        public object CurrentViewModel { get; set; }
+        private BindableBase _currentViewModel;
+        public BindableBase CurrentViewModel
+        {
+            get { return _currentViewModel; }
+            set { Set(ref _currentViewModel, value); }
+        }
     }
 }

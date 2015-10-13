@@ -8,9 +8,6 @@
         Title="MainWindow" 
         d:DesignWidth="525"
         d:DesignHeight="350">
-    <Window.DataContext>
-        <local:MainWindowViewModel/>
-    </Window.DataContext>
     <Grid>
         <ContentControl Content="{Binding CurrentViewModel}"/>
     </Grid>

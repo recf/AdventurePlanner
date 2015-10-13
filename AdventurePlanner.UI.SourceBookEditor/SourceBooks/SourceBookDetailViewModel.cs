@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
 {
-    public class SourceBookDetailViewModel
+    public class SourceBookDetailViewModel : BindableBase
     {
         public SourceBookDetailViewModel()
         {

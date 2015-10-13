@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using AdventurePlanner.UI.SourceBookEditor.SourceBooks;
+using Microsoft.Practices.Unity;
 
 namespace AdventurePlanner.UI.SourceBookEditor
 {
@@ -21,7 +22,10 @@ namespace AdventurePlanner.UI.SourceBookEditor
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
+            IUnityContainer container = new UnityContainer();
+
             var mainWindow = new MainWindow();
+            mainWindow.DataContext = container.Resolve<MainWindowViewModel>();
             mainWindow.Show();
         }
     }
