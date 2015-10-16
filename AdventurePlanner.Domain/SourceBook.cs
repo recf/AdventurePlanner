@@ -8,8 +8,14 @@ namespace AdventurePlanner.Domain
 {
     public class SourceBook
     {
-        public string Identifier { get; set; }
+        public SourceBook(string identifier, string name)
+        {
+            Identifier = identifier;
+            Name = name;
+        }
 
-        public string Name { get; set; }
+        public string Identifier { get; }
+
+        public string Name { get; }
     }
 }

@@ -14,5 +14,7 @@
         
         <Label Content="Name"/>
         <TextBox Text="{Binding Name}"/>
+        
+        <Button Content="Save" Command="{Binding SaveCommand}"/>
     </StackPanel>
 </UserControl>
