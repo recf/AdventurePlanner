@@ -16,5 +16,6 @@
         <TextBox Text="{Binding Name}"/>
         
         <Button Content="Save" Command="{Binding SaveCommand}"/>
+        <Button Content="Open" Command="{Binding OpenCommand}"/>
     </StackPanel>
 </UserControl>

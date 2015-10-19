@@ -19,5 +19,15 @@ namespace AdventurePlanner.UI.SourceBookEditor.DataAccess
                 serializer.WriteObject(stream, dto);
             }
         }
+
+        public SourceBook Open(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                var serializer = new DataContractJsonSerializer(typeof(SourceBookDto));
+                var dto = serializer.ReadObject(stream) as SourceBookDto;
+                return dto.GetDomainObject();
+            }
+        }
     }
 }

@@ -20,9 +20,34 @@ namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
 
             _service = service;
 
+            OpenCommand = new RelayCommand(OnOpen, CanOpen);
             SaveCommand = new RelayCommand(OnSave, CanSave);
 
             this.ErrorsChanged += (sender, args) => { SaveCommand.RaiseCanExecuteChanged(); };
+        }
+
+        public RelayCommand OpenCommand { get; set; }
+
+        private bool CanOpen()
+        {
+            return true;
+        }
+
+        private void OnOpen()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Source Book file|*.apsb,*.json";
+            var result = dialog.ShowDialog();
+            if (!result.HasValue || !result.Value)
+            {
+                return;
+            }
+
+            var sourceBook = _service.Open(dialog.FileName);
+            FilePath = dialog.FileName;
+
+            Identifier = sourceBook.Identifier;
+            Name = sourceBook.Name;
         }
 
         public RelayCommand SaveCommand { get; set; }
