@@ -10,7 +10,7 @@ namespace AdventurePlanner.UI.SourceBookEditor.DataAccess
         public void Save(SourceBook sourceBook, string filePath)
         {
             var dto = new SourceBookDto();
-            dto.SetFromDomain(sourceBook);
+            dto.SetFromDomainObject(sourceBook);
 
             using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
             {

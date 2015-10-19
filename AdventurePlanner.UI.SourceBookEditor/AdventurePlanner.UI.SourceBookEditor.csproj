@@ -73,16 +73,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Abilities\AbilityListView.xaml.cs">
+      <DependentUpon>AbilityListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BindableBase.cs" />
     <Compile Include="DataAccess\SourceBookDto.cs" />
     <Compile Include="DataAccess\SourceBookService.cs" />
+    <Compile Include="IDomainRepresentationObject.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SourceBooks\SourceBookDetailView.xaml.cs">
       <DependentUpon>SourceBookDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SourceBooks\SourceBookDetailViewModel.cs" />
+    <Compile Include="SourceBooks\SourceBookModel.cs" />
     <Compile Include="ValidatableBindableBase.cs" />
+    <Page Include="Abilities\AbilityListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

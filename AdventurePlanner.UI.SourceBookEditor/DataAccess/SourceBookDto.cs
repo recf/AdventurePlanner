@@ -4,7 +4,7 @@ using AdventurePlanner.Domain;
 namespace AdventurePlanner.UI.SourceBookEditor.DataAccess
 {
     [DataContract]
-    public class SourceBookDto : IDataTrasferObject<SourceBook>
+    public class SourceBookDto : IDomainRepresentationObject<SourceBook>
     {
         [DataMember(Name = "identifier", IsRequired = true)]
         public string Identifier { get; set; }
@@ -12,9 +12,9 @@ namespace AdventurePlanner.UI.SourceBookEditor.DataAccess
         [DataMember(Name = "name", IsRequired = true)]
         public string Name { get; set; }
 
-        #region Implementation of IDataTrasferObject<SourceBook>
+        #region Implementation of IDomainRepresentationObject<SourceBook>
 
-        public void SetFromDomain(SourceBook domainObject)
+        public void SetFromDomainObject(SourceBook domainObject)
         {
             Identifier = domainObject.Identifier;
             Name = domainObject.Name;
@@ -26,11 +26,5 @@ namespace AdventurePlanner.UI.SourceBookEditor.DataAccess
         }
 
         #endregion
-    }
-
-    public interface IDataTrasferObject<T>
-    {
-        void SetFromDomain(T domainObject);
-        T GetDomainObject();
     }
 }

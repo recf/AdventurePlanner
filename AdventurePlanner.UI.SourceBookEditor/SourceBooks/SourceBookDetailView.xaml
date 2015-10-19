@@ -10,10 +10,10 @@
              d:DataContext="{d:DesignInstance local:SourceBookDetailViewModel}">
     <StackPanel>
         <Label Content="Identifier"/>
-        <TextBox Text="{Binding Identifier}"/>
+        <TextBox Text="{Binding SourceBookModel.Identifier}"/>
         
         <Label Content="Name"/>
-        <TextBox Text="{Binding Name}"/>
+        <TextBox Text="{Binding SourceBookModel.Name}"/>
         
         <Button Content="Save" Command="{Binding SaveCommand}"/>
         <Button Content="Open" Command="{Binding OpenCommand}"/>

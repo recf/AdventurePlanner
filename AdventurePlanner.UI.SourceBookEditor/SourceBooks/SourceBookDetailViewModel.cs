@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
 {
-    public class SourceBookDetailViewModel : ValidatableBindableBase
+    public class SourceBookDetailViewModel : BindableBase
     {
         private SourceBookService _service;
 
@@ -23,7 +23,7 @@ namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
             OpenCommand = new RelayCommand(OnOpen, CanOpen);
             SaveCommand = new RelayCommand(OnSave, CanSave);
 
-            this.ErrorsChanged += (sender, args) => { SaveCommand.RaiseCanExecuteChanged(); };
+            SourceBookModel = new SourceBookModel();
         }
 
         public RelayCommand OpenCommand { get; set; }
@@ -45,16 +45,15 @@ namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
 
             var sourceBook = _service.Open(dialog.FileName);
             FilePath = dialog.FileName;
-
-            Identifier = sourceBook.Identifier;
-            Name = sourceBook.Name;
+            
+            SourceBookModel.SetFromDomainObject(sourceBook);
         }
 
         public RelayCommand SaveCommand { get; set; }
 
         private bool CanSave()
         {
-            return !HasErrors;
+            return !SourceBookModel.HasErrors;
         }
 
         private void OnSave()
@@ -70,12 +69,19 @@ namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
                 }
             }
 
-            _service.Save(GetDomainObject(), FilePath);
+            _service.Save(SourceBookModel.GetDomainObject(), FilePath);
         }
 
-        private SourceBook GetDomainObject()
+        private SourceBookModel _sourceBookModel;
+
+        public SourceBookModel SourceBookModel
         {
-            return new SourceBook(Identifier, Name);
+            get { return _sourceBookModel; }
+            set
+            {
+                Set(ref _sourceBookModel, value);
+                value.ErrorsChanged += (sender, args) => { SaveCommand.RaiseCanExecuteChanged(); };
+            }
         }
 
         private string _filePath;
@@ -84,24 +90,6 @@ namespace AdventurePlanner.UI.SourceBookEditor.SourceBooks
         {
             get { return _filePath; }
             set { Set(ref _filePath, value); }
-        }
-
-        private string _identifier;
-
-        [Required]
-        public string Identifier
-        {
-            get { return _identifier; }
-            set { Set(ref _identifier, value); }
-        }
-
-        private string _name;
-
-        [Required]
-        public string Name
-        {
-            get { return _name; }
-            set { Set(ref _name, value); }
         }
     }
 }
