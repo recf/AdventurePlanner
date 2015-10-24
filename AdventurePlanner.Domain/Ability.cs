@@ -11,8 +11,8 @@ namespace AdventurePlanner.Domain
             Abbreviation = abbreviation;
         }
 
-        public string Name { get; }
+        public string Name { get; private set;}
 
-        public string Abbreviation { get; }
+        public string Abbreviation { get; private set; }
     }
 }

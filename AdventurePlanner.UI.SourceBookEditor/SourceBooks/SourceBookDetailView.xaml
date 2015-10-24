@@ -9,13 +9,17 @@
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance local:SourceBookDetailViewModel}">
     <StackPanel>
+        <Menu>
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
+                <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+            </MenuItem>
+        </Menu>
+        
         <Label Content="Identifier"/>
         <TextBox Text="{Binding SourceBookModel.Identifier}"/>
         
         <Label Content="Name"/>
         <TextBox Text="{Binding SourceBookModel.Name}"/>
-        
-        <Button Content="Save" Command="{Binding SaveCommand}"/>
-        <Button Content="Open" Command="{Binding OpenCommand}"/>
     </StackPanel>
 </UserControl>

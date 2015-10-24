@@ -14,8 +14,8 @@ namespace AdventurePlanner.Domain
             Name = name;
         }
 
-        public string Identifier { get; }
+        public string Identifier { get; private set; }
 
-        public string Name { get; }
+        public string Name { get; private set; }
     }
 }
