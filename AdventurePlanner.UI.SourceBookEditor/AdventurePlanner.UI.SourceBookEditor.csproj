@@ -145,7 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdventurePlanner.Domain\AdventurePlanner.Domain.csproj">
-      <Project>{3B9F55B1-459A-44B6-8058-7E3A35560DD7}</Project>
+      <Project>{E3521F87-C774-4A21-8FAB-55278829E558}</Project>
       <Name>AdventurePlanner.Domain</Name>
     </ProjectReference>
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace AdventurePlanner.Domain
 
         public bool IsProficient
         {
-            get { return _playerCharacter.ArmorProficiencies.Contains(Armor.ProficiencyGroup, StringComparer.InvariantCultureIgnoreCase); }
+            get { return _playerCharacter.ArmorProficiencies.Contains(Armor.ProficiencyGroup, StringComparer.CurrentCultureIgnoreCase); }
         }
 
         public int ArmorClass

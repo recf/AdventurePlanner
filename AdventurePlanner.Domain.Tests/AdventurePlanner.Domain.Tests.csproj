@@ -52,21 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbilitySnapshotTests.cs" />
-    <Compile Include="PlayerCharacterTests.cs" />
-    <Compile Include="InventoryArmorTests.cs" />
     <Compile Include="AssertionHelpers.cs" />
-    <Compile Include="CharacterPlanTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InventoryWeaponTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdventurePlanner.Domain\AdventurePlanner.Domain.csproj">
-      <Project>{3b9f55b1-459a-44b6-8058-7e3a35560dd7}</Project>
-      <Name>AdventurePlanner.Core</Name>
+      <Project>{E3521F87-C774-4A21-8FAB-55278829E558}</Project>
+      <Name>AdventurePlanner.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

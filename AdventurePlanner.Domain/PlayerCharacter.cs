@@ -64,18 +64,6 @@ namespace AdventurePlanner.Domain
 
         public PlayerCharacter()
         {
-            var skills =
-                Skill.All.Select(conf => new SkillScore(this, conf.SkillName, Abilities[conf.Ability]))
-                    .ToDictionary(s => s.SkillName);
-
-            Skills = new ReadOnlyDictionary<string, SkillScore>(skills);
-
-            var savingThrows =
-                Abilities.Values.Select(a => new SavingThrow(this, a))
-                    .ToDictionary(s => s.Ability.Abbreviation);
-
-            SavingThrows = new ReadOnlyDictionary<string, SavingThrow>(savingThrows);
-
             Features = new List<FeatureSnapshot>();
 
             ArmorProficiencies = new SortedSet<string>();
